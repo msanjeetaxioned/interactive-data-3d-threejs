@@ -1,5 +1,6 @@
 const body = document.querySelector("body");
 const wrapperInteractiveData = body.querySelector(".interactive-data-section > .wrapper");
+let canvas;
 
 // Setting up Scene, Camera & Renderer
 const scene = new THREE.Scene();
@@ -8,6 +9,7 @@ const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth * 0.85, window.innerHeight * 0.85);
 wrapperInteractiveData.appendChild(renderer.domElement);
+canvas = wrapperInteractiveData.querySelector("canvas");
 
 // const orbit = new THREE.OrbitControls(camera, renderer.domElement);
 
@@ -94,4 +96,4 @@ function onMouseMove(event) {
 	oldX = event.pageX;
 }
   
-document.addEventListener('mousemove', onMouseMove, false);
+canvas.addEventListener('mousemove', onMouseMove, false);
