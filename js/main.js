@@ -42,9 +42,9 @@ cube.rotation.y = Math.PI / 4;
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
-let direction = "", 
-	oldX = 0,
-	rotationDirection = "";
+const rotation = gsap.timeline();
+
+let movementX = 0;
 
 function animate() {
 	requestAnimationFrame(animate);
@@ -55,45 +55,24 @@ function animate() {
 	let timer;
 
 	if (intersects.length > 0) {
-		rotationDirection = direction;
-		if (rotationDirection == "left") {
-			cube.rotation.y -= 0.04;
-		} else if (rotationDirection == "right") {
-			cube.rotation.y += 0.04;
-		}
+        if (movementX > 0) {
+            rotation.clear();
+            rotation.to(cube.rotation, {y: "+=6.26573", ease: "none", duration: 1.5});
+        } else if (movementX < 0) {
+            rotation.clear();
+            rotation.to(cube.rotation, {y: "-=6.26573", ease: "none", duration: 1.5});
+        }
 	} else {
-		if (rotationDirection == "left") {
-			cube.rotation.y -= 0.02;
-			clearTimeout(timer);
-			timer = setTimeout(() => {
-				rotationDirection = "";
-				cube.rotation.y = Math.PI / 4;
-			}, 2000);
-		} else if (rotationDirection == "right") {
-			cube.rotation.y += 0.02;
-			clearTimeout(timer);
-			timer = setTimeout(() => {
-				rotationDirection = "";
-				cube.rotation.y = Math.PI / 4;
-			}, 2000);
-		}
+		
 	}
 	renderer.render(scene, camera);
 }
 animate();
 
 function onMouseMove(event) {
-	console.log(event.movementX);
+	movementX =  event.movementX;
 	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 	mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-	if (event.pageX < oldX) {
-		direction = "left";
-	} else if (event.pageX > oldX) {
-		direction = "right";
-	}
-
-	oldX = event.pageX;
 }
   
 canvas.addEventListener('mousemove', onMouseMove, false);
