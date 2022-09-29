@@ -52,46 +52,54 @@ let movementX = 0,
     rotations = [-360, -180, -90, 90, 180, 360];
 
 const giveRotationDegreeAndSpeedAndDirection = () => {
-    if(!rotation.isActive() && movementX != currentMovementX) {
+    if (!rotation.isActive() && movementX != currentMovementX) {
         currentMovementX = movementX;
-        if(currentMovementX < -25) {
+        if (currentMovementX < -25) {
             currentRotationSpeedAndDirection = rotations[0];
-            rotation.to(cube.rotation, {y: "-=6.283185307", ease: "none", duration: 1});
-        } else if(currentMovementX < -15) {
+            rotation.to(cube.rotation, {y: "-=6.806784083", ease: "none", duration: 1})
+                .to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
+        } else if (currentMovementX < -15) {
             currentRotationSpeedAndDirection = rotations[1];
-            rotation.to(cube.rotation, {y: "-=3.141592654", ease: "none", duration: 0.75});
-        } else if(currentMovementX < 0) {
-            if(currentRotationSpeedAndDirection == rotations[2]) {
-                if(!timer1) {
+            rotation.to(cube.rotation, {y: "-=3.66519143", ease: "none", duration: 0.75})
+                .to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
+        } else if (currentMovementX < 0) {
+            if (currentRotationSpeedAndDirection == rotations[2]) {
+                if (!timer1) {
                     timer1 = setTimeout(() => {
                         clearTimeout(timer1);
-                        rotation.to(cube.rotation, {y: "-=1.570796327", ease: "none", duration: 0.5});
+                        rotation.to(cube.rotation, {y: "-=2.094395103", ease: "none", duration: 0.5})
+                            .to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
                     }, 500);
                 }
             } else {
                 currentRotationSpeedAndDirection = rotations[2];
-                rotation.to(cube.rotation, {y: "-=1.570796327", ease: "none", duration: 0.5});
+                rotation.to(cube.rotation, {y: "-=2.094395103", ease: "none", duration: 0.5})
+                    .to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
             }
         } else if (currentMovementX == 0) {
             rotation.clear();
         } else if (currentMovementX <= 15) {
-            if(currentRotationSpeedAndDirection == rotations[3]) {
-                if(!timer2) {
+            if (currentRotationSpeedAndDirection == rotations[3]) {
+                if (!timer2) {
                     timer2 = setTimeout(() => {
                         clearTimeout(timer2);
-                        rotation.to(cube.rotation, {y: "+=1.570796327", ease: "none", duration: 0.5});
+                        rotation.to(cube.rotation, {y: "+=2.094395103", ease: "none", duration: 0.5})
+                            .to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.2});
                     }, 500);
                 }
             } else {
                 currentRotationSpeedAndDirection = rotations[3];
-                rotation.to(cube.rotation, {y: "+=1.570796327", ease: "none", duration: 0.5});
+                rotation.to(cube.rotation, {y: "+=2.094395103", ease: "none", duration: 0.5})
+                    .to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.2});
             }
         } else if (currentMovementX <= 25) {
             currentRotationSpeedAndDirection = rotations[4];
-            rotation.to(cube.rotation, {y: "+=3.141592654", ease: "none", duration: 0.75});
+            rotation.to(cube.rotation, {y: "+=3.66519143", ease: "none", duration: 0.75})
+                .to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.2});
         } else {
             currentRotationSpeedAndDirection = rotations[5];
-            rotation.to(cube.rotation, {y: "+=6.283185307", ease: "none", duration: 1});
+            rotation.to(cube.rotation, {y: "+=6.806784083", ease: "none", duration: 1})
+                .to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.2});
         }
     }
 }
