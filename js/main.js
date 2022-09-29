@@ -58,7 +58,7 @@ const giveRotationDegreeAndSpeedAndDirection = () => {
             currentRotationSpeedAndDirection = rotations[0];
             // rotate bar -(360 + 30) degrees ie. -390 degrees
             rotation.to(cube.rotation, {y: "-=6.806784083", ease: "none", duration: 1})
-            // rotate bar 30 degrees in opposite direction as per effect on site
+            // rotate back the extra 30 degrees added previously for getting the effect on site
                 .to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
         } else if (currentMovementX < -15) {
             currentRotationSpeedAndDirection = rotations[1];
