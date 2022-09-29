@@ -56,10 +56,13 @@ const giveRotationDegreeAndSpeedAndDirection = () => {
         currentMovementX = movementX;
         if (currentMovementX < -25) {
             currentRotationSpeedAndDirection = rotations[0];
+            // rotate bar -(360 + 30) degrees ie. -390 degrees
             rotation.to(cube.rotation, {y: "-=6.806784083", ease: "none", duration: 1})
+            // rotate bar 30 degrees in opposite direction as per effect on site
                 .to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
         } else if (currentMovementX < -15) {
             currentRotationSpeedAndDirection = rotations[1];
+            // rotate bar -(180 + 30) degrees ie. -210 degrees
             rotation.to(cube.rotation, {y: "-=3.66519143", ease: "none", duration: 0.75})
                 .to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
         } else if (currentMovementX < 0) {
@@ -67,6 +70,7 @@ const giveRotationDegreeAndSpeedAndDirection = () => {
                 if (!timer1) {
                     timer1 = setTimeout(() => {
                         clearTimeout(timer1);
+                        // rotate bar -(90 + 30) degrees ie. -120 degrees
                         rotation.to(cube.rotation, {y: "-=2.094395103", ease: "none", duration: 0.5})
                             .to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
                     }, 500);
