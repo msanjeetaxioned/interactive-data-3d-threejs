@@ -45,26 +45,52 @@ const mouse = new THREE.Vector2();
 const rotation = gsap.timeline();
 
 let movementX = 0, 
-    currentMovementX = 1;
+    currentMovementX = 1,
+    currentRotationSpeedAndDirection,
+    timer1,
+    timer2,
+    rotations = [-360, -180, -90, 90, 180, 360];
 
 const giveRotationDegreeAndSpeedAndDirection = () => {
-    // console.log(cube.rotation.y);
     if(!rotation.isActive() && movementX != currentMovementX) {
         currentMovementX = movementX;
-        console.log(currentMovementX);
         if(currentMovementX < -25) {
+            currentRotationSpeedAndDirection = rotations[0];
             rotation.to(cube.rotation, {y: "-=6.283185307", ease: "none", duration: 1});
         } else if(currentMovementX < -15) {
-            rotation.to(cube.rotation, {y: "-=3.141592654", ease: "none", duration: 1});
+            currentRotationSpeedAndDirection = rotations[1];
+            rotation.to(cube.rotation, {y: "-=3.141592654", ease: "none", duration: 0.75});
         } else if(currentMovementX < 0) {
-            rotation.to(cube.rotation, {y: "-=1.570796327", ease: "none", duration: 1});
+            if(currentRotationSpeedAndDirection == rotations[2]) {
+                if(!timer1) {
+                    timer1 = setTimeout(() => {
+                        clearTimeout(timer1);
+                        rotation.to(cube.rotation, {y: "-=1.570796327", ease: "none", duration: 0.5});
+                    }, 500);
+                }
+            } else {
+                currentRotationSpeedAndDirection = rotations[2];
+                rotation.to(cube.rotation, {y: "-=1.570796327", ease: "none", duration: 0.5});
+            }
         } else if (currentMovementX == 0) {
             rotation.clear();
         } else if (currentMovementX <= 15) {
-            rotation.to(cube.rotation, {y: "+=1.570796327", ease: "none", duration: 1});
+            if(currentRotationSpeedAndDirection == rotations[3]) {
+                if(!timer2) {
+                    timer2 = setTimeout(() => {
+                        clearTimeout(timer2);
+                        rotation.to(cube.rotation, {y: "+=1.570796327", ease: "none", duration: 0.5});
+                    }, 500);
+                }
+            } else {
+                currentRotationSpeedAndDirection = rotations[3];
+                rotation.to(cube.rotation, {y: "+=1.570796327", ease: "none", duration: 0.5});
+            }
         } else if (currentMovementX <= 25) {
-            rotation.to(cube.rotation, {y: "+=3.141592654", ease: "none", duration: 1});
+            currentRotationSpeedAndDirection = rotations[4];
+            rotation.to(cube.rotation, {y: "+=3.141592654", ease: "none", duration: 0.75});
         } else {
+            currentRotationSpeedAndDirection = rotations[5];
             rotation.to(cube.rotation, {y: "+=6.283185307", ease: "none", duration: 1});
         }
     }
