@@ -70,48 +70,51 @@ camera.position.z = 30;
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
-const rotation = gsap.timeline();
+let rotationTl = [], currentRotationSpeedAndDirectionOfBars = [];
+for(let i = 0; i < bars.length; i++) {
+	currentRotationSpeedAndDirectionOfBars = 0;
+	rotationTl[i] = gsap.timeline();
+}
 
 let movementX = 0, 
 	currentMovementX = 1,
-	currentRotationSpeedAndDirection,
 	timer1,
 	timer2,
 	rotations = [-360, -180, -90, 90, 180, 360];
 
-const giveRotationDegreeAndSpeedAndDirection = (cube) => {
+const giveRotationDegreeAndSpeedAndDirection = (cube, rotation, currentBarRotation) => {
 	if (!rotation.isActive() && movementX != currentMovementX) {
 		currentMovementX = movementX;
 		if (currentMovementX < -25) {
-			currentRotationSpeedAndDirection = rotations[0];
+			currentBarRotation = rotations[0];
 			// rotate bar -(360 + 30) degrees ie. -390 degrees
 			rotation.to(cube.rotation, {y: "-=6.806784083", ease: "none", duration: 1})
 			// rotate back the extra 30 degrees added previously for getting the effect on site
 				.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
 		} else if (currentMovementX < -15) {
-			currentRotationSpeedAndDirection = rotations[1];
+			currentBarRotation = rotations[1];
 			// rotate bar -(180 + 30) degrees ie. -210 degrees
 			rotation.to(cube.rotation, {y: "-=3.66519143", ease: "none", duration: 0.75})
 				.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
 		} else if (currentMovementX < 0) {
-				if (currentRotationSpeedAndDirection == rotations[2]) {
-					if (!timer1) {
-						timer1 = setTimeout(() => {
-							clearTimeout(timer1);
-							// rotate bar -(90 + 30) degrees ie. -120 degrees
-							rotation.to(cube.rotation, {y: "-=2.094395103", ease: "none", duration: 0.5})
-								.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
-						}, 500);
-					}
-				} else {
-					currentRotationSpeedAndDirection = rotations[2];
-					rotation.to(cube.rotation, {y: "-=2.094395103", ease: "none", duration: 0.5})
-						.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
+			if (currentBarRotation == rotations[2]) {
+				if (!timer1) {
+					timer1 = setTimeout(() => {
+						clearTimeout(timer1);
+						// rotate bar -(90 + 30) degrees ie. -120 degrees
+						rotation.to(cube.rotation, {y: "-=2.094395103", ease: "none", duration: 0.5})
+							.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
+					}, 500);
 				}
+			} else {
+				currentBarRotation = rotations[2];
+				rotation.to(cube.rotation, {y: "-=2.094395103", ease: "none", duration: 0.5})
+					.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
+			}
 		} else if (currentMovementX == 0) {
 			rotation.clear();
 		} else if (currentMovementX <= 15) {
-			if (currentRotationSpeedAndDirection == rotations[3]) {
+			if (currentBarRotation == rotations[3]) {
 				if (!timer2) {
 					timer2 = setTimeout(() => {
 						clearTimeout(timer2);
@@ -120,16 +123,16 @@ const giveRotationDegreeAndSpeedAndDirection = (cube) => {
 					}, 500);
 				}
 			} else {
-				currentRotationSpeedAndDirection = rotations[3];
+				currentBarRotation = rotations[3];
 				rotation.to(cube.rotation, {y: "+=2.094395103", ease: "none", duration: 0.5})
 					.to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.2});
 			}
 		} else if (currentMovementX <= 25) {
-			currentRotationSpeedAndDirection = rotations[4];
+			currentBarRotation = rotations[4];
 			rotation.to(cube.rotation, {y: "+=3.66519143", ease: "none", duration: 0.75})
 				.to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.2});
 		} else {
-			currentRotationSpeedAndDirection = rotations[5];
+			currentBarRotation = rotations[5];
 			rotation.to(cube.rotation, {y: "+=6.806784083", ease: "none", duration: 1})
 				.to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.2});
 		}
@@ -146,7 +149,7 @@ const animate = () => {
 	if (intersects.length == 2) {
 		for(let i = 0; i < bars.length; i++) {
 			if(bars[i].uuid == intersects[0].object.uuid) {
-				giveRotationDegreeAndSpeedAndDirection(bars[i]);
+				giveRotationDegreeAndSpeedAndDirection(bars[i], rotationTl[i], currentRotationSpeedAndDirectionOfBars[i]);
 			}
 		}
 	}
