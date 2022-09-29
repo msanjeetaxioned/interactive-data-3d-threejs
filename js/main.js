@@ -25,7 +25,7 @@ let bars = [];
 const calculateBarsHeightAndAddThemInScene = () => {
     // Cubes
 	const graph = [0.1, 10, 22.2, 48, 19.7];
-	const barColors = [0xffd700, 0x8a2be2, 0x7fff00, 0x8b0000, 0x008080];
+	const barColors = [0x7fff00, 0x8a2be2, 0x8b0000, 0xffd700, 0x008080];
 	const barMaxHeight = 15;
 	let xPos = -14;
 	let maxValue = graph[0];
