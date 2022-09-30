@@ -1,5 +1,6 @@
 const body = document.querySelector("body");
 const wrapperInteractiveData = body.querySelector(".interactive-data-section > .wrapper");
+const nextGraphButton = wrapperInteractiveData.querySelector(".change-graph-button > button");
 let canvas;
 
 // Setting up Scene, Camera & Renderer
@@ -8,8 +9,16 @@ const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerH
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth * 0.85, window.innerHeight * 0.85);
-wrapperInteractiveData.appendChild(renderer.domElement);
+wrapperInteractiveData.insertBefore(renderer.domElement, wrapperInteractiveData.children[1]);
 canvas = wrapperInteractiveData.querySelector("canvas");
+
+const onMouseMove = (event) => {
+	movementX =  event.movementX;
+	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+	mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+}
+  
+canvas.addEventListener('mousemove', onMouseMove, false);
 
 // const orbit = new THREE.OrbitControls(camera, renderer.domElement);
 
@@ -20,11 +29,29 @@ const directionalLight1 = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight1.position.set(1, 0, 0);
 scene.add(directionalLight1);
 
+const graphs = [
+	[0.1, 10, 22.2, 48, 19.7],
+	[2.4, 18, 31.4, 38, 10.4],
+	[0.4, 5.9, 17.8, 57.6, 18.3]
+];
+let firstTime = true;
+let currentGraph = 1;
+
 let bars = [];
 
-const calculateBarsHeightAndAddThemInScene = () => {
+nextGraphButton.addEventListener("click", () => {
+	const prevGraph = currentGraph;
+	if (currentGraph == graphs.length) {
+		currentGraph = 1;
+	} else {
+		++currentGraph;
+	}
+	calculateBarsHeightAndAddThemInScene(prevGraph);
+});
+
+const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
     // Cubes
-	const graph = [0.1, 10, 22.2, 48, 19.7];
+	const graph = graphs[currentGraph - 1];
 	const barColors = [0x7fff00, 0x8a2be2, 0x8b0000, 0xffd700, 0x008080];
 	const barMaxHeight = 15;
 	let xPos = -14;
@@ -37,27 +64,41 @@ const calculateBarsHeightAndAddThemInScene = () => {
 		}
 	}
 
-	for (let i = 0; i < graph.length; i++) {
-		const currentBarHeight = graph[i] / maxValue * barMaxHeight;
-		barsHeight[i] = currentBarHeight;
+	if (firstTime) {
+		for (let i = 0; i < graph.length; i++) {
+			const currentBarHeight = graph[i] / maxValue * barMaxHeight;
+			barsHeight[i] = currentBarHeight;
+			const geometryBar = new THREE.BoxGeometry(2.5, barsHeight[i], 2.5);
+			const materialBar = new THREE.MeshPhongMaterial({
+				color: barColors[i],
+				emissive: 0x000000,
+				specular: 0x111111,
+				shininess: 100,
+				reflectivity: 1,
+				refractionRatio: 0.98,
+				combine: THREE.MultiplyOperation,
+				side: THREE.DoubleSide
+			});
+			bars[i] = new THREE.Mesh(geometryBar, materialBar);
+			console.log(bars[i]);
+			bars[i].position.x = xPos;
+			bars[i].position.y = barsHeight[i] / 2;
+			bars[i].rotation.y = Math.PI / 4;
+			scene.add(bars[i]);
+			xPos = xPos + 7;
+		}
+		firstTime = false;
+	} else {
+		for (let i = 0; i < graph.length; i++) {
+			const currentBarHeight = graph[i] / maxValue * barMaxHeight;
+			barsHeight[i] = currentBarHeight;
 
-		const geometryBar = new THREE.BoxGeometry(2.5, barsHeight[i], 2.5);
-		const materialBar = new THREE.MeshPhongMaterial({
-			color: barColors[i],
-			emissive: 0x000000,
-			specular: 0x111111,
-			shininess: 100,
-			reflectivity: 1,
-			refractionRatio: 0.98,
-			combine: THREE.MultiplyOperation,
-			side: THREE.DoubleSide
-		});
-		bars[i] = new THREE.Mesh(geometryBar, materialBar);
-		bars[i].position.x = xPos;
-		bars[i].position.y = barsHeight[i]/2;
-		bars[i].rotation.y = Math.PI / 4;
-		scene.add(bars[i]);
-		xPos = xPos + 7;
+			const prevGraphArr = graphs[prevGraphNum - 1];
+			const newY = graph[i] / prevGraphArr[i] * bars[i].scale.y;
+			gsap.to(bars[i].scale, {y: newY, duration: 1, ease: "power2.out", onComplete: () => {
+				bars[i].position.y = barsHeight[i] / 2;
+			}});
+		}
 	}
 }
 
@@ -71,7 +112,7 @@ const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
 let rotationTl = [], currentRotationSpeedAndDirectionOfBars = [];
-for(let i = 0; i < bars.length; i++) {
+for (let i = 0; i < bars.length; i++) {
 	currentRotationSpeedAndDirectionOfBars[i] = 0;
 	rotationTl[i] = gsap.timeline();
 }
@@ -156,11 +197,3 @@ const animate = () => {
 	renderer.render(scene, camera);
 }
 animate();
-
-const onMouseMove = (event) => {
-	movementX =  event.movementX;
-	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-	mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-}
-  
-canvas.addEventListener('mousemove', onMouseMove, false);
