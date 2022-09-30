@@ -27,9 +27,29 @@ section {
 .section3 { background-color: darkturquoise; }
 
 h2 {
+    margin-bottom: 30px;
     color: antiquewhite;
     font-size: 50px;
     font-weight: 700;
     text-align: center;
     text-transform: capitalize;
+}
+
+.change-graph-button {
+    margin-top: 30px;
+    text-align: center;
+
+    button {
+        padding: 15px 40px;
+        border: none;
+        border-radius: 30px;
+        display: inline-block;
+        background-color: #fff;
+        color: #000;
+        font-size: 30px;
+        font-weight: bold;
+        text-transform: capitalize;
+
+        &:hover { cursor: pointer; }
+    }
 }
