@@ -54,7 +54,7 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 	const graph = graphs[currentGraph - 1];
 	const barColors = [0x7fff00, 0x8a2be2, 0x8b0000, 0xffd700, 0x008080];
 	const barMaxHeight = 15;
-	let xPos = -14;
+	let xPos = -12;
 	let maxValue = graph[0];
 	let barsHeight = [];
 
@@ -85,7 +85,7 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 			bars[i].position.y = barsHeight[i] / 2;
 			bars[i].rotation.y = Math.PI / 4;
 			scene.add(bars[i]);
-			xPos = xPos + 7;
+			xPos = xPos + 6;
 		}
 		firstTime = false;
 	} else {
@@ -131,12 +131,12 @@ const rotateBar = (cube, currentBarTL, currentBarRotation) => {
 			// rotate bar -(360 + 30) degrees ie. -390 degrees
 			currentBarTL.to(cube.rotation, {y: "-=6.806784083", ease: "none", duration: 1})
 			// rotate back the extra 30 degrees added previously for getting the effect on site
-				.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
+				.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.5});
 		} else if (currentMovementX < -15) {
 			currentBarRotation = rotations[1];
 			// rotate bar -(180 + 30) degrees ie. -210 degrees
 			currentBarTL.to(cube.rotation, {y: "-=3.66519143", ease: "none", duration: 0.75})
-				.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
+				.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.5});
 		} else if (currentMovementX < 0) {
 			if (currentBarRotation == rotations[2]) {
 				if (!timer1) {
@@ -144,13 +144,13 @@ const rotateBar = (cube, currentBarTL, currentBarRotation) => {
 						clearTimeout(timer1);
 						// rotate bar -(90 + 30) degrees ie. -120 degrees
 						currentBarTL.to(cube.rotation, {y: "-=2.094395103", ease: "none", duration: 0.5})
-							.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
+							.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.5});
 					}, 500);
 				}
 			} else {
 				currentBarRotation = rotations[2];
 				currentBarTL.to(cube.rotation, {y: "-=2.094395103", ease: "none", duration: 0.5})
-					.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.2});
+					.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.5});
 			}
 		} else if (currentMovementX == 0) {
 			currentBarTL.clear();
@@ -160,22 +160,22 @@ const rotateBar = (cube, currentBarTL, currentBarRotation) => {
 					timer2 = setTimeout(() => {
 						clearTimeout(timer2);
 						currentBarTL.to(cube.rotation, {y: "+=2.094395103", ease: "none", duration: 0.5})
-							.to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.2});
+							.to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.5});
 					}, 500);
 				}
 			} else {
 				currentBarRotation = rotations[3];
 				currentBarTL.to(cube.rotation, {y: "+=2.094395103", ease: "none", duration: 0.5})
-					.to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.2});
+					.to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.5});
 			}
 		} else if (currentMovementX <= 25) {
 			currentBarRotation = rotations[4];
 			currentBarTL.to(cube.rotation, {y: "+=3.66519143", ease: "none", duration: 0.75})
-				.to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.2});
+				.to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.5});
 		} else {
 			currentBarRotation = rotations[5];
 			currentBarTL.to(cube.rotation, {y: "+=6.806784083", ease: "none", duration: 1})
-				.to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.2});
+				.to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.5});
 		}
 	}
 }
