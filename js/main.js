@@ -20,6 +20,9 @@ const onMouseMove = (event) => {
   
 canvas.addEventListener('mousemove', onMouseMove, false);
 
+// const axesHelper = new THREE.AxesHelper(15);
+// scene.add(axesHelper);
+
 // const orbit = new THREE.OrbitControls(camera, renderer.domElement);
 
 const light = new THREE.AmbientLight(0xffffff, 0.5); // dim white light
@@ -69,6 +72,7 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 			const currentBarHeight = graph[i] / maxValue * barMaxHeight;
 			barsHeight[i] = currentBarHeight;
 			const geometryBar = new THREE.BoxGeometry(2.5, barsHeight[i], 2.5);
+			geometryBar.translate( 0, barsHeight[i] / 2, 0 );
 			const materialBar = new THREE.MeshPhongMaterial({
 				color: barColors[i],
 				emissive: 0x000000,
@@ -82,7 +86,6 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 			bars[i] = new THREE.Mesh(geometryBar, materialBar);
 			console.log(bars[i]);
 			bars[i].position.x = xPos;
-			bars[i].position.y = barsHeight[i] / 2;
 			bars[i].rotation.y = Math.PI / 4;
 			scene.add(bars[i]);
 			xPos = xPos + 6;
@@ -95,9 +98,7 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 
 			const prevGraphArr = graphs[prevGraphNum - 1];
 			const newY = graph[i] / prevGraphArr[i] * bars[i].scale.y;
-			gsap.to(bars[i].scale, {y: newY, duration: 1, ease: "power2.out", onComplete: () => {
-				bars[i].position.y = barsHeight[i] / 2;
-			}});
+			gsap.to(bars[i].scale, {y: newY, duration: 1, ease: "power2.out"});
 		}
 	}
 }
