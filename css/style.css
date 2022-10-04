@@ -59,8 +59,10 @@ h2 {
   font-size: 24px;
   font-weight: bold;
   text-transform: capitalize;
+  transition: background-color 1s ease-in-out;
 }
 .change-graph-buttons button:hover {
+  background-color: orangered;
   cursor: pointer;
 }
 .change-graph-buttons .graph-info {

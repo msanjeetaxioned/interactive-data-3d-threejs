@@ -55,8 +55,12 @@ h2 {
 		font-size: 24px;
 		font-weight: bold;
 		text-transform: capitalize;
+		transition: background-color 1s ease-in-out;
 
-		&:hover { cursor: pointer; }
+		&:hover {
+			background-color: orangered;
+			cursor: pointer;
+		}
 	}
 
 	.graph-info {
