@@ -1,4 +1,5 @@
 * {
+  font-family: "Caraque Trial", sans-serif;
   box-sizing: border-box;
 }
 
@@ -24,7 +25,8 @@ section {
 }
 
 .interactive-data-section {
-  height: 140vh;
+  height: 100%;
+  min-height: 100vh;
   background-color: #000;
 }
 
@@ -41,21 +43,38 @@ h2 {
   text-transform: capitalize;
 }
 
-.change-graph-button {
+.change-graph-buttons {
   margin-top: 30px;
+  display: flex;
+  justify-content: center;
   text-align: center;
 }
-.change-graph-button button {
-  padding: 15px 40px;
+.change-graph-buttons button {
+  padding: 12px 35px;
   border: none;
-  border-radius: 30px;
+  border-radius: 25px;
   display: inline-block;
   background-color: #fff;
   color: #000;
-  font-size: 30px;
+  font-size: 24px;
   font-weight: bold;
   text-transform: capitalize;
 }
-.change-graph-button button:hover {
+.change-graph-buttons button:hover {
   cursor: pointer;
+}
+.change-graph-buttons .graph-info {
+  width: 100px;
+  margin: 0 40px;
+  color: #fff;
+}
+.change-graph-buttons .graph-info h3 {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.change-graph-buttons .graph-info span {
+  margin-top: 10px;
+  display: inline-block;
+  font-size: 16px;
 }

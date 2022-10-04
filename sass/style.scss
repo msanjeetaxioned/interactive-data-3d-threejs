@@ -1,55 +1,79 @@
-* { box-sizing: border-box; }
+* {
+	font-family: 'Caraque Trial', sans-serif; 
+	box-sizing: border-box; 
+}
 
-body {
-    margin: 0;
-    font-family: 'Caraque Trial', sans-serif;
+body { 
+	margin: 0;
+	font-family: 'Caraque Trial', sans-serif; 
 }
 
 /* Styles start */
 .wrapper {
-    width: 85%;
-    padding: 50px 0;
-    margin: 0 auto;
+	width: 85%;
+	padding: 50px 0;
+	margin: 0 auto;
 }
 
 section {
-    width: 100%;
-    height: 100vh;
+	width: 100%;
+	height: 100vh;
 }
 
 .section1 { background-color: mediumpurple; }
 
 .interactive-data-section { 
-    height: 140vh;
-    background-color: #000;
+	height: 100%;
+	min-height: 100vh;
+	background-color: #000;
 }
 
 .section3 { background-color: darkturquoise; }
 
 h2 {
-    margin-bottom: 30px;
-    color: antiquewhite;
-    font-size: 50px;
-    font-weight: 700;
-    text-align: center;
-    text-transform: capitalize;
+	margin-bottom: 30px;
+	color: antiquewhite;
+	font-size: 50px;
+	font-weight: 700;
+	text-align: center;
+	text-transform: capitalize;
 }
 
-.change-graph-button {
-    margin-top: 30px;
-    text-align: center;
+.change-graph-buttons {
+	margin-top: 30px;
+	display: flex;
+	justify-content: center;
+	text-align: center;
 
-    button {
-        padding: 15px 40px;
-        border: none;
-        border-radius: 30px;
-        display: inline-block;
-        background-color: #fff;
-        color: #000;
-        font-size: 30px;
-        font-weight: bold;
-        text-transform: capitalize;
+	button {
+		padding: 12px 35px;
+		border: none;
+		border-radius: 25px;
+		display: inline-block;
+		background-color: #fff;
+		color: #000;
+		font-size: 24px;
+		font-weight: bold;
+		text-transform: capitalize;
 
-        &:hover { cursor: pointer; }
-    }
+		&:hover { cursor: pointer; }
+	}
+
+	.graph-info {
+		width: 100px;
+		margin: 0 40px;
+		color: #fff;
+
+		h3 {
+			font-size: 20px;
+			font-weight: bold;
+			text-transform: capitalize;
+		}
+
+		span {
+			margin-top: 10px;
+			display: inline-block;
+			font-size: 16px;
+		}
+	}
 }

@@ -1,6 +1,11 @@
-const body = document.querySelector("body");
-const wrapperInteractiveData = body.querySelector(".interactive-data-section > .wrapper");
-const nextGraphButton = wrapperInteractiveData.querySelector(".change-graph-button > button");
+const wrapperInteractiveData = document.querySelector(".interactive-data-section > .wrapper");
+
+const changeGraphButtonsDiv = wrapperInteractiveData.querySelector(".change-graph-buttons");
+const prevGraphButton = changeGraphButtonsDiv.querySelector(".previous-button");
+const nextGraphButton = changeGraphButtonsDiv.querySelector(".next-button");
+const graphNameH3 = changeGraphButtonsDiv.querySelector(".graph-info > h3");
+const graphNumSpan = changeGraphButtonsDiv.querySelector(".graph-info > span");
+
 let canvas;
 
 // Setting up Scene, Camera & Renderer
@@ -12,12 +17,21 @@ renderer.setSize(window.innerWidth * 0.85, window.innerHeight * 0.85);
 wrapperInteractiveData.insertBefore(renderer.domElement, wrapperInteractiveData.children[1]);
 canvas = wrapperInteractiveData.querySelector("canvas");
 
+let movementX = 0, 
+	currentMovementX = 1,
+	timer1,
+	timer2,
+	rotations = [-360, -180, -90, 90, 180, 360];
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
 const onMouseMove = (event) => {
 	movementX =  event.movementX;
 	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 	mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 }
-  
+	
 canvas.addEventListener('mousemove', onMouseMove, false);
 
 // const axesHelper = new THREE.AxesHelper(15);
@@ -37,23 +51,14 @@ const graphs = [
 	[2.4, 18, 31.4, 38, 10.4],
 	[0.4, 5.9, 17.8, 57.6, 18.3]
 ];
+const graphNames = ["marketing", "writing", "engineering"];
 let firstTime = true;
 let currentGraph = 1;
 
 let bars = [];
 
-nextGraphButton.addEventListener("click", () => {
-	const prevGraph = currentGraph;
-	if (currentGraph == graphs.length) {
-		currentGraph = 1;
-	} else {
-		++currentGraph;
-	}
-	calculateBarsHeightAndAddThemInScene(prevGraph);
-});
-
 const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
-    // Cubes
+	// Cubes
 	const graph = graphs[currentGraph - 1];
 	const barColors = [0x7fff00, 0x8a2be2, 0x8b0000, 0xffd700, 0x008080];
 	const barMaxHeight = 15;
@@ -84,7 +89,6 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 				side: THREE.DoubleSide
 			});
 			bars[i] = new THREE.Mesh(geometryBar, materialBar);
-			console.log(bars[i]);
 			bars[i].position.x = xPos;
 			bars[i].rotation.y = Math.PI / 4;
 			scene.add(bars[i]);
@@ -103,26 +107,35 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 	}
 }
 
+const prevOrNextButtonClick = (prevOrNext) => {
+	const prevGraph = currentGraph;
+	if (currentGraph == graphs.length && prevOrNext == 1) {
+		currentGraph = 1;
+	} else if (currentGraph == 1 && prevOrNext == -1) {
+		currentGraph = graphs.length;
+	}
+	else {
+		currentGraph += prevOrNext;
+	}
+	calculateBarsHeightAndAddThemInScene(prevGraph);
+	graphNameH3.innerText = graphNames[currentGraph - 1];
+	graphNumSpan.innerText = currentGraph + " of 3";
+}
+
+prevGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, -1));
+nextGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, 1));
+
 calculateBarsHeightAndAddThemInScene();
 
 camera.position.y = 7;
 camera.position.z = 30;
 // orbit.update();
 
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-
 let rotationTl = [], currentRotationSpeedAndDirectionOfBars = [];
 for (let i = 0; i < bars.length; i++) {
 	currentRotationSpeedAndDirectionOfBars[i] = 0;
 	rotationTl[i] = gsap.timeline();
 }
-
-let movementX = 0, 
-	currentMovementX = 1,
-	timer1,
-	timer2,
-	rotations = [-360, -180, -90, 90, 180, 360];
 
 const rotateBar = (cube, currentBarTL, currentBarRotation) => {
 	if (!currentBarTL.isActive() && movementX != currentMovementX) {
@@ -189,8 +202,8 @@ const animate = () => {
 	const intersects = raycaster.intersectObjects(scene.children);
 
 	if (intersects.length == 2) {
-		for(let i = 0; i < bars.length; i++) {
-			if(bars[i].uuid == intersects[0].object.uuid) {
+		for (let i = 0; i < bars.length; i++) {
+			if (bars[i].uuid == intersects[0].object.uuid) {
 				rotateBar(bars[i], rotationTl[i], currentRotationSpeedAndDirectionOfBars[i]);
 			}
 		}
