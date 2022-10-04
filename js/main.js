@@ -19,6 +19,7 @@ canvas = wrapperInteractiveData.querySelector("canvas");
 
 let movementX = 0, 
 	currentMovementX = 1,
+	mouseXCanvas = 0,
 	timer1,
 	timer2,
 	rotations = [-360, -180, -90, 90, 180, 360];
@@ -28,8 +29,13 @@ const mouse = new THREE.Vector2();
 
 const onMouseMove = (event) => {
 	movementX =  event.movementX;
-	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-	mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+	const rect = event.target.getBoundingClientRect();
+
+	mouseXCanvas = event.clientX - rect.left;
+	const mouseYCanvas = event.clientY - rect.top;
+
+	mouse.x = (mouseXCanvas / rect.width) * 2 - 1;
+	mouse.y = -(mouseYCanvas / rect.height) * 2 + 1;
 }
 	
 canvas.addEventListener('mousemove', onMouseMove, false);
