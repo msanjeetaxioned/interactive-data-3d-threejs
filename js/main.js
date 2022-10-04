@@ -34,6 +34,20 @@ const onMouseMove = (event) => {
 	
 canvas.addEventListener('mousemove', onMouseMove, false);
 
+const options = {threshold: 0.5};
+
+const handleIntersect = (entries) => {
+	entries.forEach(entry => {
+		if (entry.isIntersecting) {
+			calculateBarsHeightAndAddThemInScene();
+			observer.unobserve(entry.target);
+		}
+	});
+}
+
+const observer = new IntersectionObserver(handleIntersect, options);
+observer.observe(canvas);
+
 // const axesHelper = new THREE.AxesHelper(15);
 // scene.add(axesHelper);
 
@@ -74,10 +88,8 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 
 	if (firstTime) {
 		for (let i = 0; i < graph.length; i++) {
-			const currentBarHeight = graph[i] / maxValue * barMaxHeight;
-			barsHeight[i] = currentBarHeight;
-			const geometryBar = new THREE.BoxGeometry(2.5, barsHeight[i], 2.5);
-			geometryBar.translate( 0, barsHeight[i] / 2, 0 );
+			const geometryBar = new THREE.BoxGeometry(2.5, 0.1, 2.5);
+			geometryBar.translate( 0, 0.1 / 2, 0 );
 			const materialBar = new THREE.MeshPhongMaterial({
 				color: barColors[i],
 				emissive: 0x000000,
@@ -99,10 +111,16 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 		for (let i = 0; i < graph.length; i++) {
 			const currentBarHeight = graph[i] / maxValue * barMaxHeight;
 			barsHeight[i] = currentBarHeight;
+			let newY;
 
-			const prevGraphArr = graphs[prevGraphNum - 1];
-			const newY = graph[i] / prevGraphArr[i] * bars[i].scale.y;
-			gsap.to(bars[i].scale, {y: newY, duration: 1, ease: "power2.out"});
+			if(prevGraphNum == undefined) {
+				newY = barsHeight[i] / 0.1 * bars[i].scale.y;
+				gsap.to(bars[i].scale, {y: newY, duration: 2, ease: "power2.out"});
+			} else {
+				const prevGraphArr = graphs[prevGraphNum - 1];
+				newY = graph[i] / prevGraphArr[i] * bars[i].scale.y;
+				gsap.to(bars[i].scale, {y: newY, duration: 1, ease: "power2.out"});
+			}
 		}
 	}
 }
