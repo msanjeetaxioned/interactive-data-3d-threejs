@@ -12,12 +12,12 @@ let canvas;
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
 
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth * 0.85, window.innerHeight * 0.85);
 wrapperInteractiveData.insertBefore(renderer.domElement, wrapperInteractiveData.children[1]);
 canvas = wrapperInteractiveData.querySelector("canvas");
 
-let movementX = 0, 
+let movementX = 0,
 	currentMovementX = 1,
 	mouseXCanvas = 0,
 	timer1,
@@ -151,6 +151,7 @@ nextGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, 1));
 
 calculateBarsHeightAndAddThemInScene();
 
+camera.lookAt(new THREE.Vector3(0, 0, 0));
 camera.position.y = 7;
 camera.position.z = 30;
 // orbit.update();
