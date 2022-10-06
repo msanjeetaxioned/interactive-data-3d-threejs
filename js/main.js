@@ -219,6 +219,34 @@ const rotateBar = (cube, currentBarTL, currentBarRotation) => {
 	}
 }
 
+const scale = (number, inMin, inMax, outMin, outMax) => {
+	return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+}
+
+const canvasDistanceFromTop = window.pageYOffset + canvas.getBoundingClientRect().top;
+const canvasVisibleMin =  canvasDistanceFromTop - window.innerHeight;
+const canvasVisibleMax = canvasVisibleMin + canvas.getBoundingClientRect().height * 2;
+
+const setRotationAngleOfBarsBasedOnScrollPosition = () => {
+	const windowY = window.scrollY;
+	if (windowY >= canvasVisibleMin && windowY <= canvasVisibleMax) {
+		const percent = Math.round(windowY / canvasVisibleMax * 100);
+		let barsRotationAngleX;
+		if(percent <= 40) {
+			barsRotationAngleX = scale(percent, 0, 40, Math.PI / 6, 0);
+		} else if(percent > 40 && percent <= 80) {
+			barsRotationAngleX = 0;
+		} else {
+			barsRotationAngleX = scale(percent, 81, 100, 0, -Math.PI / 6);
+		}
+		for (let i = 0; i < bars.length; i++) {
+			if(bars[i].rotation.x != barsRotationAngleX) {
+				bars[i].rotation.x = barsRotationAngleX;
+			}
+		}
+	}
+}
+
 const animate = () => {
 	requestAnimationFrame(animate);
 	raycaster.setFromCamera(mouse, camera);
@@ -233,6 +261,11 @@ const animate = () => {
 			}
 		}
 	}
+	setRotationAngleOfBarsBasedOnScrollPosition();
+
+	// console.log(window.scrollY);
+	// For tilting graph based on left-right position of mouse cursor
+	// const percent = Math.round(mouseXCanvas / canvas.getBoundingClientRect().width * 100);
 	renderer.render(scene, camera);
 }
 animate();
