@@ -241,14 +241,7 @@ const setRotationAngleOfBarsBasedOnScrollPosition = () => {
 	if(currentWindowY != windowY && windowY != undefined) {
 		if (currentWindowY >= canvasVisibleMin && currentWindowY <= canvasVisibleMax) {
 			const percent = Math.round(currentWindowY / canvasVisibleMax * 100);
-			let barsRotationAngleX;
-			if (percent > 10 && percent <= 50) {
-				barsRotationAngleX = scale(percent, 11, 50, Math.PI / 6, 0);
-			} else if (percent > 50 && percent <= 80) {
-				barsRotationAngleX = 0;
-			} else {
-				barsRotationAngleX = scale(percent, 81, 100, 0, -Math.PI / 6);
-			}
+			const barsRotationAngleX = scale(percent, 0, 100, Math.PI / 8, -Math.PI / 8);
 			for (let i = 0; i < bars.length; i++) {
 				bars[i].rotation.x = barsRotationAngleX;
 			}
