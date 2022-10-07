@@ -227,20 +227,21 @@ const canvasDistanceFromTop = window.pageYOffset + canvas.getBoundingClientRect(
 const canvasVisibleMin =  canvasDistanceFromTop - window.innerHeight;
 const canvasVisibleMax = canvasVisibleMin + canvas.getBoundingClientRect().height * 2;
 
+// Sets Vertical rotation of bars based on scroll position 
 const setRotationAngleOfBarsBasedOnScrollPosition = () => {
 	const windowY = window.scrollY;
 	if (windowY >= canvasVisibleMin && windowY <= canvasVisibleMax) {
 		const percent = Math.round(windowY / canvasVisibleMax * 100);
 		let barsRotationAngleX;
-		if(percent <= 40) {
-			barsRotationAngleX = scale(percent, 0, 40, Math.PI / 6, 0);
-		} else if(percent > 40 && percent <= 80) {
+		if (percent > 10 && percent <= 50) {
+			barsRotationAngleX = scale(percent, 11, 50, Math.PI / 6, 0);
+		} else if (percent > 50 && percent <= 80) {
 			barsRotationAngleX = 0;
 		} else {
 			barsRotationAngleX = scale(percent, 81, 100, 0, -Math.PI / 6);
 		}
 		for (let i = 0; i < bars.length; i++) {
-			if(bars[i].rotation.x != barsRotationAngleX) {
+			if (bars[i].rotation.x != barsRotationAngleX) {
 				bars[i].rotation.x = barsRotationAngleX;
 			}
 		}
@@ -263,7 +264,6 @@ const animate = () => {
 	}
 	setRotationAngleOfBarsBasedOnScrollPosition();
 
-	// console.log(window.scrollY);
 	// For tilting graph based on left-right position of mouse cursor
 	// const percent = Math.round(mouseXCanvas / canvas.getBoundingClientRect().width * 100);
 	renderer.render(scene, camera);
