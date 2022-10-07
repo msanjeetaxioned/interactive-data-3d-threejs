@@ -69,7 +69,7 @@ scene.add(directionalLight1);
 const graphs = [
 	[0.1, 10, 22.2, 48, 19.7],
 	[2.4, 18, 31.4, 38, 10.4],
-	[0.4, 5.9, 17.8, 57.6, 18.3]
+	[30, 25, 10, 5, 30]
 ];
 const graphNames = ["marketing", "writing", "engineering"];
 let firstTime = true;
