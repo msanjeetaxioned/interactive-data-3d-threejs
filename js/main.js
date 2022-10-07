@@ -119,13 +119,13 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 			barsHeight[i] = currentBarHeight;
 			let newY;
 
-			if(prevGraphNum == undefined) {
+			if (prevGraphNum == undefined) {
 				newY = barsHeight[i] / 0.1 * bars[i].scale.y;
 				gsap.to(bars[i].scale, {y: newY, duration: 2, ease: "power2.out"});
 			} else {
 				const prevGraphArr = graphs[prevGraphNum - 1];
 				newY = graph[i] / prevGraphArr[i] * bars[i].scale.y;
-				gsap.to(bars[i].scale, {y: newY, duration: 1, ease: "power2.out"});
+				gsap.to(bars[i].scale, {y: newY, duration: 1.5, ease: "power2.out"});
 			}
 		}
 	}
@@ -226,22 +226,30 @@ const scale = (number, inMin, inMax, outMin, outMax) => {
 const canvasDistanceFromTop = window.pageYOffset + canvas.getBoundingClientRect().top;
 const canvasVisibleMin =  canvasDistanceFromTop - window.innerHeight;
 const canvasVisibleMax = canvasVisibleMin + canvas.getBoundingClientRect().height * 2;
+let currentWindowY = undefined;
 
 // Sets Vertical rotation of bars based on scroll position 
 const setRotationAngleOfBarsBasedOnScrollPosition = () => {
-	const windowY = window.scrollY;
-	if (windowY >= canvasVisibleMin && windowY <= canvasVisibleMax) {
-		const percent = Math.round(windowY / canvasVisibleMax * 100);
-		let barsRotationAngleX;
-		if (percent > 10 && percent <= 50) {
-			barsRotationAngleX = scale(percent, 11, 50, Math.PI / 6, 0);
-		} else if (percent > 50 && percent <= 80) {
-			barsRotationAngleX = 0;
-		} else {
-			barsRotationAngleX = scale(percent, 81, 100, 0, -Math.PI / 6);
-		}
-		for (let i = 0; i < bars.length; i++) {
-			if (bars[i].rotation.x != barsRotationAngleX) {
+	let windowY;
+	if (currentWindowY != undefined) {
+		windowY = currentWindowY;
+	} else {
+		windowY = undefined;
+	}
+	currentWindowY = window.scrollY;
+
+	if(currentWindowY != windowY && windowY != undefined) {
+		if (currentWindowY >= canvasVisibleMin && currentWindowY <= canvasVisibleMax) {
+			const percent = Math.round(currentWindowY / canvasVisibleMax * 100);
+			let barsRotationAngleX;
+			if (percent > 10 && percent <= 50) {
+				barsRotationAngleX = scale(percent, 11, 50, Math.PI / 6, 0);
+			} else if (percent > 50 && percent <= 80) {
+				barsRotationAngleX = 0;
+			} else {
+				barsRotationAngleX = scale(percent, 81, 100, 0, -Math.PI / 6);
+			}
+			for (let i = 0; i < bars.length; i++) {
 				bars[i].rotation.x = barsRotationAngleX;
 			}
 		}
