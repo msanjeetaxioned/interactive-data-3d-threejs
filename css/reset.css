@@ -94,11 +94,6 @@ sub {
 }
 
 /*for all*/
-body {
-  box-sizing: border-box;
-  font-family: sans-serif;
-}
-
 a {
   display: inline-block;
   text-decoration: none;
@@ -107,45 +102,4 @@ a {
 li {
   display: inline-block;
   list-style-type: none;
-}
-
-/* Common styling */
-.grey {
-  color: #666;
-}
-
-.cap {
-  text-transform: capitalize;
-}
-
-.up {
-  text-transform: uppercase;
-}
-
-.center {
-  text-align: center;
-}
-
-.bold {
-  font-weight: bold;
-}
-
-.transition {
-  transition: 1s all ease;
-}
-
-/*for wrapper*/
-.wrapper {
-  max-width: 1350px;
-  width: 86%;
-  margin: 0 auto;
-}
-
-/*kill the transitions on any descendant elements of .notransition*/
-.notransition * {
-  -webkit-transition: none !important;
-  -moz-transition: none !important;
-  -o-transition: none !important;
-  -ms-transition: none !important;
-  transition: none !important;
 }
