@@ -17,6 +17,9 @@ canvas = wrapperInteractiveData.querySelector("canvas");
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.85) / (window.innerHeight * 2) , 1, 1000);
 
+const holder = new THREE.Group();
+scene.add(holder);
+
 let movementX = 0,
 	currentMovementX = 1,
 	mouseXCanvas = 0,
@@ -55,12 +58,12 @@ const observer = new IntersectionObserver(handleIntersect, options);
 observer.observe(canvas);
 
 // const axesHelper = new THREE.AxesHelper(15);
-// scene.add(axesHelper);
+// holder.add(axesHelper);
 
 // const orbit = new THREE.OrbitControls(camera, renderer.domElement);
 
 const light = new THREE.AmbientLight(0xffffff, 0.5); // dim white light
-scene.add(light);
+holder.add(light);
 
 const directionalLight1 = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight1.position.set(1, 0, 0);
@@ -109,7 +112,7 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 			bars[i] = new THREE.Mesh(geometryBar, materialBar);
 			bars[i].position.x = xPos;
 			bars[i].rotation.y = Math.PI / 4;
-			scene.add(bars[i]);
+			holder.add(bars[i]);
 			xPos = xPos + 6;
 		}
 		firstTime = false;
@@ -249,12 +252,19 @@ const setRotationAngleOfBarsBasedOnScrollPosition = () => {
 	}
 }
 
+// For tilting graph based on left-right position of mouse cursor
+const tiltGraphBasedOnMouseXPosition = () => {
+	const percent = Math.round(mouseXCanvas / canvas.getBoundingClientRect().width * 100);
+	// Tilts graph by 5 degrees both directions based on mouse x position
+	holder.rotation.y = scale(percent, 0, 100, 0.087266463, -0.087266463);
+}
+
 const animate = () => {
 	requestAnimationFrame(animate);
 	raycaster.setFromCamera(mouse, camera);
 
 	// calculate objects intersecting the picking ray
-	const intersects = raycaster.intersectObjects(scene.children);
+	const intersects = raycaster.intersectObjects(holder.children);
 
 	if (intersects.length == 2) {
 		for (let i = 0; i < bars.length; i++) {
@@ -264,9 +274,7 @@ const animate = () => {
 		}
 	}
 	setRotationAngleOfBarsBasedOnScrollPosition();
-
-	// For tilting graph based on left-right position of mouse cursor
-	// const percent = Math.round(mouseXCanvas / canvas.getBoundingClientRect().width * 100);
+	tiltGraphBasedOnMouseXPosition();
 	renderer.render(scene, camera);
 }
 animate();
