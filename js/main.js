@@ -152,7 +152,7 @@ nextGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, 1));
 calculateBarsHeightAndAddThemInScene();
 
 camera.lookAt(new THREE.Vector3(0, 0, 0));
-camera.position.y = -7;
+camera.position.y = 0;
 camera.position.z = 70;
 // orbit.update();
 
