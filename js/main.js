@@ -10,12 +10,12 @@ let canvas;
 
 // Setting up Scene, Camera & Renderer
 const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(window.innerWidth * 0.85, window.innerHeight * 2);
+renderer.setSize(window.innerWidth * 0.85, window.innerHeight * 1.5);
 wrapperInteractiveData.insertBefore(renderer.domElement, wrapperInteractiveData.children[1]);
 canvas = wrapperInteractiveData.querySelector("canvas");
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.85) / (window.innerHeight * 2) , 1, 1000);
+const camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.85) / (window.innerHeight * 1.5) , 1, 1000);
 
 let movementX = 0,
 	currentMovementX = 1,
@@ -153,7 +153,7 @@ calculateBarsHeightAndAddThemInScene();
 
 camera.lookAt(new THREE.Vector3(0, 0, 0));
 camera.position.y = 0;
-camera.position.z = 70;
+camera.position.z = 55;
 // orbit.update();
 
 let rotationTl = [], currentRotationSpeedAndDirectionOfBars = [];
