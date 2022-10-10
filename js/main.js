@@ -241,11 +241,9 @@ const setRotationAngleOfBarsBasedOnScrollPosition = () => {
 	if (currentWindowY != windowY && windowY != undefined) {
 		if (currentWindowY >= 0 && currentWindowY <= canvasVisibleMax) {
 			const percent = Math.round(currentWindowY / canvasVisibleMax * 100);
-			// console.log(percent);
 			if (percent >= 25 && percent <= 90) {
 				camera.position.y = scale(percent, 25, 90, 18, -9);
 				camera.lookAt(0, 0, 0);
-				// console.log(camera.position.y);
 			}
 		}
 	}
