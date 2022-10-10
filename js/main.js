@@ -70,11 +70,16 @@ directionalLight1.position.set(1, 0, 0);
 scene.add(directionalLight1);
 
 const graphs = [
-	[0.1, 10, 22.2, 48, 19.7],
+	[0.9, 7.8, 22.5, 50.3, 18.5],
 	[2.4, 18, 31.4, 38, 10.4],
-	[30, 25, 10, 5, 30]
+	[0.1, 10, 22.2, 48, 19.6],
+	[1.1, 16.9, 30.4, 41, 10.6],
+	[0.7, 10.5, 28.2, 48.4, 12.2],
+	[0.4, 5.9, 17.8, 57.6, 18.3]
 ];
-const graphNames = ["marketing", "writing", "engineering"];
+const graphNames = ["product", "writing", "marketing", "social", "design", "engineering"];
+const graphXAxis = ["<10", "10-20", "20-30", "30-40", "40+"];
+const graphXTitle = "hours worked per week";
 let firstTime = true;
 let currentGraph = 1;
 
@@ -146,7 +151,7 @@ const prevOrNextButtonClick = (prevOrNext) => {
 	}
 	calculateBarsHeightAndAddThemInScene(prevGraph);
 	graphNameH3.innerText = graphNames[currentGraph - 1];
-	graphNumSpan.innerText = currentGraph + " of 3";
+	graphNumSpan.innerText = currentGraph + " of " + graphs.length;
 }
 
 prevGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, -1));
