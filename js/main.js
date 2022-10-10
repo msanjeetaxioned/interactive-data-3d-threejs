@@ -9,13 +9,13 @@ const graphNumSpan = changeGraphButtonsDiv.querySelector(".graph-info > span");
 let canvas;
 
 // Setting up Scene, Camera & Renderer
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
-
 const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(window.innerWidth * 0.85, window.innerHeight * 0.85);
+renderer.setSize(window.innerWidth * 0.85, window.innerHeight * 2);
 wrapperInteractiveData.insertBefore(renderer.domElement, wrapperInteractiveData.children[1]);
 canvas = wrapperInteractiveData.querySelector("canvas");
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.85) / (window.innerHeight * 2) , 1, 1000);
 
 let movementX = 0,
 	currentMovementX = 1,
@@ -152,8 +152,8 @@ nextGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, 1));
 calculateBarsHeightAndAddThemInScene();
 
 camera.lookAt(new THREE.Vector3(0, 0, 0));
-camera.position.y = 7;
-camera.position.z = 30;
+camera.position.y = -7;
+camera.position.z = 70;
 // orbit.update();
 
 let rotationTl = [], currentRotationSpeedAndDirectionOfBars = [];
@@ -225,7 +225,7 @@ const scale = (number, inMin, inMax, outMin, outMax) => {
 
 const canvasDistanceFromTop = window.pageYOffset + canvas.getBoundingClientRect().top;
 const canvasVisibleMin =  canvasDistanceFromTop - window.innerHeight;
-const canvasVisibleMax = canvasVisibleMin + canvas.getBoundingClientRect().height * 2;
+const canvasVisibleMax = canvasVisibleMin + canvas.getBoundingClientRect().height;
 let currentWindowY = undefined;
 
 // Sets Vertical rotation of bars based on scroll position 
@@ -236,14 +236,16 @@ const setRotationAngleOfBarsBasedOnScrollPosition = () => {
 	} else {
 		windowY = undefined;
 	}
-	currentWindowY = window.scrollY;
+	currentWindowY = window.scrollY - canvasVisibleMin;
 
-	if(currentWindowY != windowY && windowY != undefined) {
-		if (currentWindowY >= canvasVisibleMin && currentWindowY <= canvasVisibleMax) {
+	if (currentWindowY != windowY && windowY != undefined) {
+		if (currentWindowY >= 0 && currentWindowY <= canvasVisibleMax) {
 			const percent = Math.round(currentWindowY / canvasVisibleMax * 100);
-			const barsRotationAngleX = scale(percent, 0, 100, Math.PI / 8, -Math.PI / 8);
-			for (let i = 0; i < bars.length; i++) {
-				bars[i].rotation.x = barsRotationAngleX;
+			// console.log(percent);
+			if (percent >= 25 && percent <= 90) {
+				camera.position.y = scale(percent, 25, 90, 18, -9);
+				camera.lookAt(0, 0, 0);
+				// console.log(camera.position.y);
 			}
 		}
 	}
