@@ -1,9 +1,11 @@
 const wrapperInteractiveData = document.querySelector(".interactive-data-section > .wrapper");
 const canvasContainer = wrapperInteractiveData.querySelector(".canvas-container");
 
-// const changeGraphButtonsDiv = wrapperInteractiveData.querySelector(".change-graph-buttons");
-// const prevGraphButton = changeGraphButtonsDiv.querySelector(".previous-button");
-// const nextGraphButton = changeGraphButtonsDiv.querySelector(".next-button");
+const prevGraphButton = canvasContainer.querySelector(".previous-button");
+const nextGraphButton = canvasContainer.querySelector(".next-button");
+
+const graphNamesUl = canvasContainer.querySelector(".graph-names");
+const graphNamesLis = graphNamesUl.querySelectorAll("li");
 // const graphNameH3 = changeGraphButtonsDiv.querySelector(".graph-info > h3");
 // const graphNumSpan = changeGraphButtonsDiv.querySelector(".graph-info > span");
 
@@ -137,6 +139,30 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 	}
 }
 
+const changeGraphNameWithSlideAnimation = (prevGraph) => {
+	graphNamesLis[prevGraph - 1].classList.remove("active");
+	graphNamesLis[currentGraph - 1].classList.add("active");
+	let graphNamesX = [];
+	for (let i = 0; i < graphNamesLis.length; i++) {
+		if(i > 0) {
+			graphNamesX[i] = graphNamesLis[i-1].offsetLeft - graphNamesLis[i].offsetLeft;
+		}
+	}
+	let x = "-100%";
+	for (let j = 0; j < graphNamesLis.length; j++) {
+		if (j > 0) {
+			x = graphNamesX[j];
+		}
+		const tween = gsap.to(graphNamesLis[j], {x: x, duration: 1});
+		if(j == (graphNamesLis.length - 1)) {
+			const timer = setTimeout(() => {
+				clearTimeout(timer);
+				graphNamesUl.append(graphNamesUl.children[0]);
+			}, 1100)
+		}
+	}
+}
+
 const prevOrNextButtonClick = (prevOrNext) => {
 	const prevGraph = currentGraph;
 	if (currentGraph == graphs.length && prevOrNext == 1) {
@@ -147,13 +173,16 @@ const prevOrNextButtonClick = (prevOrNext) => {
 	else {
 		currentGraph += prevOrNext;
 	}
+	if(prevOrNext == 1) {
+		changeGraphNameWithSlideAnimation(prevGraph);
+	}
 	calculateBarsHeightAndAddThemInScene(prevGraph);
 	// graphNameH3.innerText = graphNames[currentGraph - 1];
 	// graphNumSpan.innerText = currentGraph + " of " + graphs.length;
 }
 
-// prevGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, -1));
-// nextGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, 1));
+prevGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, -1));
+nextGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, 1));
 
 calculateBarsHeightAndAddThemInScene();
 
