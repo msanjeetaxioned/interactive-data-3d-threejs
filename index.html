@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>3D Interactive Data using Threejs</title>
 	<link href="https://fonts.cdnfonts.com/css/caraque-trial" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" href="css/style.css">
 </head>
@@ -14,13 +15,51 @@
 	<section class="interactive-data-section">
 		<div class="wrapper">
 			<h2>3D interactive graphs</h2>
-			<div class="change-graph-buttons">
-				<button class="previous-button" type="button">previous</button>
-				<div class="graph-info">
-					<h3>marketing</h3>
-					<span>1 of 3</span>
+			<div class="canvas-container">
+				<div class="graph-info-and-buttons">
+					<ul class="graph-x-name">
+						<li>
+							<span>&lt;10</span>
+						</li>
+						<li>
+							<span>10 - 20</span>
+						</li>
+						<li>
+							<span>20 - 30</span>
+						</li>
+						<li>
+							<span>30 - 40</span>
+						</li>
+						<li>
+							<span>40+</span>
+						</li>
+					</ul>
+					<span>hours worked per week</span>
+					<div class="graph-names-container">
+						<ul class="graph-names">
+							<li>
+								<span>product</span>
+							</li>
+							<li>
+								<span>writing</span>
+							</li>
+							<li class="active">
+								<span>marketing</span>
+							</li>
+							<li>
+								<span>social</span>
+							</li>
+							<li>
+								<span>design</span>
+							</li>
+							<li class="hidden">
+								<span>engineering</span>
+							</li>
+						</ul>
+						<button class="previous-button button">previous</button>
+						<button class="next-button button">next</button>
+					</div>
 				</div>
-				<button class="next-button" type="button">next</button>
 			</div>
 		</div>
 	</section>

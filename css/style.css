@@ -29,7 +29,140 @@ section {
   min-height: 100vh;
   background-color: #000;
 }
+.interactive-data-section .canvas-container {
+  position: relative;
+}
 
+.graph-info-and-buttons {
+  width: 100%;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.graph-info-and-buttons > span {
+  margin-bottom: 20px;
+  display: block;
+  color: #626262;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.graph-x-name {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+.graph-x-name li {
+  margin-right: 6%;
+}
+.graph-x-name li:last-child {
+  margin-right: 0;
+}
+.graph-x-name span {
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.graph-names-container {
+  height: 50px;
+  position: relative;
+}
+.graph-names-container .button {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  background-color: #fff;
+  color: #000;
+  font-size: 0;
+  font-weight: bold;
+  text-transform: capitalize;
+  transition: background-color 1s ease-in-out;
+}
+.graph-names-container .button.previous-button {
+  top: 0;
+  left: 35%;
+}
+.graph-names-container .button.previous-button::after {
+  content: "\f060";
+  font-family: "Font Awesome 6 Free";
+  font-size: 24px;
+  font-weight: 900;
+}
+.graph-names-container .button.next-button {
+  top: 0;
+  left: 65%;
+}
+.graph-names-container .button.next-button::after {
+  content: "\f061";
+  font-family: "Font Awesome 6 Free";
+  font-size: 24px;
+  font-weight: 900;
+}
+.graph-names-container .button:hover {
+  background-color: orangered;
+  cursor: pointer;
+}
+
+.graph-names {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.graph-names li span {
+  color: #626262;
+  font-size: 28px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.graph-names li.active {
+  margin: 0 7%;
+}
+.graph-names li.active span {
+  color: #fff;
+  font-size: 38px;
+}
+.graph-names li.hidden {
+  display: none;
+}
+.graph-names .active + li {
+  margin-left: 0;
+}
+
+.previous-button svg {
+  display: block;
+  width: 50px;
+  height: 50px;
+}
+.previous-button:hover circle {
+  animation: draw1 0.75s linear forwards;
+}
+.previous-button span {
+  font-size: 0;
+}
+
+@keyframes draw1 {
+  0% {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 700;
+    stroke-width: 1px;
+  }
+  75% {
+    stroke-dasharray: 900;
+    stroke-width: 1px;
+  }
+  100% {
+    stroke-dasharray: 900;
+    stroke-width: 1px;
+  }
+}
 .section3 {
   background-color: darkturquoise;
 }
@@ -41,42 +174,4 @@ h2 {
   font-weight: 700;
   text-align: center;
   text-transform: capitalize;
-}
-
-.change-graph-buttons {
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-}
-.change-graph-buttons button {
-  padding: 12px 35px;
-  border: none;
-  border-radius: 25px;
-  display: inline-block;
-  background-color: #fff;
-  color: #000;
-  font-size: 24px;
-  font-weight: bold;
-  text-transform: capitalize;
-  transition: background-color 1s ease-in-out;
-}
-.change-graph-buttons button:hover {
-  background-color: orangered;
-  cursor: pointer;
-}
-.change-graph-buttons .graph-info {
-  width: 100px;
-  margin: 0 40px;
-  color: #fff;
-}
-.change-graph-buttons .graph-info h3 {
-  font-size: 20px;
-  font-weight: bold;
-  text-transform: capitalize;
-}
-.change-graph-buttons .graph-info span {
-  margin-top: 10px;
-  display: inline-block;
-  font-size: 16px;
 }

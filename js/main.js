@@ -1,17 +1,18 @@
 const wrapperInteractiveData = document.querySelector(".interactive-data-section > .wrapper");
+const canvasContainer = wrapperInteractiveData.querySelector(".canvas-container");
 
-const changeGraphButtonsDiv = wrapperInteractiveData.querySelector(".change-graph-buttons");
-const prevGraphButton = changeGraphButtonsDiv.querySelector(".previous-button");
-const nextGraphButton = changeGraphButtonsDiv.querySelector(".next-button");
-const graphNameH3 = changeGraphButtonsDiv.querySelector(".graph-info > h3");
-const graphNumSpan = changeGraphButtonsDiv.querySelector(".graph-info > span");
+// const changeGraphButtonsDiv = wrapperInteractiveData.querySelector(".change-graph-buttons");
+// const prevGraphButton = changeGraphButtonsDiv.querySelector(".previous-button");
+// const nextGraphButton = changeGraphButtonsDiv.querySelector(".next-button");
+// const graphNameH3 = changeGraphButtonsDiv.querySelector(".graph-info > h3");
+// const graphNumSpan = changeGraphButtonsDiv.querySelector(".graph-info > span");
 
 let canvas;
 
 // Setting up Scene, Camera & Renderer
 const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth * 0.85, window.innerHeight * 1.5);
-wrapperInteractiveData.insertBefore(renderer.domElement, wrapperInteractiveData.children[1]);
+canvasContainer.insertBefore(renderer.domElement, canvasContainer.children[0]);
 canvas = wrapperInteractiveData.querySelector("canvas");
 
 const scene = new THREE.Scene();
@@ -77,11 +78,8 @@ const graphs = [
 	[0.7, 10.5, 28.2, 48.4, 12.2],
 	[0.4, 5.9, 17.8, 57.6, 18.3]
 ];
-const graphNames = ["product", "writing", "marketing", "social", "design", "engineering"];
-const graphXAxis = ["<10", "10-20", "20-30", "30-40", "40+"];
-const graphXTitle = "hours worked per week";
 let firstTime = true;
-let currentGraph = 1;
+let currentGraph = 3;
 
 let bars = [];
 
@@ -150,12 +148,12 @@ const prevOrNextButtonClick = (prevOrNext) => {
 		currentGraph += prevOrNext;
 	}
 	calculateBarsHeightAndAddThemInScene(prevGraph);
-	graphNameH3.innerText = graphNames[currentGraph - 1];
-	graphNumSpan.innerText = currentGraph + " of " + graphs.length;
+	// graphNameH3.innerText = graphNames[currentGraph - 1];
+	// graphNumSpan.innerText = currentGraph + " of " + graphs.length;
 }
 
-prevGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, -1));
-nextGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, 1));
+// prevGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, -1));
+// nextGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, 1));
 
 calculateBarsHeightAndAddThemInScene();
 
