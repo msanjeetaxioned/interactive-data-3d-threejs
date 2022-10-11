@@ -46,20 +46,16 @@ prevGraphButton.addEventListener("mouseout", (e) => e.target.classList.add("reve
 nextGraphButton.addEventListener("mouseout", (e) => e.target.classList.add("reverseSpin"));
 
 // Setting up Scene, Camera & Renderer
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45,
-  window.innerWidth / window.innerHeight,
-  1,
-  1000
-);
-
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth * 0.85, window.innerHeight * 0.85);
-wrapperInteractiveData.insertBefore(
-  renderer.domElement,
-  wrapperInteractiveData.children[2]
-);
+const renderer = new THREE.WebGLRenderer({antialias: true});
+renderer.setSize(window.innerWidth * 0.85, window.innerHeight * 1.5);
+wrapperInteractiveData.insertBefore(renderer.domElement, wrapperInteractiveData.children[1]);
 canvas = wrapperInteractiveData.querySelector("canvas");
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.85) / (window.innerHeight * 1.5) , 1, 1000);
+
+const holder = new THREE.Group();
+scene.add(holder);
 
 let movementX = 0,
   currentMovementX = 1,
@@ -99,12 +95,12 @@ const observer = new IntersectionObserver(handleIntersect, options);
 observer.observe(canvas);
 
 // const axesHelper = new THREE.AxesHelper(15);
-// scene.add(axesHelper);
+// holder.add(axesHelper);
 
 // const orbit = new THREE.OrbitControls(camera, renderer.domElement);
 
 const light = new THREE.AmbientLight(0xffffff, 0.5); // dim white light
-scene.add(light);
+holder.add(light);
 
 const directionalLight1 = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight1.position.set(1, 0, 0);
@@ -164,7 +160,7 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
       bars[i] = new THREE.Mesh(geometryBar, materialBar);
       bars[i].position.x = xPos;
       bars[i].rotation.y = Math.PI / 4;
-      scene.add(bars[i]);
+      holder.add(bars[i]);
       xPos = xPos + 6;
     }
     firstTime = false;
@@ -216,8 +212,8 @@ nextGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, 1));
 calculateBarsHeightAndAddThemInScene();
 
 camera.lookAt(new THREE.Vector3(0, 0, 0));
-camera.position.y = 7;
-camera.position.z = 30;
+camera.position.y = 0;
+camera.position.z = 55;
 // orbit.update();
 
 let rotationTl = [],
@@ -328,67 +324,55 @@ const scale = (number, inMin, inMax, outMin, outMax) => {
   return ((number - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
 };
 
-const canvasDistanceFromTop =
-  window.pageYOffset + canvas.getBoundingClientRect().top;
-const canvasVisibleMin = canvasDistanceFromTop - window.innerHeight;
-const canvasVisibleMax =
-  canvasVisibleMin + canvas.getBoundingClientRect().height * 2;
+const canvasDistanceFromTop = window.pageYOffset + canvas.getBoundingClientRect().top;
+const canvasVisibleMin =  canvasDistanceFromTop - window.innerHeight;
+const canvasVisibleMax = canvasVisibleMin + canvas.getBoundingClientRect().height;
 let currentWindowY = undefined;
 
 // Sets Vertical rotation of bars based on scroll position
 const setRotationAngleOfBarsBasedOnScrollPosition = () => {
-  let windowY;
-  if (currentWindowY != undefined) {
-    windowY = currentWindowY;
-  } else {
-    windowY = undefined;
-  }
-  currentWindowY = window.scrollY;
+	let windowY;
+	if (currentWindowY != undefined) {
+		windowY = currentWindowY;
+	} else {
+		windowY = undefined;
+	}
+	currentWindowY = window.scrollY - canvasVisibleMin;
 
-  if (currentWindowY != windowY && windowY != undefined) {
-    if (
-      currentWindowY >= canvasVisibleMin &&
-      currentWindowY <= canvasVisibleMax
-    ) {
-      const percent = Math.round((currentWindowY / canvasVisibleMax) * 100);
-      const barsRotationAngleX = scale(
-        percent,
-        0,
-        100,
-        Math.PI / 8,
-        -Math.PI / 8
-      );
-      for (let i = 0; i < bars.length; i++) {
-        bars[i].rotation.x = barsRotationAngleX;
-      }
-    }
-  }
-};
+	if (currentWindowY != windowY && windowY != undefined) {
+		if (currentWindowY >= 0 && currentWindowY <= canvasVisibleMax) {
+			const percent = Math.round(currentWindowY / canvasVisibleMax * 100);
+			if (percent >= 25 && percent <= 90) {
+				camera.position.y = scale(percent, 25, 90, 18, -9);
+				camera.lookAt(0, 0, 0);
+			}
+		}
+	}
+}
+
+// For tilting graph based on left-right position of mouse cursor
+const tiltGraphBasedOnMouseXPosition = () => {
+	const percent = Math.round(mouseXCanvas / canvas.getBoundingClientRect().width * 100);
+	// Tilts graph by 4 degrees both directions based on mouse x position
+	holder.rotation.y = scale(percent, 0, 100, 0.06981317, -0.06981317);
+}
 
 const animate = () => {
   requestAnimationFrame(animate);
   raycaster.setFromCamera(mouse, camera);
 
   // calculate objects intersecting the picking ray
-  const intersects = raycaster.intersectObjects(scene.children);
+  const intersects = raycaster.intersectObjects(holder.children);
 
-  if (intersects.length == 2) {
-    for (let i = 0; i < bars.length; i++) {
-      if (bars[i].uuid == intersects[0].object.uuid) {
-        rotateBar(
-          bars[i],
-          rotationTl[i],
-          currentRotationSpeedAndDirectionOfBars[i]
-        );
-      }
-    }
-  }
-  setRotationAngleOfBarsBasedOnScrollPosition();
-
-  // For tilting graph based on left-right position of mouse cursor
-  // const percent = Math.round(mouseXCanvas / canvas.getBoundingClientRect().width * 100);
-  renderer.render(scene, camera);
-};
+	if (intersects.length == 2) {
+		for (let i = 0; i < bars.length; i++) {
+			if (bars[i].uuid == intersects[0].object.uuid) {
+				rotateBar(bars[i], rotationTl[i], currentRotationSpeedAndDirectionOfBars[i]);
+			}
+		}
+	}
+	setRotationAngleOfBarsBasedOnScrollPosition();
+	tiltGraphBasedOnMouseXPosition();
+	renderer.render(scene, camera);
+}
 animate();
-
-
