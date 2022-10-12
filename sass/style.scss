@@ -1,5 +1,57 @@
 $primary-color: #fff;
 $secondary-color: #686767;
+$pc:1440px;
+$small-pc: 1280px;
+$ipad-pro:1024px;
+$ipad:768px;
+$large-mobile:425px;
+$med-mobile:375px;
+$small-mobile:320px;
+
+
+@mixin breakpoint($device) {
+  @if($device=='pc'){
+    @media screen and (max-width: $pc) {
+      @content;
+    }
+  }
+	@else if($device=='small-pc'){
+    @media screen and (max-width: $small-pc) {
+      @content;
+    }
+  } 
+  @else if($device=='ipad-pro') {
+    @media screen and (max-width: $ipad-pro) {
+      @content;
+    }
+  }
+  @else if($device=='ipad') {
+    @media screen and (max-width: $ipad) {
+      @content;
+    }
+  }
+  @else if($device=='large-mobile') {
+    @media screen and (max-width: $large-mobile) {
+      @content;
+    }
+  }
+  @else if($device=='med-mobile') {
+    @media screen and (max-width: $med-mobile) {
+      @content;
+    }
+  }
+  @else if($device=='small-mobile') {
+    @media screen and (max-width: $small-mobile) {
+      @content;
+    }
+  }
+  @else if($device=='min-ipad') {
+    @media screen and (min-width: $ipad) {
+      @content;
+    }
+  }
+}
+
 
 * {
 	font-family: 'Poppins', sans-serif; 
@@ -28,11 +80,19 @@ section {
 	background-image: url('../images/bg.jpg'); 
 	background-position: left 33rem center;
 
+	@include breakpoint(small-pc) {
+		background-position: left 17rem center;
+	}
+
 	.section-title {
 		font-size: 8.5rem;
 		font-weight: 500;
 		line-height: 1;
 		text-transform: uppercase;
+
+		@include breakpoint(small-pc) {
+			font-size: 7rem;
+		}
 
 		.thin { font-weight: 100; }
 	}
@@ -55,6 +115,14 @@ section {
 		text-align: center;
 		text-transform: uppercase;
 
+		@include breakpoint(pc) {
+			width: 60%;
+		}
+
+		@include breakpoint(small-pc) {
+			font-size: 7rem;
+		}
+
 		.thin { font-weight: 100; }
 	}
 
@@ -67,34 +135,48 @@ section {
 		font-size: 25px;
 		font-weight: 600;
 		text-align: center;
+
+		@include breakpoint(small-pc) {
+			font-size: 18px;
+		}
+	}
+
+	.canvas-info-container {
+		position: absolute;
+		top: 60%;
+		right: 0;
+		left: 0;
+
+		@include breakpoint(pc) { top: 61%; }
+		@include breakpoint(small-pc) { top: 59%; }
 	}
 
 	.graph-type-list {
-		width: 41.5%;
+		width: 43.3%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
-    bottom: 27.5rem;
-    left: 30%;
 
+		@include breakpoint(pc) { width: 48.3%; }
+		@include breakpoint(pc) { width: 54.3%; }
+   
 		&_item {
-			font-size: 25px;
-			font-weight: 500;	
+			flex-basis: calc(20% - 4.5rem);
+			font-size: 22px;
+			font-weight: 600;	
+			text-align: center;
+			@include breakpoint(pc) { flex-basis: calc(20% - 3rem); }
 		}
 	}
 
 	.graph-title {
+		padding: 1.5rem 0;
 		font-size: 16px;
 		font-weight: 600;
 		color: $secondary-color;
 		text-align: center;
 		text-transform: uppercase;
-		position: absolute;
-    right: 0;
-    left: 0;
-    bottom: 24rem
 	}
 
 	.graph-category-list {
@@ -106,14 +188,11 @@ section {
 			color: $secondary-color;
 			font-size: 35px;
 			font-weight: bold;
-			text-transform: capitalize;
+			text-transform: uppercase;
 			text-align: center;
 			transition: 1s ease-in-out;
 
-			&.active {
-				color: $primary-color;
-				// font-size: 45px;
-			}
+			&.active { color: $primary-color; }
 		}
 		
 	}
@@ -125,7 +204,7 @@ section {
 		position: absolute;
 		left: 0;
 		right: 0;
-		bottom: 300px;
+		bottom: 11.5rem;
 		text-align: center;
 	
 		button {
@@ -140,8 +219,16 @@ section {
 			&:hover { animation: borderSpin 1s ease-in; }
 		}
 	
-		.next-button { right: 39%; }
-		.previous-button { left: 39%; }
+		.next-button { 
+			right: 39%; 
+			@include breakpoint(pc) { right: 37.5%; }
+			@include breakpoint(pc) { right: 32.5%; }
+		}
+		.previous-button {
+			left: 39%; 
+			@include breakpoint(pc) { left: 37.5%; }
+			@include breakpoint(pc) { left: 32.5%; }
+		}
 	
 		.next-button::before {
 			content: "\f061";
@@ -167,7 +254,7 @@ section {
 		padding: 20px 45px;
 		border: 2px solid #ff62aa;
 		border-radius: 45px;
-		margin: 3rem auto 0;
+		margin: 4rem auto 0;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;

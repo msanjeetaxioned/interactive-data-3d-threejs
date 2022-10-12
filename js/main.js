@@ -14,7 +14,7 @@ $(".graph-category-list").slick({
 	easing: 'ease-in',
   responsive: [
     {
-      breakpoint: 768,
+      breakpoint: 1300,
       settings: {
         arrows: false,
         centerMode: true,
@@ -48,7 +48,7 @@ nextGraphButton.addEventListener("mouseout", (e) => e.target.classList.add("reve
 // Setting up Scene, Camera & Renderer
 const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth * 0.85, window.innerHeight * 1.5);
-wrapperInteractiveData.insertBefore(renderer.domElement, wrapperInteractiveData.children[1]);
+wrapperInteractiveData.insertBefore(renderer.domElement, wrapperInteractiveData.children[2]);
 canvas = wrapperInteractiveData.querySelector("canvas");
 
 const scene = new THREE.Scene();
@@ -202,8 +202,6 @@ const prevOrNextButtonClick = (prevOrNext) => {
     currentGraph += prevOrNext;
   }
   calculateBarsHeightAndAddThemInScene(prevGraph);
-  // graphNameH3.innerText = graphNames[currentGraph - 1];
-  // graphNumSpan.innerText = currentGraph + " of 3";
 };
 
 prevGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, -1));

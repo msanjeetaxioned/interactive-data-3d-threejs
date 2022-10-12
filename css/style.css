@@ -25,11 +25,21 @@ section {
   background-image: url("../images/bg.jpg");
   background-position: left 33rem center;
 }
+@media screen and (max-width: 1280px) {
+  .section1 {
+    background-position: left 17rem center;
+  }
+}
 .section1 .section-title {
   font-size: 8.5rem;
   font-weight: 500;
   line-height: 1;
   text-transform: uppercase;
+}
+@media screen and (max-width: 1280px) {
+  .section1 .section-title {
+    font-size: 7rem;
+  }
 }
 .section1 .section-title .thin {
   font-weight: 100;
@@ -55,6 +65,16 @@ section {
   text-align: center;
   text-transform: uppercase;
 }
+@media screen and (max-width: 1440px) {
+  .interactive-data-section .section-title {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 1280px) {
+  .interactive-data-section .section-title {
+    font-size: 7rem;
+  }
+}
 .interactive-data-section .section-title .thin {
   font-weight: 100;
 }
@@ -68,30 +88,62 @@ section {
   font-weight: 600;
   text-align: center;
 }
+@media screen and (max-width: 1280px) {
+  .interactive-data-section .section-info {
+    font-size: 18px;
+  }
+}
+.interactive-data-section .canvas-info-container {
+  position: absolute;
+  top: 60%;
+  right: 0;
+  left: 0;
+}
+@media screen and (max-width: 1440px) {
+  .interactive-data-section .canvas-info-container {
+    top: 61%;
+  }
+}
+@media screen and (max-width: 1280px) {
+  .interactive-data-section .canvas-info-container {
+    top: 59%;
+  }
+}
 .interactive-data-section .graph-type-list {
-  width: 41.5%;
+  width: 43.3%;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: absolute;
-  bottom: 27.5rem;
-  left: 30%;
+}
+@media screen and (max-width: 1440px) {
+  .interactive-data-section .graph-type-list {
+    width: 48.3%;
+  }
+}
+@media screen and (max-width: 1440px) {
+  .interactive-data-section .graph-type-list {
+    width: 54.3%;
+  }
 }
 .interactive-data-section .graph-type-list_item {
-  font-size: 25px;
-  font-weight: 500;
+  flex-basis: calc(20% - 4.5rem);
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+}
+@media screen and (max-width: 1440px) {
+  .interactive-data-section .graph-type-list_item {
+    flex-basis: calc(20% - 3rem);
+  }
 }
 .interactive-data-section .graph-title {
+  padding: 1.5rem 0;
   font-size: 16px;
   font-weight: 600;
   color: #686767;
   text-align: center;
   text-transform: uppercase;
-  position: absolute;
-  right: 0;
-  left: 0;
-  bottom: 24rem;
 }
 .interactive-data-section .graph-category-list {
   margin: 0 auto;
@@ -102,7 +154,7 @@ section {
   color: #686767;
   font-size: 35px;
   font-weight: bold;
-  text-transform: capitalize;
+  text-transform: uppercase;
   text-align: center;
   transition: 1s ease-in-out;
 }
@@ -116,7 +168,7 @@ section {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 300px;
+  bottom: 11.5rem;
   text-align: center;
 }
 .interactive-data-section .change-graph-buttons button {
@@ -135,8 +187,28 @@ section {
 .interactive-data-section .change-graph-buttons .next-button {
   right: 39%;
 }
+@media screen and (max-width: 1440px) {
+  .interactive-data-section .change-graph-buttons .next-button {
+    right: 37.5%;
+  }
+}
+@media screen and (max-width: 1440px) {
+  .interactive-data-section .change-graph-buttons .next-button {
+    right: 32.5%;
+  }
+}
 .interactive-data-section .change-graph-buttons .previous-button {
   left: 39%;
+}
+@media screen and (max-width: 1440px) {
+  .interactive-data-section .change-graph-buttons .previous-button {
+    left: 37.5%;
+  }
+}
+@media screen and (max-width: 1440px) {
+  .interactive-data-section .change-graph-buttons .previous-button {
+    left: 32.5%;
+  }
 }
 .interactive-data-section .change-graph-buttons .next-button::before {
   content: "\f061";
@@ -159,7 +231,7 @@ section {
   padding: 20px 45px;
   border: 2px solid #ff62aa;
   border-radius: 45px;
-  margin: 3rem auto 0;
+  margin: 4rem auto 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
