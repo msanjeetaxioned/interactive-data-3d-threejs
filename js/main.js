@@ -298,15 +298,19 @@ const tiltGraphBasedOnMouseXPosition = () => {
 }
 
 const playCounterAnimation = (spanClassName, counterMaxValue, counterDuration) => {
+	const span = canvasContainer.querySelector(spanClassName);
+	let counterMinValue = 0;
+	if (span.getAttribute("data-counter-value")) {
+		counterMinValue = parseFloat(span.getAttribute("data-counter-value"));
+	}
+
 	const timerInterval = 40;
 	const step = counterDuration / timerInterval;
 
 	let counterIncrement;
-	let counterValue = 0;
+	let counterValue = counterMinValue;
 
-	counterIncrement = parseFloat(counterMaxValue / step);
-
-	const span = canvasContainer.querySelector(spanClassName);
+	counterIncrement = parseFloat(( counterMaxValue - counterMinValue) / step);
 
 	let i = 1; 
 	const interval = setInterval(() => {
@@ -315,6 +319,7 @@ const playCounterAnimation = (spanClassName, counterMaxValue, counterDuration) =
 			span.innerText = Math.round(counterValue * 100) / 100 + "%";
 			++i;
 		} else {
+			span.setAttribute("data-counter-value", counterMaxValue);
 			clearInterval(interval);
 		}
 	}, timerInterval);
@@ -331,7 +336,7 @@ function appendValuesToGraph(i, counterDuration) {
 	const y = vector.y - 70;
 
 	let span = canvasContainer.querySelector(".graph-value-" + (i+1));
-	if(!span) {
+	if (!span) {
 		span = document.createElement("span");
 	}
 	
@@ -340,7 +345,7 @@ function appendValuesToGraph(i, counterDuration) {
 	span.innerText = 0 + "%";
 	span.style.top = y + "px";
 	span.style.left = x + "px";
-	if(!canvasContainer.querySelector(".graph-value-" + (i+1))) {
+	if (!canvasContainer.querySelector(".graph-value-" + (i+1))) {
 		canvasContainer.append(span);
 	}
 	playCounterAnimation(".graph-value-" + (i+1), graphs[currentGraph - 1][i], counterDuration);
