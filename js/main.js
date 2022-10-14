@@ -123,24 +123,25 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 			holder.add(bars[i]);
 			xPos = xPos + 6;
 		}
-		const timer = setTimeout(() => {
-			clearTimeout(timer);
-			appendValuesToGraph();
-		}, 500);
 		firstTime = false;
 	} else {
-		for (let i = 0; i < graph.length; i++) {
-			const currentBarHeight = graph[i] / maxValue * barMaxHeight;
-			barsHeight[i] = currentBarHeight;
-			let newY;
-
-			if (prevGraphNum == undefined) {
-				newY = barsHeight[i] / 0.1 * bars[i].scale.y;
-				gsap.to(bars[i].scale, {y: newY, duration: 2, ease: "power2.out"});
-			} else {
-				const prevGraphArr = graphs[prevGraphNum - 1];
-				newY = graph[i] / prevGraphArr[i] * bars[i].scale.y;
-				gsap.to(bars[i].scale, {y: newY, duration: 1.5, ease: "power2.out"});
+		if (!valuesAppended) {
+			for (let i = 0; i < graph.length; i++) {
+				valuesAppended = true;
+				const currentBarHeight = graph[i] / maxValue * barMaxHeight;
+				barsHeight[i] = currentBarHeight;
+				let newY;
+	
+				if (prevGraphNum == undefined) {
+					newY = barsHeight[i] / 0.1 * bars[i].scale.y;
+					appendValuesToGraph(i, 2000);
+					gsap.to(bars[i].scale, {y: newY, duration: 2, ease: "power2.out"});
+				} else {
+					const prevGraphArr = graphs[prevGraphNum - 1];
+					newY = graph[i] / prevGraphArr[i] * bars[i].scale.y;
+					appendValuesToGraph(i, 1600);
+					gsap.to(bars[i].scale, {y: newY, duration: 1.6, ease: "power2.out"});
+				}
 			}
 		}
 	}
@@ -171,22 +172,19 @@ const changeGraphNameWithSlideAnimation = (prevGraph) => {
 }
 
 const prevOrNextButtonClick = (prevOrNext) => {
-	console.log("prevOrNextButtonClick");
+	valuesAppended = false;
 	const prevGraph = currentGraph;
 	if (currentGraph == graphs.length && prevOrNext == 1) {
 		currentGraph = 1;
 	} else if (currentGraph == 1 && prevOrNext == -1) {
 		currentGraph = graphs.length;
-	}
-	else {
+	} else {
 		currentGraph += prevOrNext;
 	}
 	if (prevOrNext == 1) {
 		changeGraphNameWithSlideAnimation(prevGraph);
 	}
 	calculateBarsHeightAndAddThemInScene(prevGraph);
-	// graphNameH3.innerText = graphNames[currentGraph - 1];
-	// graphNumSpan.innerText = currentGraph + " of " + graphs.length;
 }
 
 prevGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, -1));
@@ -299,26 +297,53 @@ const tiltGraphBasedOnMouseXPosition = () => {
 	holder.rotation.y = scale(percent, 0, 100, 0.06981317, -0.06981317);
 }
 
-function appendValuesToGraph() {
-	if(!valuesAppended) {
-		for (let i = 0; i < bars.length; i++) {
-			valuesAppended = true;
-			const vector = new THREE.Vector3(bars[i].position.x - bars[i].geometry.parameters.width / 2, bars[i].position.y + barsHeight[i], bars[i].position.z);
-			vector.project(camera);
-			vector.x = (vector.x + 1) * canvas.getBoundingClientRect().width / 2;
-			vector.y =  - (vector.y - 1) * canvas.getBoundingClientRect().height / 2;
-	
-			let x = vector.x;
-			let y = vector.y - 70;
-	
-			const span = document.createElement("span");
-			span.classList.add("graph-value");
-			span.innerText = graphs[currentGraph - 1][i] + "%";
-			span.style.top = y + "px";
-			span.style.left = x + "px";
-			canvasContainer.append(span);
+const playCounterAnimation = (spanClassName, counterMaxValue, counterDuration) => {
+	const timerInterval = 40;
+	const step = counterDuration / timerInterval;
+
+	let counterIncrement;
+	let counterValue = 0;
+
+	counterIncrement = parseFloat(counterMaxValue / step);
+
+	const span = canvasContainer.querySelector(spanClassName);
+
+	let i = 1; 
+	const interval = setInterval(() => {
+		if (i <= step) {
+			counterValue += counterIncrement;
+			span.innerText = Math.round(counterValue * 100) / 100 + "%";
+			++i;
+		} else {
+			clearInterval(interval);
 		}
+	}, timerInterval);
+}
+
+// appends the graph values (Written as Normal function as it needs to get hoisted)
+function appendValuesToGraph(i, counterDuration) {
+	const vector = new THREE.Vector3(bars[i].position.x - bars[i].geometry.parameters.width / 2, bars[i].position.y + barsHeight[i], bars[i].position.z);
+	vector.project(camera);
+	vector.x = (vector.x + 1) * canvas.getBoundingClientRect().width / 2;
+	vector.y =  - (vector.y - 1) * canvas.getBoundingClientRect().height / 2;
+
+	const x = vector.x;
+	const y = vector.y - 70;
+
+	let span = canvasContainer.querySelector(".graph-value-" + (i+1));
+	if(!span) {
+		span = document.createElement("span");
 	}
+	
+	span.classList.add("graph-value");
+	span.classList.add("graph-value-" + (i+1));
+	span.innerText = 0 + "%";
+	span.style.top = y + "px";
+	span.style.left = x + "px";
+	if(!canvasContainer.querySelector(".graph-value-" + (i+1))) {
+		canvasContainer.append(span);
+	}
+	playCounterAnimation(".graph-value-" + (i+1), graphs[currentGraph - 1][i], counterDuration);
 }
 
 const animate = () => {
