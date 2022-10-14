@@ -86,6 +86,8 @@ let currentGraph = 3;
 let bars = [];
 let barsHeight = [];
 
+let valuesAppended = false;
+
 const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 	// Cubes
 	const graph = graphs[currentGraph - 1];
@@ -121,6 +123,10 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 			holder.add(bars[i]);
 			xPos = xPos + 6;
 		}
+		const timer = setTimeout(() => {
+			clearTimeout(timer);
+			appendValuesToGraph();
+		}, 500);
 		firstTime = false;
 	} else {
 		for (let i = 0; i < graph.length; i++) {
@@ -130,11 +136,11 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 
 			if (prevGraphNum == undefined) {
 				newY = barsHeight[i] / 0.1 * bars[i].scale.y;
-				gsap.to(bars[i].scale, {y: newY, duration: 2, ease: "power2.out", onComplete: appendValuesToGraph});
+				gsap.to(bars[i].scale, {y: newY, duration: 2, ease: "power2.out"});
 			} else {
 				const prevGraphArr = graphs[prevGraphNum - 1];
 				newY = graph[i] / prevGraphArr[i] * bars[i].scale.y;
-				gsap.to(bars[i].scale, {y: newY, duration: 1.5, ease: "power2.out", onComplete: appendValuesToGraph});
+				gsap.to(bars[i].scale, {y: newY, duration: 1.5, ease: "power2.out"});
 			}
 		}
 	}
@@ -293,9 +299,7 @@ const tiltGraphBasedOnMouseXPosition = () => {
 	holder.rotation.y = scale(percent, 0, 100, 0.06981317, -0.06981317);
 }
 
-let valuesAppended = false;
-
-const appendValuesToGraph = () => {
+function appendValuesToGraph() {
 	if(!valuesAppended) {
 		for (let i = 0; i < bars.length; i++) {
 			valuesAppended = true;
