@@ -30,6 +30,13 @@ section {
 	.canvas-container { position: relative; }
 }
 
+.graph-value {
+	position: absolute;
+	color: #fff;
+	font-size: 30px;
+	font-weight: bold;
+}
+
 .graph-info-and-buttons {
 	width: 100%;
 	position: absolute;

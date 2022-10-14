@@ -84,6 +84,7 @@ let firstTime = true;
 let currentGraph = 3;
 
 let bars = [];
+let barsHeight = [];
 
 const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 	// Cubes
@@ -92,7 +93,6 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 	const barMaxHeight = 15;
 	let xPos = -12;
 	let maxValue = graph[0];
-	let barsHeight = [];
 
 	for (let i = 1; i < graph.length; i++) {
 		if (graph[i] > maxValue) {
@@ -117,6 +117,7 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 			bars[i] = new THREE.Mesh(geometryBar, materialBar);
 			bars[i].position.x = xPos;
 			bars[i].rotation.y = Math.PI / 4;
+			console.log(bars[i]);
 			holder.add(bars[i]);
 			xPos = xPos + 6;
 		}
@@ -129,11 +130,11 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 
 			if (prevGraphNum == undefined) {
 				newY = barsHeight[i] / 0.1 * bars[i].scale.y;
-				gsap.to(bars[i].scale, {y: newY, duration: 2, ease: "power2.out"});
+				gsap.to(bars[i].scale, {y: newY, duration: 2, ease: "power2.out", onComplete: appendValuesToGraph});
 			} else {
 				const prevGraphArr = graphs[prevGraphNum - 1];
 				newY = graph[i] / prevGraphArr[i] * bars[i].scale.y;
-				gsap.to(bars[i].scale, {y: newY, duration: 1.5, ease: "power2.out"});
+				gsap.to(bars[i].scale, {y: newY, duration: 1.5, ease: "power2.out", onComplete: appendValuesToGraph});
 			}
 		}
 	}
@@ -144,7 +145,7 @@ const changeGraphNameWithSlideAnimation = (prevGraph) => {
 	graphNamesLis[currentGraph - 1].classList.add("active");
 	let graphNamesX = [];
 	for (let i = 0; i < graphNamesLis.length; i++) {
-		if(i > 0) {
+		if (i > 0) {
 			graphNamesX[i] = graphNamesLis[i-1].offsetLeft - graphNamesLis[i].offsetLeft;
 		}
 	}
@@ -154,7 +155,7 @@ const changeGraphNameWithSlideAnimation = (prevGraph) => {
 			x = graphNamesX[j];
 		}
 		const tween = gsap.to(graphNamesLis[j], {x: x, duration: 1});
-		if(j == (graphNamesLis.length - 1)) {
+		if (j == (graphNamesLis.length - 1)) {
 			const timer = setTimeout(() => {
 				clearTimeout(timer);
 				graphNamesUl.append(graphNamesUl.children[0]);
@@ -164,6 +165,7 @@ const changeGraphNameWithSlideAnimation = (prevGraph) => {
 }
 
 const prevOrNextButtonClick = (prevOrNext) => {
+	console.log("prevOrNextButtonClick");
 	const prevGraph = currentGraph;
 	if (currentGraph == graphs.length && prevOrNext == 1) {
 		currentGraph = 1;
@@ -173,7 +175,7 @@ const prevOrNextButtonClick = (prevOrNext) => {
 	else {
 		currentGraph += prevOrNext;
 	}
-	if(prevOrNext == 1) {
+	if (prevOrNext == 1) {
 		changeGraphNameWithSlideAnimation(prevGraph);
 	}
 	calculateBarsHeightAndAddThemInScene(prevGraph);
@@ -289,6 +291,30 @@ const tiltGraphBasedOnMouseXPosition = () => {
 	const percent = Math.round(mouseXCanvas / canvas.getBoundingClientRect().width * 100);
 	// Tilts graph by 4 degrees both directions based on mouse x position
 	holder.rotation.y = scale(percent, 0, 100, 0.06981317, -0.06981317);
+}
+
+let valuesAppended = false;
+
+const appendValuesToGraph = () => {
+	if(!valuesAppended) {
+		for (let i = 0; i < bars.length; i++) {
+			valuesAppended = true;
+			const vector = new THREE.Vector3(bars[i].position.x - bars[i].geometry.parameters.width / 2, bars[i].position.y + barsHeight[i], bars[i].position.z);
+			vector.project(camera);
+			vector.x = (vector.x + 1) * canvas.getBoundingClientRect().width / 2;
+			vector.y =  - (vector.y - 1) * canvas.getBoundingClientRect().height / 2;
+	
+			let x = vector.x;
+			let y = vector.y - 70;
+	
+			const span = document.createElement("span");
+			span.classList.add("graph-value");
+			span.innerText = graphs[currentGraph - 1][i] + "%";
+			span.style.top = y + "px";
+			span.style.left = x + "px";
+			canvasContainer.append(span);
+		}
+	}
 }
 
 const animate = () => {
