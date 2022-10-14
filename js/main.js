@@ -299,7 +299,10 @@ const setRotationAngleOfBarsBasedOnScrollPosition = () => {
 const tiltGraphBasedOnMouseXPosition = () => {
 	const percent = Math.round(mouseXCanvas / canvas.getBoundingClientRect().width * 100);
 	// Tilts graph by 4 degrees both directions based on mouse x position
-	holder.rotation.y = scale(percent, 0, 100, 0.06981317, -0.06981317);
+	const newY = scale(percent, 0, 100, 0.06981317, -0.06981317);
+	if (holder.rotation.y != newY) {
+		holder.rotation.y = newY;
+	}
 }
 
 const playCounterAnimation = (spanClassName, counterMaxValue, counterDuration) => {
