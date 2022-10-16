@@ -122,31 +122,43 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 			console.log(bars[i]);
 			holder.add(bars[i]);
 			xPos = xPos + 6;
+			if (!valuesAppended) {
+				if (i == (graph.length - 1)) {
+					valuesAppended = true;
+				}
+				appendValuesToGraph(i);
+			}
 		}
 		firstTime = false;
 	} else {
-		if (!valuesAppended) {
-			for (let i = 0; i < graph.length; i++) {
-				valuesAppended = true;
-				const currentBarHeight = graph[i] / maxValue * barMaxHeight;
-				barsHeight[i] = currentBarHeight;
-				let newY;
-	
-				if (prevGraphNum == undefined) {
-					newY = barsHeight[i] / 0.1 * bars[i].scale.y;
-					appendValuesToGraph(i, 2000);
-					gsap.to(bars[i].scale, {y: newY, duration: 2, ease: "power2.out"});
-				} else {
-					const prevGraphArr = graphs[prevGraphNum - 1];
-					newY = graph[i] / prevGraphArr[i] * bars[i].scale.y;
-					appendValuesToGraph(i, 1600);
-					if(i == 0) {
-						console.log(barsHeight[i]);
-					}
-					gsap.to(bars[i].scale, {y: newY, duration: 1.6, ease: "power2.out", onUpdate: () => {
+		for (let i = 0; i < graph.length; i++) {
+			const currentBarHeight = graph[i] / maxValue * barMaxHeight;
+			barsHeight[i] = currentBarHeight;
+			let newY;
+
+			if (prevGraphNum == undefined) {
+				newY = barsHeight[i] / 0.1 * bars[i].scale.y;
+				playCounterAnimation(".graph-value-" + (i+1), graphs[currentGraph - 1][i], 2000);
+				gsap.to(bars[i].scale, {
+					y: newY, 
+					duration: 2, 
+					ease: "power2.out", 
+					onUpdate: () => {
 						updatePositionOfGraphValues(i);
-					}});
-				}
+					}
+				});
+			} else {
+				const prevGraphArr = graphs[prevGraphNum - 1];
+				newY = graph[i] / prevGraphArr[i] * bars[i].scale.y;
+				playCounterAnimation(".graph-value-" + (i+1), graphs[currentGraph - 1][i], 1600);
+				gsap.to(bars[i].scale, {
+					y: newY, 
+					duration: 1.6, 
+					ease: "power2.out", 
+					onUpdate: () => {
+						updatePositionOfGraphValues(i);
+					}
+				});
 			}
 		}
 	}
@@ -334,8 +346,8 @@ const playCounterAnimation = (spanClassName, counterMaxValue, counterDuration) =
 }
 
 // appends the graph values (Written as Normal function as it needs to get hoisted)
-function appendValuesToGraph(i, counterDuration) {
-	const vector = new THREE.Vector3(bars[i].position.x - bars[i].geometry.parameters.width / 2, bars[i].position.y + barsHeight[i], bars[i].position.z);
+function appendValuesToGraph(i) {
+	const vector = new THREE.Vector3(bars[i].position.x - bars[i].geometry.parameters.width / 2, bars[i].position.y + 0.1, bars[i].position.z);
 	vector.project(camera);
 	vector.x = (vector.x + 1) * canvas.getBoundingClientRect().width / 2;
 	vector.y =  - (vector.y - 1) * canvas.getBoundingClientRect().height / 2;
@@ -356,7 +368,6 @@ function appendValuesToGraph(i, counterDuration) {
 		span.style.left = x + "px";
 		canvasContainer.append(span);
 	}
-	playCounterAnimation(".graph-value-" + (i+1), graphs[currentGraph - 1][i], counterDuration);
 }
 
 const updatePositionOfGraphValues = (i) => {
