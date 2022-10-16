@@ -88,6 +88,7 @@ let bars = [];
 let barsHeight = [];
 
 let valuesAppended = false;
+let xValuesAppended = false;
 
 const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 	// Cubes
@@ -122,6 +123,7 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 			bars[i].rotation.y = Math.PI / 4;
 			holder.add(bars[i]);
 			xPos = xPos + 6;
+			
 			if (!valuesAppended) {
 				if (i == (graph.length - 1)) {
 					valuesAppended = true;
@@ -131,6 +133,10 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 		}
 		firstTime = false;
 	} else {
+		if (!xValuesAppended) {
+			xValuesAppended = true;
+			appendGraphXValues();
+		}
 		for (let i = 0; i < graph.length; i++) {
 			const currentBarHeight = graph[i] / maxValue * barMaxHeight;
 			barsHeight[i] = currentBarHeight;
@@ -358,7 +364,7 @@ function calculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = "top")
 	if (appendToTopOrBottom == "top") {
 		y = vector.y - 70;
 	} else if (appendToTopOrBottom == "bottom") {
-		y = vector.y + 70;
+		y = vector.y + 50;
 	}
 	return {x, y};
 }
@@ -388,6 +394,20 @@ const updatePositionOfGraphValues = (i) => {
 	let span = canvasContainer.querySelector(".graph-value-" + (i+1));
 	span.style.top = obj.y + "px";
 	span.style.left = obj.x + "px";
+}
+
+function appendGraphXValues() {
+	for (let i = 0; i < graphXValuesNames.length; i++) {
+		const obj = calculateCoordinatesOfBarInCanvas(i, bars[i].position.y, "bottom");
+
+		const span = document.createElement("span");
+		span.classList.add("graph-x-name");
+		span.innerText = graphXValuesNames[i];
+		span.style.left = obj.x + "px";
+		span.style.top = obj.y + "px";
+
+		canvasContainer.append(span);
+	}
 }
 
 const animate = () => {

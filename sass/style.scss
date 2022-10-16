@@ -45,7 +45,7 @@ section {
 	transform: translate(-50%, 0);
 
 	> span {
-		margin-bottom: 20px;
+		margin: 60px 0 20px;
 		display: block;
 		color: #626262;
 		font-size: 14px;
@@ -56,20 +56,10 @@ section {
 }
 
 .graph-x-name {
-	margin-bottom: 20px;
-	display: flex;
-	justify-content: center;
-
-	li {
-		margin-right: 6%;
-		&:last-child { margin-right: 0; }
-	}
-
-	span {
-		color: #fff;
-		font-size: 20px;
-		font-weight: bold;
-	}
+	position: absolute;
+	color: #fff;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 .graph-names-container { 
