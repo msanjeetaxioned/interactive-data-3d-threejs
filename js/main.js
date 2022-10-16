@@ -80,6 +80,7 @@ const graphs = [
 	[0.7, 10.5, 28.2, 48.4, 12.2],
 	[0.4, 5.9, 17.8, 57.6, 18.3]
 ];
+const graphXValuesNames = ["<10", "10 - 20", "20 - 30", "30 - 40", "40+"];
 let firstTime = true;
 let currentGraph = 3;
 
@@ -119,7 +120,6 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 			bars[i] = new THREE.Mesh(geometryBar, materialBar);
 			bars[i].position.x = xPos;
 			bars[i].rotation.y = Math.PI / 4;
-			console.log(bars[i]);
 			holder.add(bars[i]);
 			xPos = xPos + 6;
 			if (!valuesAppended) {
@@ -345,15 +345,27 @@ const playCounterAnimation = (spanClassName, counterMaxValue, counterDuration) =
 	}, timerInterval);
 }
 
-// appends the graph values (Written as Normal function as it needs to get hoisted)
-function appendValuesToGraph(i) {
-	const vector = new THREE.Vector3(bars[i].position.x - bars[i].geometry.parameters.width / 2, bars[i].position.y + 0.1, bars[i].position.z);
+// Calculates & returns html coordinates of a given bar of graph
+function calculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = "top") {
+	const vector = new THREE.Vector3(bars[i].position.x - bars[i].geometry.parameters.width / 2, yPos, bars[i].position.z);
+
 	vector.project(camera);
 	vector.x = (vector.x + 1) * canvas.getBoundingClientRect().width / 2;
 	vector.y =  - (vector.y - 1) * canvas.getBoundingClientRect().height / 2;
 
 	const x = vector.x;
-	const y = vector.y - 70;
+	let y;
+	if (appendToTopOrBottom == "top") {
+		y = vector.y - 70;
+	} else if (appendToTopOrBottom == "bottom") {
+		y = vector.y + 70;
+	}
+	return {x, y};
+}
+
+// appends the graph values (Written as Normal function as it needs to get hoisted)
+function appendValuesToGraph(i) {
+	const obj = calculateCoordinatesOfBarInCanvas(i, bars[i].position.y + 0.1);
 
 	let span = canvasContainer.querySelector(".graph-value-" + (i+1));
 	if (!span) {
@@ -364,24 +376,18 @@ function appendValuesToGraph(i) {
 		span.innerText = 0 + "%";
 		span.classList.add("graph-value");
 		span.classList.add("graph-value-" + (i+1));
-		span.style.top = y + "px";
-		span.style.left = x + "px";
+		span.style.top = obj.y + "px";
+		span.style.left = obj.x + "px";
 		canvasContainer.append(span);
 	}
 }
 
 const updatePositionOfGraphValues = (i) => {
-	const vector = new THREE.Vector3(bars[i].position.x - bars[i].geometry.parameters.width / 2, bars[i].position.y + bars[i].scale.y * 0.1, bars[i].position.z);
-	vector.project(camera);
-	vector.x = (vector.x + 1) * canvas.getBoundingClientRect().width / 2;
-	vector.y =  - (vector.y - 1) * canvas.getBoundingClientRect().height / 2;
-
-	const x = vector.x;
-	const y = vector.y - 70;
+	const obj = calculateCoordinatesOfBarInCanvas(i, bars[i].position.y + bars[i].scale.y * 0.1);
 
 	let span = canvasContainer.querySelector(".graph-value-" + (i+1));
-	span.style.top = y + "px";
-	span.style.left = x + "px";
+	span.style.top = obj.y + "px";
+	span.style.left = obj.x + "px";
 }
 
 const animate = () => {
