@@ -177,22 +177,29 @@ const changeGraphNameWithSlideAnimation = (prevSlideNum, currentSlideNum, prevOr
 
 	prevGraph.classList.remove("active");
 	currentGraph.classList.add("active");
-	
-	// graphNamesUl.scroll({
-	// 	left: prevGraph.getBoundingClientRect().left,
-	// 	behavior: "smooth"
-	// });
 
 	if (prevOrNext == 1) {
-		graphNamesUl.append(graphNamesUl.children[0]);
+		graphNamesUl.scroll({
+			left: prevGraph.getBoundingClientRect().left,
+			behavior: "smooth"
+		});
+		const timer = setTimeout(() => {
+			clearTimeout(timer);
+			graphNamesUl.append(graphNamesUl.children[0]);
+			graphNamesUl.scroll({
+				left: 0
+			});
+		}, 500);
 	} else {
 		graphNamesUl.insertBefore(graphNamesUl.children[graphNamesLis.length - 1], graphNamesUl.children[0]);
+		graphNamesUl.scroll({
+			left: graphNamesLis[1].getBoundingClientRect().left
+		});
+		graphNamesUl.scroll({
+			left: 0,
+			behavior: "smooth"
+		});
 	}
-
-	// const firstChildCopy = graphNamesLis[0].cloneNode(true);
-	// firstChildCopy.innerText = prevGraph.innerText;
-
-	// graphNamesUl.append(firstChildCopy);
 
 }
 
