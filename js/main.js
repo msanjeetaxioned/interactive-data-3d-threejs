@@ -6,8 +6,6 @@ const nextGraphButton = canvasContainer.querySelector(".next-button");
 
 const graphNamesUl = canvasContainer.querySelector(".graph-names");
 const graphNamesLis = graphNamesUl.querySelectorAll("li");
-// const graphNameH3 = changeGraphButtonsDiv.querySelector(".graph-info > h3");
-// const graphNumSpan = changeGraphButtonsDiv.querySelector(".graph-info > span");
 
 let canvas;
 
@@ -388,6 +386,7 @@ function appendValuesToGraph(i) {
 	}
 }
 
+// Updates y-position of appended percent graph values when bar size changes
 const updatePositionOfGraphValues = (i) => {
 	const obj = calculateCoordinatesOfBarInCanvas(i, bars[i].position.y + bars[i].scale.y * 0.1);
 
@@ -396,6 +395,7 @@ const updatePositionOfGraphValues = (i) => {
 	span.style.left = obj.x + "px";
 }
 
+// Appends values of x-axis of the graph at proper position
 function appendGraphXValues() {
 	for (let i = 0; i < graphXValuesNames.length; i++) {
 		const obj = calculateCoordinatesOfBarInCanvas(i, bars[i].position.y, "bottom");
