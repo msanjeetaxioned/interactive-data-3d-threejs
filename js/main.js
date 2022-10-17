@@ -171,6 +171,7 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 	}
 }
 
+// Changes graph name with animation when next or previous button is clicked
 const changeGraphNameWithSlideAnimation = (prevSlideNum, currentSlideNum, prevOrNext) => {
 	const prevGraph = graphNamesLis[prevSlideNum - 1];
 	const currentGraph = graphNamesLis[currentSlideNum - 1];
@@ -200,7 +201,6 @@ const changeGraphNameWithSlideAnimation = (prevSlideNum, currentSlideNum, prevOr
 			behavior: "smooth"
 		});
 	}
-
 }
 
 const prevOrNextButtonClick = (prevOrNext) => {
@@ -330,6 +330,7 @@ const tiltGraphBasedOnMouseXPosition = () => {
 	}
 }
 
+// Starts counter increment/decrement animation from previous to new value
 const playCounterAnimation = (spanClassName, counterMaxValue, counterDuration) => {
 	const span = canvasContainer.querySelector(spanClassName);
 	let counterMinValue = 0;
