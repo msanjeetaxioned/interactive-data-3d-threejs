@@ -7,6 +7,9 @@ const nextGraphButton = canvasContainer.querySelector(".next-button");
 const graphNamesUl = canvasContainer.querySelector(".graph-names");
 const graphNamesLis = graphNamesUl.querySelectorAll("li");
 
+// graphNamesUl.insertBefore(graphNamesLis[graphNamesLis.length - 1], graphNamesUl.children[0]);
+// graphNamesUl.scroll({left: graphNamesLis[1].getBoundingClientRect().left});
+
 let canvas;
 
 // Setting up Scene, Camera & Renderer
@@ -168,28 +171,29 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 	}
 }
 
-const changeGraphNameWithSlideAnimation = (prevGraph) => {
-	graphNamesLis[prevGraph - 1].classList.remove("active");
-	graphNamesLis[currentGraph - 1].classList.add("active");
-	let graphNamesX = [];
-	for (let i = 0; i < graphNamesLis.length; i++) {
-		if (i > 0) {
-			graphNamesX[i] = graphNamesLis[i-1].offsetLeft - graphNamesLis[i].offsetLeft;
-		}
+const changeGraphNameWithSlideAnimation = (prevSlideNum, currentSlideNum, prevOrNext) => {
+	const prevGraph = graphNamesLis[prevSlideNum - 1];
+	const currentGraph = graphNamesLis[currentSlideNum - 1];
+
+	prevGraph.classList.remove("active");
+	currentGraph.classList.add("active");
+	
+	// graphNamesUl.scroll({
+	// 	left: prevGraph.getBoundingClientRect().left,
+	// 	behavior: "smooth"
+	// });
+
+	if (prevOrNext == 1) {
+		graphNamesUl.append(graphNamesUl.children[0]);
+	} else {
+		graphNamesUl.insertBefore(graphNamesUl.children[graphNamesLis.length - 1], graphNamesUl.children[0]);
 	}
-	let x = "-100%";
-	for (let j = 0; j < graphNamesLis.length; j++) {
-		if (j > 0) {
-			x = graphNamesX[j];
-		}
-		const tween = gsap.to(graphNamesLis[j], {x: x, duration: 1});
-		if (j == (graphNamesLis.length - 1)) {
-			const timer = setTimeout(() => {
-				clearTimeout(timer);
-				graphNamesUl.append(graphNamesUl.children[0]);
-			}, 1100)
-		}
-	}
+
+	// const firstChildCopy = graphNamesLis[0].cloneNode(true);
+	// firstChildCopy.innerText = prevGraph.innerText;
+
+	// graphNamesUl.append(firstChildCopy);
+
 }
 
 const prevOrNextButtonClick = (prevOrNext) => {
@@ -202,9 +206,7 @@ const prevOrNextButtonClick = (prevOrNext) => {
 	} else {
 		currentGraph += prevOrNext;
 	}
-	if (prevOrNext == 1) {
-		changeGraphNameWithSlideAnimation(prevGraph);
-	}
+	changeGraphNameWithSlideAnimation(prevGraph, currentGraph, prevOrNext);
 	calculateBarsHeightAndAddThemInScene(prevGraph);
 }
 

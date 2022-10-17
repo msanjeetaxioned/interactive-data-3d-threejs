@@ -114,7 +114,7 @@ section {
 	align-items: center;
 	overflow: hidden;
 	li {
-		flex-basis: 17%;
+		flex-basis: 17.5%;
 		flex-shrink: 0;
 		text-align: center;
 		span {
@@ -125,7 +125,7 @@ section {
 		}
 
 		&.active {
-			flex-basis: 32%;
+			flex-basis: 30%;
 
 			span {
 				color: #fff;
