@@ -4,14 +4,29 @@
   font-weight: normal;
   src: local("Caraque Trial Regular Melted"), url("../Caraque_Trial_RgMelted.woff") format("woff");
 }
+@font-face {
+  font-family: "Roboto Regular";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Roboto Regular"), url("../Roboto-Regular.woff") format("woff");
+}
 * {
-  font-family: "Caraque Trial Regular Melted", sans-serif;
+  font-family: "Roboto Regular", sans-serif;
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: "Caraque Trial Regular Melted", sans-serif;
+  font-family: "Roboto Regular", sans-serif;
+}
+
+h2 {
+  margin-bottom: 30px;
+  color: antiquewhite;
+  font-size: 48px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: capitalize;
 }
 
 /* Styles start */
@@ -42,7 +57,7 @@ section {
 .graph-value {
   position: absolute;
   color: #fff;
-  font-size: 30px;
+  font-size: 26px;
   font-weight: bold;
 }
 
@@ -120,22 +135,22 @@ section {
   overflow: hidden;
 }
 .graph-names li {
-  flex-basis: 17.5%;
+  flex-basis: 16.5%;
   flex-shrink: 0;
   text-align: center;
 }
 .graph-names li span {
   color: #626262;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
   text-transform: uppercase;
 }
 .graph-names li.active {
-  flex-basis: 30%;
+  flex-basis: 34%;
 }
 .graph-names li.active span {
   color: #fff;
-  font-size: 38px;
+  font-size: 32px;
 }
 .graph-names .active + li {
   margin-left: 0;
@@ -143,13 +158,4 @@ section {
 
 .section3 {
   background-color: darkturquoise;
-}
-
-h2 {
-  margin-bottom: 30px;
-  color: antiquewhite;
-  font-size: 50px;
-  font-weight: 700;
-  text-align: center;
-  text-transform: capitalize;
 }

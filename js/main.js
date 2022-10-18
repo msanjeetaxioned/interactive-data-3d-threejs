@@ -78,7 +78,7 @@ const graphs = [
 	[0.7, 10.5, 28.2, 48.4, 12.2],
 	[0.4, 5.9, 17.8, 57.6, 18.3]
 ];
-const graphXValuesNames = ["<10", "10 - 20", "20 - 30", "30 - 40", "40+"];
+const graphXValuesNames = ["< 10", "10 - 20", "20 - 30", "30 - 40", "40+"];
 let firstTime = true;
 let currentGraph = 3;
 
