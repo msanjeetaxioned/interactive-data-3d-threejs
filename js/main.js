@@ -7,9 +7,6 @@ const nextGraphButton = canvasContainer.querySelector(".next-button");
 const graphNamesUl = canvasContainer.querySelector(".graph-names");
 const graphNamesLis = graphNamesUl.querySelectorAll("li");
 
-// graphNamesUl.insertBefore(graphNamesLis[graphNamesLis.length - 1], graphNamesUl.children[0]);
-// graphNamesUl.scroll({left: graphNamesLis[1].getBoundingClientRect().left});
-
 let canvas;
 
 // Setting up Scene, Camera & Renderer
