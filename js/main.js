@@ -91,6 +91,20 @@ let barsHeight = [];
 let valuesAppended = false;
 let xValuesAppended = false;
 
+const enableOrDisablePrevAndNextButtons = (enable) => {
+	if (enable) {
+		prevGraphButton.removeAttribute("disabled");
+		nextGraphButton.removeAttribute("disabled");
+		prevGraphButton.setAttribute("title", "Previous");
+		nextGraphButton.setAttribute("title", "Next");
+	} else {
+		prevGraphButton.setAttribute("disabled", "");
+		nextGraphButton.setAttribute("disabled", "");
+		prevGraphButton.setAttribute("title", "Disabled");
+		nextGraphButton.setAttribute("title", "Disabled");
+	}
+}
+
 const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 	// Cubes
 	const graph = graphs[currentGraph - 1];
@@ -143,6 +157,7 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 			barsHeight[i] = currentBarHeight;
 			let newY;
 
+			enableOrDisablePrevAndNextButtons(false);
 			if (prevGraphNum == undefined) {
 				newY = barsHeight[i] / 0.1 * bars[i].scale.y;
 				playCounterAnimation(".graph-value-" + (i+1), graphs[currentGraph - 1][i], 2000);
@@ -152,6 +167,9 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 					ease: "power2.out", 
 					onUpdate: () => {
 						updatePositionOfGraphValues(i);
+					},
+					onComplete: () => {
+						enableOrDisablePrevAndNextButtons(true);
 					}
 				});
 			} else {
@@ -164,8 +182,10 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 					ease: "power2.out", 
 					onUpdate: () => {
 						updatePositionOfGraphValues(i);
-					}
-				});
+					},
+					onComplete: () => {
+						enableOrDisablePrevAndNextButtons(true);
+					}});
 			}
 		}
 	}
