@@ -1,11 +1,18 @@
+@font-face {
+	font-family: 'Caraque Trial Regular Melted';
+	font-style: normal;
+	font-weight: normal;
+	src: local('Caraque Trial Regular Melted'), url('../Caraque_Trial_RgMelted.woff') format('woff');
+}
+
 * {
-	font-family: 'Caraque Trial', sans-serif; 
+	font-family: 'Caraque Trial Regular Melted', sans-serif; 
 	box-sizing: border-box; 
 }
 
 body { 
 	margin: 0;
-	font-family: 'Caraque Trial', sans-serif; 
+	font-family: 'Caraque Trial Regular Melted', sans-serif; 
 }
 
 /* Styles start */
