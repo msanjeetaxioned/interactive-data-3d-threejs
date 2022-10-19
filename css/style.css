@@ -61,15 +61,15 @@ section {
   font-weight: bold;
 }
 
-.graph-info-and-buttons {
+.graph-info {
   width: 100%;
   position: absolute;
   top: 55%;
   left: 50%;
   transform: translate(-50%, 0);
 }
-.graph-info-and-buttons > span {
-  margin: 60px 0 20px;
+.graph-info > span {
+  margin: 90px 0 20px;
   display: block;
   color: #626262;
   font-size: 14px;
@@ -78,82 +78,24 @@ section {
   text-transform: uppercase;
 }
 
-.graph-x-name {
+.graph-x {
   position: absolute;
+  text-align: center;
+}
+.graph-x span {
+  display: block;
+}
+.graph-x .graph-x-name {
+  margin-bottom: 10px;
   color: #fff;
   font-size: 20px;
   font-weight: bold;
-}
-
-.graph-names-container {
-  height: 50px;
-  position: relative;
-}
-.graph-names-container .button {
-  width: 50px;
-  height: 50px;
-  border: 1px solid #fff;
-  border-radius: 50%;
-  display: inline-block;
-  position: absolute;
-  background-color: transparent;
-  color: #fff;
-  font-size: 0;
-  font-weight: bold;
   text-transform: capitalize;
-  transition: background-color 1s ease-in-out;
 }
-.graph-names-container .button.previous-button {
-  top: 0;
-  left: 34%;
-}
-.graph-names-container .button.previous-button::after {
-  content: "\f060";
-  font-family: "Font Awesome 6 Free";
-  font-size: 24px;
-  font-weight: 900;
-}
-.graph-names-container .button.next-button {
-  top: 0;
-  left: 62%;
-}
-.graph-names-container .button.next-button::after {
-  content: "\f061";
-  font-family: "Font Awesome 6 Free";
-  font-size: 24px;
-  font-weight: 900;
-}
-.graph-names-container .button:hover {
-  background-color: orangered;
-  cursor: pointer;
-}
-
-.graph-names {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-}
-.graph-names li {
-  flex-basis: 16.5%;
-  flex-shrink: 0;
-  text-align: center;
-}
-.graph-names li span {
-  color: #626262;
-  font-size: 24px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-.graph-names li.active {
-  flex-basis: 34%;
-}
-.graph-names li.active span {
+.graph-x .graph-x-value {
   color: #fff;
-  font-size: 32px;
-}
-.graph-names .active + li {
-  margin-left: 0;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .section3 {

@@ -73,9 +73,6 @@ let firstTime = true;
 let bars = [];
 let barsHeight = [];
 
-let valuesAppended = false;
-let xValuesAppended = false;
-
 const calculateBarsHeightAndAddThemInScene = () => {
 	// Cubes
 	const barColor = 0x4a39ea;
@@ -116,13 +113,15 @@ const calculateBarsHeightAndAddThemInScene = () => {
 
 			bars[i][j].rotation.y = Math.PI / 4;
 			holder.add(bars[i][j]);
+
+			if (i == (graphXNames.length - 1) && j == (graphXValues[i] - 1)) {
+				const timer = setTimeout(() => {
+					clearTimeout(timer);
+					appendGraphXValues();
+				}, 200);
+			}
 		}
 		xPos = xPos + 6;
-	}
-
-	if (!xValuesAppended) {
-		xValuesAppended = true;
-		// appendGraphXValues();
 	}
 }
 
@@ -145,7 +144,6 @@ for (let i = 0; i < bars.length; i++) {
 
 const rotateBar = (cube, currentBarTL, currentBarRotation) => {
 	if (!currentBarTL.isActive() && movementX != currentMovementX) {
-		console.log(cube);
 		currentMovementX = movementX;
 		if (currentMovementX < -25) {
 			currentBarRotation = rotations[0];
@@ -243,7 +241,7 @@ const tiltGraphBasedOnMouseXPosition = () => {
 
 // Calculates & returns html coordinates of a given bar of graph
 function calculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = "top") {
-	const vector = new THREE.Vector3(bars[i][0].position.x - bars[i][0].geometry.parameters.width / 2, yPos, bars[i][0].position.z);
+	const vector = new THREE.Vector3(bars[i][0].position.x - bars[i][0].geometry.parameters.width, yPos, bars[i][0].position.z);
 
 	vector.project(camera);
 	vector.x = (vector.x + 1) * canvas.getBoundingClientRect().width / 2;
@@ -261,16 +259,29 @@ function calculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = "top")
 
 // Appends values of x-axis of the graph at proper position
 function appendGraphXValues() {
-	for (let i = 0; i < graphXValuesNames.length; i++) {
+	for (let i = 0; i < graphXNames.length; i++) {
 		const obj = calculateCoordinatesOfBarInCanvas(i, bars[i][0].position.y, "bottom");
 
-		const span = document.createElement("span");
-		span.classList.add("graph-x-name");
-		span.innerText = graphXValuesNames[i];
-		span.style.left = obj.x + "px";
-		span.style.top = obj.y + "px";
+		const div = document.createElement("div");
+		div.classList.add("graph-x");
+		div.style.left = obj.x + "px";
+		div.style.top = obj.y + "px";
 
-		canvasContainer.append(span);
+		const span1 = document.createElement("span");
+		span1.classList.add("graph-x-name");
+		span1.innerText = graphXNames[i];
+		div.append(span1);
+
+		const span2 = document.createElement("span");
+		span2.classList.add("graph-x-value");
+		span2.innerText = graphXValues[i];
+		div.append(span2);
+
+		canvasContainer.append(div);
+
+		const widthBy2 = div.getBoundingClientRect().width / 2;
+		console.log(widthBy2);
+		// div.style.left = (div.offsetLeft - widthBy2) + "px";
 	}
 }
 
