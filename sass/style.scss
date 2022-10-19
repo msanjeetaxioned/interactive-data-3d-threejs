@@ -48,7 +48,7 @@ section {
 .interactive-data-section { 
 	height: 100%;
 	min-height: 100vh;
-	background: linear-gradient(90deg,#000 85%,rgb(92, 38, 202) 100%);
+	background: #000;
 
 	.canvas-container { position: relative; }
 }
@@ -159,38 +159,5 @@ section {
 
 	.active + li { margin-left: 0; }
 }
-
-// .previous-button {
-// 	svg {
-// 		display: block;
-// 		width: 50px;
-// 		height: 50px;
-// 	}
-// 	&:hover {
-// 		circle {
-// 			animation: draw1 .75s linear forwards;
-// 		}
-// 	}
-
-// 	span {
-// 		font-size: 0;
-// 	}
-// }
-
-// @keyframes draw1 {
-// 	0% {
-// 			stroke-dasharray: 300;
-// 			stroke-dashoffset: 700;
-// 			stroke-width: 1px;
-// 	}
-// 	75% {
-// 			stroke-dasharray: 900;
-// 			stroke-width: 1px;
-// 	}
-// 	100% {
-// 			stroke-dasharray: 900;
-// 			stroke-width: 1px;
-// 	}
-// }
 
 .section3 { background-color: darkturquoise; }

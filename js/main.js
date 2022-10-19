@@ -1,17 +1,13 @@
 const wrapperInteractiveData = document.querySelector(".interactive-data-section > .wrapper");
 const canvasContainer = wrapperInteractiveData.querySelector(".canvas-container");
 
-const prevGraphButton = canvasContainer.querySelector(".previous-button");
-const nextGraphButton = canvasContainer.querySelector(".next-button");
-
-const graphNamesUl = canvasContainer.querySelector(".graph-names");
-const graphNamesLis = graphNamesUl.querySelectorAll("li");
-
 let canvas;
 
 // Setting up Scene, Camera & Renderer
 const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth * 0.85, window.innerHeight * 1.5);
+renderer.setClearColor(0xffffff, 0);
+
 canvasContainer.insertBefore(renderer.domElement, canvasContainer.children[0]);
 canvas = wrapperInteractiveData.querySelector("canvas");
 
@@ -49,7 +45,6 @@ const options = {threshold: 0.5};
 const handleIntersect = (entries) => {
 	entries.forEach(entry => {
 		if (entry.isIntersecting) {
-			calculateBarsHeightAndAddThemInScene();
 			observer.unobserve(entry.target);
 		}
 	});
@@ -70,17 +65,10 @@ const directionalLight1 = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight1.position.set(1, 0, 0);
 scene.add(directionalLight1);
 
-const graphs = [
-	[0.9, 7.8, 22.5, 50.3, 18.5],
-	[2.4, 18, 31.4, 38, 10.4],
-	[0.1, 10, 22.2, 48, 19.6],
-	[1.1, 16.9, 30.4, 41, 10.6],
-	[0.7, 10.5, 28.2, 48.4, 12.2],
-	[0.4, 5.9, 17.8, 57.6, 18.3]
-];
-const graphXValuesNames = ["< 10", "10 - 20", "20 - 30", "30 - 40", "40+"];
+const graphXNames = ["design", "engineering", "product", "writing", "marketing", "social"];
+const graphXValues = [3, 2, 3, 3, 4, 4];
+
 let firstTime = true;
-let currentGraph = 3;
 
 let bars = [];
 let barsHeight = [];
@@ -88,40 +76,27 @@ let barsHeight = [];
 let valuesAppended = false;
 let xValuesAppended = false;
 
-const enableOrDisablePrevAndNextButtons = (enable) => {
-	if (enable) {
-		prevGraphButton.removeAttribute("disabled");
-		nextGraphButton.removeAttribute("disabled");
-		prevGraphButton.setAttribute("title", "Previous");
-		nextGraphButton.setAttribute("title", "Next");
-	} else {
-		prevGraphButton.setAttribute("disabled", "");
-		nextGraphButton.setAttribute("disabled", "");
-		prevGraphButton.setAttribute("title", "Disabled");
-		nextGraphButton.setAttribute("title", "Disabled");
-	}
-}
-
-const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
+const calculateBarsHeightAndAddThemInScene = () => {
 	// Cubes
-	const graph = graphs[currentGraph - 1];
-	const barColors = [0x7fff00, 0x8a2be2, 0x8b0000, 0xffd700, 0x008080];
-	const barMaxHeight = 15;
-	let xPos = -12;
-	let maxValue = graph[0];
+	const barColor = 0x4a39ea;
+	const barMaxHeight = 12;
+	let xPos = -15;
+	let maxValue = graphXValues[0];
+	const individualBarHeight = barMaxHeight / maxValue;
 
-	for (let i = 1; i < graph.length; i++) {
-		if (graph[i] > maxValue) {
-			maxValue = graph[i];
+	for (let i = 1; i < graphXValues.length; i++) {
+		if (graphXValues[i] > maxValue) {
+			maxValue = graphXValues[i];
 		}
 	}
 
-	if (firstTime) {
-		for (let i = 0; i < graph.length; i++) {
-			const geometryBar = new THREE.BoxGeometry(2.5, 0.1, 2.5);
-			geometryBar.translate( 0, 0.1 / 2, 0 );
+	for (let i = 0; i < graphXNames.length; i++) {
+		bars[i] = [];
+		for (let j = 0; j < graphXValues[i]; j++) {
+			const geometryBar = new THREE.BoxGeometry(2.5, individualBarHeight, 2.5);
+			geometryBar.translate( 0, individualBarHeight / 2, 0 );
 			const materialBar = new THREE.MeshPhongMaterial({
-				color: barColors[i],
+				color: barColor,
 				emissive: 0x000000,
 				specular: 0x111111,
 				shininess: 100,
@@ -130,128 +105,47 @@ const calculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 				combine: THREE.MultiplyOperation,
 				side: THREE.DoubleSide
 			});
-			bars[i] = new THREE.Mesh(geometryBar, materialBar);
-			bars[i].position.x = xPos;
-			bars[i].rotation.y = Math.PI / 4;
-			holder.add(bars[i]);
-			xPos = xPos + 6;
+			bars[i][j] = new THREE.Mesh(geometryBar, materialBar);
+			bars[i][j].position.x = xPos;
 			
-			if (!valuesAppended) {
-				if (i == (graph.length - 1)) {
-					valuesAppended = true;
-				}
-				appendValuesToGraph(i);
-			}
-		}
-		firstTime = false;
-	} else {
-		if (!xValuesAppended) {
-			xValuesAppended = true;
-			appendGraphXValues();
-		}
-		for (let i = 0; i < graph.length; i++) {
-			const currentBarHeight = graph[i] / maxValue * barMaxHeight;
-			barsHeight[i] = currentBarHeight;
-			let newY;
-
-			enableOrDisablePrevAndNextButtons(false);
-			if (prevGraphNum == undefined) {
-				newY = barsHeight[i] / 0.1 * bars[i].scale.y;
-				playCounterAnimation(".graph-value-" + (i+1), graphs[currentGraph - 1][i], 2000);
-				gsap.to(bars[i].scale, {
-					y: newY, 
-					duration: 2, 
-					ease: "power2.out", 
-					onUpdate: () => {
-						updatePositionOfGraphValues(i);
-					},
-					onComplete: () => {
-						enableOrDisablePrevAndNextButtons(true);
-					}
-				});
+			if (j == 0 ) {
+				bars[i][j].position.y = 0;
 			} else {
-				const prevGraphArr = graphs[prevGraphNum - 1];
-				newY = graph[i] / prevGraphArr[i] * bars[i].scale.y;
-				playCounterAnimation(".graph-value-" + (i+1), graphs[currentGraph - 1][i], 1600);
-				gsap.to(bars[i].scale, {
-					y: newY, 
-					duration: 1.6, 
-					ease: "power2.out", 
-					onUpdate: () => {
-						updatePositionOfGraphValues(i);
-					},
-					onComplete: () => {
-						enableOrDisablePrevAndNextButtons(true);
-					}});
+				bars[i][j].position.y = (individualBarHeight + 0.3) * j;
 			}
+
+			bars[i][j].rotation.y = Math.PI / 4;
+			holder.add(bars[i][j]);
 		}
+		xPos = xPos + 6;
+	}
+
+	if (!xValuesAppended) {
+		xValuesAppended = true;
+		// appendGraphXValues();
 	}
 }
-
-// Changes graph name with animation when next or previous button is clicked
-const changeGraphNameWithSlideAnimation = (prevSlideNum, currentSlideNum, prevOrNext) => {
-	const prevGraph = graphNamesLis[prevSlideNum - 1];
-	const currentGraph = graphNamesLis[currentSlideNum - 1];
-
-	prevGraph.classList.remove("active");
-	currentGraph.classList.add("active");
-
-	if (prevOrNext == 1) {
-		graphNamesUl.scroll({
-			left: prevGraph.getBoundingClientRect().left,
-			behavior: "smooth"
-		});
-		const timer = setTimeout(() => {
-			clearTimeout(timer);
-			graphNamesUl.append(graphNamesUl.children[0]);
-			graphNamesUl.scroll({
-				left: 0
-			});
-		}, 500);
-	} else {
-		graphNamesUl.insertBefore(graphNamesUl.children[graphNamesLis.length - 1], graphNamesUl.children[0]);
-		graphNamesUl.scroll({
-			left: graphNamesLis[1].getBoundingClientRect().left
-		});
-		graphNamesUl.scroll({
-			left: 0,
-			behavior: "smooth"
-		});
-	}
-}
-
-const prevOrNextButtonClick = (prevOrNext) => {
-	valuesAppended = false;
-	const prevGraph = currentGraph;
-	if (currentGraph == graphs.length && prevOrNext == 1) {
-		currentGraph = 1;
-	} else if (currentGraph == 1 && prevOrNext == -1) {
-		currentGraph = graphs.length;
-	} else {
-		currentGraph += prevOrNext;
-	}
-	changeGraphNameWithSlideAnimation(prevGraph, currentGraph, prevOrNext);
-	calculateBarsHeightAndAddThemInScene(prevGraph);
-}
-
-prevGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, -1));
-nextGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, 1));
 
 calculateBarsHeightAndAddThemInScene();
 
 camera.lookAt(new THREE.Vector3(0, 0, 0));
 camera.position.y = 0;
-camera.position.z = 55;
+camera.position.z = 60;
 // orbit.update();
 
 let rotationTl = [], currentRotationSpeedAndDirectionOfBars = [];
 for (let i = 0; i < bars.length; i++) {
-	currentRotationSpeedAndDirectionOfBars[i] = 0;
-	rotationTl[i] = gsap.timeline();
+	currentRotationSpeedAndDirectionOfBars[i] = [];
+	rotationTl[i] = [];
+	for (let j = 0; j < bars[i].length; j++) {
+		currentRotationSpeedAndDirectionOfBars[i][j] = 0;
+		rotationTl[i][j] = gsap.timeline();
+	}
 }
 
 const rotateBar = (cube, currentBarTL, currentBarRotation) => {
 	if (!currentBarTL.isActive() && movementX != currentMovementX) {
+		console.log(cube);
 		currentMovementX = movementX;
 		if (currentMovementX < -25) {
 			currentBarRotation = rotations[0];
@@ -347,38 +241,9 @@ const tiltGraphBasedOnMouseXPosition = () => {
 	}
 }
 
-// Starts counter increment/decrement animation from previous to new value
-const playCounterAnimation = (spanClassName, counterMaxValue, counterDuration) => {
-	const span = canvasContainer.querySelector(spanClassName);
-	let counterMinValue = 0;
-	if (span.getAttribute("data-counter-value")) {
-		counterMinValue = parseFloat(span.getAttribute("data-counter-value"));
-	}
-
-	const timerInterval = 40;
-	const step = counterDuration / timerInterval;
-
-	let counterIncrement;
-	let counterValue = counterMinValue;
-
-	counterIncrement = parseFloat(( counterMaxValue - counterMinValue) / step);
-
-	let i = 1; 
-	const interval = setInterval(() => {
-		if (i <= step) {
-			counterValue += counterIncrement;
-			span.innerText = Math.round(counterValue * 100) / 100 + "%";
-			++i;
-		} else {
-			span.setAttribute("data-counter-value", counterMaxValue);
-			clearInterval(interval);
-		}
-	}, timerInterval);
-}
-
 // Calculates & returns html coordinates of a given bar of graph
 function calculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = "top") {
-	const vector = new THREE.Vector3(bars[i].position.x - bars[i].geometry.parameters.width / 2, yPos, bars[i].position.z);
+	const vector = new THREE.Vector3(bars[i][0].position.x - bars[i][0].geometry.parameters.width / 2, yPos, bars[i][0].position.z);
 
 	vector.project(camera);
 	vector.x = (vector.x + 1) * canvas.getBoundingClientRect().width / 2;
@@ -394,38 +259,10 @@ function calculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = "top")
 	return {x, y};
 }
 
-// appends the graph values (Written as Normal function as it needs to get hoisted)
-function appendValuesToGraph(i) {
-	const obj = calculateCoordinatesOfBarInCanvas(i, bars[i].position.y + 0.1);
-
-	let span = canvasContainer.querySelector(".graph-value-" + (i+1));
-	if (!span) {
-		span = document.createElement("span");
-	}
-	
-	if (!canvasContainer.querySelector(".graph-value-" + (i+1))) {
-		span.innerText = 0 + "%";
-		span.classList.add("graph-value");
-		span.classList.add("graph-value-" + (i+1));
-		span.style.top = obj.y + "px";
-		span.style.left = obj.x + "px";
-		canvasContainer.append(span);
-	}
-}
-
-// Updates y-position of appended percent graph values when bar size changes
-const updatePositionOfGraphValues = (i) => {
-	const obj = calculateCoordinatesOfBarInCanvas(i, bars[i].position.y + bars[i].scale.y * 0.1);
-
-	let span = canvasContainer.querySelector(".graph-value-" + (i+1));
-	span.style.top = obj.y + "px";
-	span.style.left = obj.x + "px";
-}
-
 // Appends values of x-axis of the graph at proper position
 function appendGraphXValues() {
 	for (let i = 0; i < graphXValuesNames.length; i++) {
-		const obj = calculateCoordinatesOfBarInCanvas(i, bars[i].position.y, "bottom");
+		const obj = calculateCoordinatesOfBarInCanvas(i, bars[i][0].position.y, "bottom");
 
 		const span = document.createElement("span");
 		span.classList.add("graph-x-name");
@@ -446,8 +283,10 @@ const animate = () => {
 
 	if (intersects.length == 2) {
 		for (let i = 0; i < bars.length; i++) {
-			if (bars[i].uuid == intersects[0].object.uuid) {
-				rotateBar(bars[i], rotationTl[i], currentRotationSpeedAndDirectionOfBars[i]);
+			for (let j = 0; j < bars[i].length; j++) {
+				if (bars[i][j].uuid == intersects[0].object.uuid) {
+					rotateBar(bars[i][j], rotationTl[i][j], currentRotationSpeedAndDirectionOfBars[i][j]);
+				}
 			}
 		}
 	}

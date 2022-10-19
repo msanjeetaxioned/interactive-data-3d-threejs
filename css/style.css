@@ -48,7 +48,7 @@ section {
 .interactive-data-section {
   height: 100%;
   min-height: 100vh;
-  background: linear-gradient(90deg, #000 85%, rgb(92, 38, 202) 100%);
+  background: #000;
 }
 .interactive-data-section .canvas-container {
   position: relative;
