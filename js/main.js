@@ -12,6 +12,8 @@ let canvas;
 // Setting up Scene, Camera & Renderer
 const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth * 0.85, window.innerHeight * 1.5);
+renderer.setClearColor(0xffffff, 0);
+
 canvasContainer.insertBefore(renderer.domElement, canvasContainer.children[0]);
 canvas = wrapperInteractiveData.querySelector("canvas");
 
@@ -69,6 +71,11 @@ holder.add(light);
 const directionalLight1 = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight1.position.set(1, 0, 0);
 scene.add(directionalLight1);
+
+// const spotLight = new THREE.SpotLight( 0xb25cfa );
+// spotLight.position.set( 25, 0, 10 );
+// spotLight.castShadow = true;
+// scene.add( spotLight );
 
 const graphs = [
 	[0.9, 7.8, 22.5, 50.3, 18.5],

@@ -107,10 +107,16 @@ section {
 			left: 34%;
 			&::after {
 				content: "\f060";
+				position: absolute;
+				top: 50%;
+				left: 50%;
 				font-family: "Font Awesome 6 Free";
 				font-size: 24px;
 				font-weight: 900;
+				transform: translate(-50%, -50%);
+				&:hover { animation: nextArrowAnimation 1.5s ease-in; }
 			}
+			&:hover { animation: reverseBorderSpin 1.5s ease-in; }
 		}
 
 		&.next-button {
@@ -122,12 +128,10 @@ section {
 				font-size: 24px;
 				font-weight: 900;
 			}
+			&:hover { animation: borderSpin 1.5s ease-in; }
 		}
 
-		&:hover {
-			background-color: orangered;
-			cursor: pointer;
-		}
+		&:hover { cursor: pointer; }
 	}
 }
 
@@ -192,5 +196,30 @@ section {
 // 			stroke-width: 1px;
 // 	}
 // }
+
+@keyframes borderSpin {
+	0% { border-color: transparent; }
+	25% { border-right: 1px solid #fff; }
+	50% { border-bottom: 1px solid #fff; }
+	75% { border-left: 1px solid #fff; }
+	100% { border: 1px solid #fff; }
+}
+
+@keyframes reverseBorderSpin {
+	0% { border-color: transparent; }
+	25% { border-top: 1px solid #fff; }
+	50% { border-left: 1px solid #fff; }
+	75% { border-bottom: 1px solid #fff; }
+	100% { border-right: 1px solid #fff; }
+}
+
+@keyframes nextArrowAnimation {
+	0% { left: 55%; opacity: 0.9; }
+	25% { left: 60%; opacity: 0.5; }
+	50% { left: 70%; opacity: 0; }
+	51% { left: 30%; opacity: 0.1; }
+	75% { left: 40%; opacity: 0.5; }
+	100% { left: 50%; opacity: 1; }
+}
 
 .section3 { background-color: darkturquoise; }
