@@ -5,14 +5,14 @@ let canvas;
 
 // Setting up Scene, Camera & Renderer
 const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(window.innerWidth * 0.85, window.innerHeight * 1.5);
+renderer.setSize(document.body.clientWidth * 0.85, window.innerHeight * 1.5);
 renderer.setClearColor(0xffffff, 0);
 
 canvasContainer.insertBefore(renderer.domElement, canvasContainer.children[0]);
 canvas = wrapperInteractiveData.querySelector("canvas");
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.85) / (window.innerHeight * 1.5) , 1, 1000);
+const camera = new THREE.PerspectiveCamera(45, (document.body.clientWidth * 0.85) / (window.innerHeight * 1.5) , 1, 1000);
 
 const holder = new THREE.Group();
 scene.add(holder);
@@ -239,15 +239,26 @@ const tiltGraphBasedOnMouseXPosition = () => {
 	}
 }
 
+let barWidthInHTMLCordinates;
+
 // Calculates & returns html coordinates of a given bar of graph
 function calculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = "top") {
-	const vector = new THREE.Vector3(bars[i][0].position.x - bars[i][0].geometry.parameters.width, yPos, bars[i][0].position.z);
+	const vector = new THREE.Vector3(bars[i][0].position.x - 1.7, yPos, bars[i][0].position.z);
 
 	vector.project(camera);
 	vector.x = (vector.x + 1) * canvas.getBoundingClientRect().width / 2;
 	vector.y =  - (vector.y - 1) * canvas.getBoundingClientRect().height / 2;
 
 	const x = vector.x;
+
+	if (!barWidthInHTMLCordinates) {
+		const vector2 = new THREE.Vector3(bars[i][0].position.x + 1.7, yPos, bars[i][0].position.z);
+		vector2.project(camera);
+		vector2.x = (vector2.x + 1) * canvas.getBoundingClientRect().width / 2;
+		const x2 = vector2.x;
+		barWidthInHTMLCordinates = x2 - x;
+	}
+
 	let y;
 	if (appendToTopOrBottom == "top") {
 		y = vector.y - 70;
@@ -279,9 +290,8 @@ function appendGraphXValues() {
 
 		canvasContainer.append(div);
 
-		const widthBy2 = div.getBoundingClientRect().width / 2;
-		console.log(widthBy2);
-		// div.style.left = (div.offsetLeft - widthBy2) + "px";
+		const xDiffBy2 = (div.getBoundingClientRect().width - barWidthInHTMLCordinates) / 2;
+		div.style.left = (div.offsetLeft - xDiffBy2) + "px";
 	}
 }
 
