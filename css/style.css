@@ -145,6 +145,11 @@ section {
   font-size: 26px;
   font-weight: bold;
 }
+@media screen and (max-width: 1280px) {
+  .graph-value {
+    font-size: 22px;
+  }
+}
 
 .graph-info-and-buttons {
   width: 100%;
@@ -169,6 +174,11 @@ section {
   font-size: 20px;
   font-weight: bold;
 }
+@media screen and (max-width: 1280px) {
+  .graph-x-name {
+    font-size: 18px;
+  }
+}
 
 .graph-names-container {
   height: 50px;
@@ -188,15 +198,26 @@ section {
   text-transform: capitalize;
   transition: background-color 1s ease-in-out;
 }
+@media screen and (max-width: 1280px) {
+  .graph-names-container .button {
+    width: 44px;
+    height: 44px;
+  }
+}
 .graph-names-container .button.previous-button {
   top: 0;
-  left: 34%;
+  left: 33%;
 }
 .graph-names-container .button.previous-button::after {
   content: "\f060";
   font-family: "Font Awesome 6 Free";
   font-size: 24px;
   font-weight: 900;
+}
+@media screen and (max-width: 1280px) {
+  .graph-names-container .button.previous-button::after {
+    font-size: 20px;
+  }
 }
 .graph-names-container .button.next-button {
   top: 0;
@@ -208,6 +229,11 @@ section {
   font-size: 24px;
   font-weight: 900;
 }
+@media screen and (max-width: 1280px) {
+  .graph-names-container .button.next-button::after {
+    font-size: 20px;
+  }
+}
 .graph-names-container .button:hover {
   background-color: orangered;
   cursor: pointer;
@@ -215,6 +241,7 @@ section {
 
 .graph-names {
   width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -230,12 +257,22 @@ section {
   font-weight: bold;
   text-transform: uppercase;
 }
+@media screen and (max-width: 1280px) {
+  .graph-names li span {
+    font-size: 20px;
+  }
+}
 .graph-names li.active {
   flex-basis: 34%;
 }
 .graph-names li.active span {
   color: #fff;
   font-size: 32px;
+}
+@media screen and (max-width: 1280px) {
+  .graph-names li.active span {
+    font-size: 24px;
+  }
 }
 .graph-names .active + li {
   margin-left: 0;
