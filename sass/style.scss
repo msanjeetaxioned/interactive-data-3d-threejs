@@ -6,20 +6,20 @@
 }
 
 @font-face {
-	font-family: 'Roboto Regular';
+	font-family: 'Poppins Regular';
 	font-style: normal;
 	font-weight: normal;
-	src: local('Roboto Regular'), url('../Roboto-Regular.woff') format('woff');
-	}
+	src: local('Poppins Regular'), url('../Poppins-Regular.woff') format('woff');
+}
 
 * {
-	font-family: 'Roboto Regular', sans-serif; 
+	font-family: 'Poppins Regular', sans-serif; 
 	box-sizing: border-box; 
 }
 
 body { 
 	margin: 0;
-	font-family: 'Roboto Regular', sans-serif; 
+	font-family: 'Poppins Regular', sans-serif; 
 }
 
 h2 {
