@@ -11,12 +11,12 @@ let canvas;
 
 // Setting up Scene, Camera & Renderer
 const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(window.innerWidth * 0.85, window.innerHeight * 1.5);
+renderer.setSize(document.body.clientWidth * 0.85, window.innerHeight * 1.5);
 canvasContainer.insertBefore(renderer.domElement, canvasContainer.children[0]);
 canvas = wrapperInteractiveData.querySelector("canvas");
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, (window.innerWidth * 0.85) / (window.innerHeight * 1.5) , 1, 1000);
+const camera = new THREE.PerspectiveCamera(45, (document.body.clientWidth * 0.85) / (window.innerHeight * 1.5) , 1, 1000);
 
 const holder = new THREE.Group();
 scene.add(holder);
@@ -416,6 +416,7 @@ function appendValuesToGraph(i) {
 // Updates y-position of appended percent graph values when bar size changes
 const updatePositionOfGraphValues = (i) => {
 	const obj = calculateCoordinatesOfBarInCanvas(i, bars[i].position.y + bars[i].scale.y * 0.1);
+	console.log(obj);
 
 	let span = canvasContainer.querySelector(".graph-value-" + (i+1));
 	span.style.top = obj.y + "px";
