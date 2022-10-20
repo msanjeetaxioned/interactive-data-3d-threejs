@@ -42,7 +42,28 @@ section {
 }
 
 .section1 {
-  background-color: mediumpurple;
+  padding: 10rem 0 12rem;
+  background-image: url("../images/bg.jpg");
+  background-position: left 33rem center;
+}
+@media screen and (max-width: 1280px) {
+  .section1 {
+    background-position: left 17rem center;
+  }
+}
+.section1 .section-title {
+  font-size: 8.5rem;
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
+}
+@media screen and (max-width: 1280px) {
+  .section1 .section-title {
+    font-size: 7rem;
+  }
+}
+.section1 .section-title .thin {
+  font-weight: 100;
 }
 
 .interactive-data-section {
@@ -50,8 +71,71 @@ section {
   min-height: 100vh;
   background-color: #000;
 }
+.interactive-data-section .section-title {
+  width: 40%;
+  margin: 0 auto;
+  font-size: 9.5rem;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+}
+@media screen and (max-width: 1440px) {
+  .interactive-data-section .section-title {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 1280px) {
+  .interactive-data-section .section-title {
+    font-size: 7rem;
+  }
+}
+.interactive-data-section .section-title .thin {
+  font-weight: 100;
+}
+.interactive-data-section .section-info {
+  padding-top: 10px;
+  background: linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 25px;
+  font-weight: 600;
+  text-align: center;
+}
+@media screen and (max-width: 1280px) {
+  .interactive-data-section .section-info {
+    font-size: 18px;
+  }
+}
 .interactive-data-section .canvas-container {
   position: relative;
+}
+.interactive-data-section .section-note {
+  width: 50%;
+  padding: 20px 45px;
+  border: 2px solid #ff62aa;
+  border-radius: 45px;
+  margin: 4rem auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.interactive-data-section .section-note_title {
+  background: linear-gradient(270deg, #4c65f7 8.21%, #ff62aa 66.32%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.interactive-data-section .section-note_title::before {
+  content: "\f24e";
+  margin-right: 5px;
+  font-family: "FontAwesome";
+  font-size: 20px;
 }
 
 .graph-value {

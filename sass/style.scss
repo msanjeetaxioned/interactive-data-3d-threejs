@@ -12,14 +12,68 @@
 	src: local('Poppins Regular'), url('../Poppins-Regular.woff') format('woff');
 }
 
+$primary-color: #fff;
+$secondary-color: #686767;
+$pc:1440px;
+$small-pc: 1280px;
+$ipad-pro:1024px;
+$ipad:768px;
+$large-mobile:425px;
+$med-mobile:375px;
+$small-mobile:320px;
+
+
+@mixin breakpoint($device) {
+  @if($device=='pc'){
+    @media screen and (max-width: $pc) {
+      @content;
+    }
+  }
+	@else if($device=='small-pc'){
+    @media screen and (max-width: $small-pc) {
+      @content;
+    }
+  } 
+  @else if($device=='ipad-pro') {
+    @media screen and (max-width: $ipad-pro) {
+      @content;
+    }
+  }
+  @else if($device=='ipad') {
+    @media screen and (max-width: $ipad) {
+      @content;
+    }
+  }
+  @else if($device=='large-mobile') {
+    @media screen and (max-width: $large-mobile) {
+      @content;
+    }
+  }
+  @else if($device=='med-mobile') {
+    @media screen and (max-width: $med-mobile) {
+      @content;
+    }
+  }
+  @else if($device=='small-mobile') {
+    @media screen and (max-width: $small-mobile) {
+      @content;
+    }
+  }
+  @else if($device=='min-ipad') {
+    @media screen and (min-width: $ipad) {
+      @content;
+    }
+  }
+}
+
 * {
-	font-family: 'Poppins Regular', sans-serif; 
+	font-family: "Poppins Regular", sans-serif; 
 	box-sizing: border-box; 
 }
 
 body { 
 	margin: 0;
-	font-family: 'Poppins Regular', sans-serif; 
+	font-family: "Poppins Regular", sans-serif; 
 }
 
 h2 {
@@ -43,14 +97,99 @@ section {
 	height: 100vh;
 }
 
-.section1 { background-color: mediumpurple; }
+.section1 {
+	padding: 10rem 0 12rem;
+	background-image: url('../images/bg.jpg'); 
+	background-position: left 33rem center;
+
+	@include breakpoint(small-pc) {
+		background-position: left 17rem center;
+	}
+
+	.section-title {
+		font-size: 8.5rem;
+		font-weight: 500;
+		line-height: 1;
+		text-transform: uppercase;
+
+		@include breakpoint(small-pc) {
+			font-size: 7rem;
+		}
+
+		.thin { font-weight: 100; }
+	}
+}
 
 .interactive-data-section { 
 	height: 100%;
 	min-height: 100vh;
 	background-color: #000;
 
+	.section-title {
+		width: 40%;
+		margin: 0 auto;
+		font-size: 9.5rem;
+		font-weight: 500;
+		line-height: 1;
+		text-align: center;
+		text-transform: uppercase;
+
+		@include breakpoint(pc) {
+			width: 60%;
+		}
+
+		@include breakpoint(small-pc) {
+			font-size: 7rem;
+		}
+
+		.thin { font-weight: 100; }
+	}
+
+	.section-info {
+		padding-top: 10px;
+		background: linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%);
+		background-clip: text;
+		-webkit-background-clip: text;
+	  -webkit-text-fill-color: transparent;
+		font-size: 25px;
+		font-weight: 600;
+		text-align: center;
+
+		@include breakpoint(small-pc) {
+			font-size: 18px;
+		}
+	}
+
 	.canvas-container { position: relative; }
+
+	.section-note {
+		width: 50%;
+		padding: 20px 45px;
+		border: 2px solid #ff62aa;
+		border-radius: 45px;
+		margin: 4rem auto 0;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 20px;
+	
+		&_title {
+			background: linear-gradient(270deg, #4c65f7 8.21%, #ff62aa 66.32%);
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			font-size: 20px;
+			font-weight: 500;
+			text-transform: uppercase;
+
+			&::before {
+				content: "\f24e";
+				margin-right: 5px;
+				font-family: 'FontAwesome';
+				font-size: 20px;
+			}
+		}
+	}
 }
 
 .graph-value {
