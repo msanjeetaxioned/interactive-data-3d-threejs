@@ -72,6 +72,9 @@ section {
   min-height: 100vh;
   background-color: #000;
 }
+.interactive-data-section .wrapper {
+  padding: 50px 0 200px;
+}
 .interactive-data-section .section-title {
   width: 40%;
   margin: 0 auto;
@@ -112,7 +115,8 @@ section {
 .interactive-data-section .canvas-container {
   position: relative;
 }
-.interactive-data-section .section-note {
+
+.section-note {
   width: 50%;
   padding: 20px 45px;
   border: 2px solid #ff62aa;
@@ -123,7 +127,12 @@ section {
   align-items: center;
   gap: 20px;
 }
-.interactive-data-section .section-note_title {
+@media screen and (max-width: 1280px) {
+  .section-note {
+    width: 70%;
+  }
+}
+.section-note_title {
   background: linear-gradient(270deg, #4c65f7 8.21%, #ff62aa 66.32%);
   background-clip: text;
   -webkit-background-clip: text;
@@ -132,7 +141,7 @@ section {
   font-weight: 500;
   text-transform: uppercase;
 }
-.interactive-data-section .section-note_title::before {
+.section-note_title::before {
   content: "\f24e";
   margin-right: 5px;
   font-family: "FontAwesome";
@@ -276,8 +285,4 @@ section {
 }
 .graph-names .active + li {
   margin-left: 0;
-}
-
-.section3 {
-  background-color: darkturquoise;
 }
