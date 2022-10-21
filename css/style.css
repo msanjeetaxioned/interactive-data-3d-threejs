@@ -10,6 +10,12 @@
   font-weight: normal;
   src: local("Poppins Regular"), url("../Poppins-Regular.woff") format("woff");
 }
+@font-face {
+  font-family: "Poppins Thin";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins Thin"), url("../Poppins-Thin.woff") format("woff");
+}
 * {
   font-family: "Poppins Regular", sans-serif;
   box-sizing: border-box;
@@ -64,20 +70,20 @@ section {
   }
 }
 .section1 .section-title .thin {
-  font-weight: 100;
+  font-family: "Poppins Thin";
 }
 
-.work-life-balance-graph-section {
+.graph-section {
   height: 100%;
   min-height: 100vh;
   background-color: #000;
 }
-.work-life-balance-graph-section .wrapper {
+.graph-section .wrapper {
   padding: 50px 0 200px;
 }
-.work-life-balance-graph-section .section-title {
-  width: 40%;
-  margin: 0 auto;
+.graph-section .section-title {
+  width: 50%;
+  margin: 0;
   font-size: 9.5rem;
   font-weight: 500;
   line-height: 1;
@@ -85,19 +91,20 @@ section {
   text-transform: uppercase;
 }
 @media screen and (max-width: 1440px) {
-  .work-life-balance-graph-section .section-title {
-    width: 60%;
+  .graph-section .section-title {
+    width: 100%;
   }
 }
 @media screen and (max-width: 1280px) {
-  .work-life-balance-graph-section .section-title {
+  .graph-section .section-title {
     font-size: 7rem;
   }
 }
-.work-life-balance-graph-section .section-title .thin {
-  font-weight: 100;
+.graph-section .section-title .thin {
+  display: block;
+  font-family: "Poppins Thin";
 }
-.work-life-balance-graph-section .section-info {
+.graph-section .section-info {
   padding-top: 10px;
   background: linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%);
   background-clip: text;
@@ -108,12 +115,16 @@ section {
   text-align: center;
 }
 @media screen and (max-width: 1280px) {
-  .work-life-balance-graph-section .section-info {
+  .graph-section .section-info {
     font-size: 18px;
   }
 }
-.work-life-balance-graph-section .canvas-container {
+.graph-section .canvas-container {
   position: relative;
+}
+
+.project-by-numbers-section {
+  background-color: #000117;
 }
 
 .section-note {
@@ -146,6 +157,9 @@ section {
   margin-right: 5px;
   font-family: "FontAwesome";
   font-size: 20px;
+}
+.section-note_title.bars::before {
+  content: "\f0c9";
 }
 
 .graph1-value {
@@ -286,3 +300,50 @@ section {
 .graph1-names .active + li {
   margin-left: 0;
 }
+
+/* Graph2 SCSS start */
+.graph2-value {
+  position: absolute;
+  color: #fff;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.graph2-info {
+  width: 100%;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.graph2-info > span {
+  margin: 90px 0 20px;
+  display: block;
+  color: #626262;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.graph2-x {
+  position: absolute;
+  text-align: center;
+}
+.graph2-x span {
+  display: block;
+}
+.graph2-x .graph-x-name {
+  margin-bottom: 10px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.graph2-x .graph-x-value {
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Graph2 SCSS end */

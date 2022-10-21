@@ -12,6 +12,13 @@
 	src: local('Poppins Regular'), url('../Poppins-Regular.woff') format('woff');
 }
 
+@font-face {
+	font-family: 'Poppins Thin';
+	font-style: normal;
+	font-weight: normal;
+	src: local('Poppins Thin'), url('../Poppins-Thin.woff') format('woff');
+	}
+
 $primary-color: #fff;
 $secondary-color: #686767;
 $pc:1440px;
@@ -117,11 +124,11 @@ section {
 			font-size: 7rem;
 		}
 
-		.thin { font-weight: 100; }
+		.thin { font-family: "Poppins Thin"; }
 	}
 }
 
-.work-life-balance-graph-section { 
+.graph-section { 
 	height: 100%;
 	min-height: 100vh;
 	background-color: #000;
@@ -129,8 +136,8 @@ section {
 	.wrapper { padding: 50px 0 200px; }
 
 	.section-title {
-		width: 40%;
-		margin: 0 auto;
+		width: 50%;
+		margin: 0;
 		font-size: 9.5rem;
 		font-weight: 500;
 		line-height: 1;
@@ -138,14 +145,17 @@ section {
 		text-transform: uppercase;
 
 		@include breakpoint(pc) {
-			width: 60%;
+			width: 100%;
 		}
 
 		@include breakpoint(small-pc) {
 			font-size: 7rem;
 		}
 
-		.thin { font-weight: 100; }
+		.thin { 
+			display: block;
+			font-family: "Poppins Thin"; 
+		}
 	}
 
 	.section-info {
@@ -165,6 +175,8 @@ section {
 
 	.canvas-container { position: relative; }
 }
+
+.project-by-numbers-section { background-color: #000117; }
 
 .section-note {
 	width: 50%;
@@ -195,6 +207,12 @@ section {
 			margin-right: 5px;
 			font-family: 'FontAwesome';
 			font-size: 20px;
+		}
+
+		&.bars {
+			&::before {
+				content: "\f0c9";
+			}
 		}
 	}
 }
@@ -368,3 +386,51 @@ section {
 // 			stroke-width: 1px;
 // 	}
 // }
+
+/* Graph2 SCSS start */
+.graph2-value {
+	position: absolute;
+	color: #fff;
+	font-size: 26px;
+	font-weight: bold;
+}
+
+.graph2-info {
+	width: 100%;
+	position: absolute;
+	top: 55%;
+	left: 50%;
+	transform: translate(-50%, 0);
+
+	> span {
+		margin: 90px 0 20px;
+		display: block;
+		color: #626262;
+		font-size: 14px;
+		font-weight: bold;
+		text-align: center;
+		text-transform: uppercase;
+	}
+}
+
+.graph2-x {
+	position: absolute;
+	text-align: center;
+	
+	span { display: block; }
+
+	.graph-x-name {
+		margin-bottom: 10px;
+		color: #fff;
+		font-size: 20px;
+		font-weight: bold;
+		text-transform: capitalize;
+	}
+
+	.graph-x-value {
+		color: #fff;
+		font-size: 16px;
+		font-weight: bold;
+	}
+}
+/* Graph2 SCSS end */
