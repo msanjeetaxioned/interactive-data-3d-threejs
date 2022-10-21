@@ -385,7 +385,8 @@ const scale = (number, inMin, inMax, outMin, outMax) => {
 
 const graph1CanvasDistanceFromTop = window.pageYOffset + graph1Canvas.getBoundingClientRect().top;
 const graph1CanvasVisibleMin =  graph1CanvasDistanceFromTop - window.innerHeight;
-const graph1CanvasVisibleMax = graph1CanvasVisibleMin + graph1Canvas.getBoundingClientRect().height;
+const graph1CanvasHeight = graph1Canvas.getBoundingClientRect().height;
+const graph1CanvasVisibleMax = graph1CanvasVisibleMin + graph1CanvasHeight;
 let graph1CurrentWindowY = undefined;
 
 // Sets Vertical rotation of bars based on scroll position 
@@ -399,10 +400,10 @@ const setRotationAngleOfBarsBasedOnScrollPosition = () => {
 	graph1CurrentWindowY = window.scrollY - graph1CanvasVisibleMin;
 
 	if (graph1CurrentWindowY != windowY && windowY != undefined) {
-		if (graph1CurrentWindowY >= 0 && graph1CurrentWindowY <= graph1CanvasVisibleMax) {
-			const percent = Math.round(graph1CurrentWindowY / graph1CanvasVisibleMax * 100);
+		if (graph1CurrentWindowY >= 0 && graph1CurrentWindowY <= graph1CanvasHeight) {
+			const percent = Math.round(graph1CurrentWindowY / graph1CanvasHeight * 100);
 			if (percent >= 25 && percent <= 90) {
-				graph1Camera.position.y = scale(percent, 25, 90, 18, -9);
+				graph1Camera.position.y = scale(percent, 25, 90, 18, -7);
 				graph1Camera.lookAt(0, 0, 0);
 			}
 		}
@@ -636,9 +637,9 @@ const rotateBar = (cube, currentBarTL, currentBarRotation) => {
 }
 
 const canvasDistanceFromTop = window.pageYOffset + canvas.getBoundingClientRect().top;
-console.log(canvasDistanceFromTop);
 const canvasVisibleMin =  canvasDistanceFromTop - window.innerHeight;
-const canvasVisibleMax = canvasVisibleMin + canvas.getBoundingClientRect().height;
+const canvasHeight = canvas.getBoundingClientRect().height;
+const canvasVisibleMax = canvasVisibleMin + canvasHeight;
 let currentWindowY = undefined;
 
 // Sets Vertical rotation of bars based on scroll position 
@@ -652,10 +653,10 @@ const graph2SetRotationAngleOfBarsBasedOnScrollPosition = () => {
 	currentWindowY = window.scrollY - canvasVisibleMin;
 
 	if (currentWindowY != windowY && windowY != undefined) {
-		if (currentWindowY >= 0 && currentWindowY <= canvasVisibleMax) {
-			const percent = Math.round(currentWindowY / canvasVisibleMax * 100);
+		if (currentWindowY >= 0 && currentWindowY <= canvasHeight) {
+			const percent = Math.round(currentWindowY / canvasHeight * 100);
 			if (percent >= 25 && percent <= 90) {
-				camera.position.y = scale(percent, 25, 90, 18, -9);
+				camera.position.y = scale(percent, 25, 90, 18, -8);
 				camera.lookAt(0, 0, 0);
 			}
 		}
