@@ -82,18 +82,13 @@ section {
   padding: 50px 0 200px;
 }
 .graph-section .section-title {
-  width: 50%;
+  width: 100%;
   margin: 0;
   font-size: 9.5rem;
   font-weight: 500;
   line-height: 1;
   text-align: center;
   text-transform: uppercase;
-}
-@media screen and (max-width: 1440px) {
-  .graph-section .section-title {
-    width: 100%;
-  }
 }
 @media screen and (max-width: 1280px) {
   .graph-section .section-title {
