@@ -214,7 +214,7 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 				}
 				let timer = setTimeout(() => {
 					clearTimeout(timer);
-					appendValuesToGraph(i);
+					appendOrUpdateValuesInGraph(i);
 				}, 50);
 			}
 		}
@@ -245,6 +245,7 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 					}
 				});
 			} else {
+				appendOrUpdateValuesInGraph(i);
 				const prevGraphArr = workLifeGraphs[prevGraphNum - 1];
 				newY = graph[i] / prevGraphArr[i] * graph1Bars[i].scale.y;
 				playCounterAnimation(".graph1-value-" + (i+1), workLifeGraphs[graph1CurrentGraph - 1][i], 1600);
@@ -478,7 +479,7 @@ function graph1CalculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = 
 }
 
 // appends the graph values (Written as Normal function as it needs to get hoisted)
-function appendValuesToGraph(i) {
+function appendOrUpdateValuesInGraph(i) {
 	const obj = graph1CalculateCoordinatesOfBarInCanvas(i, graph1Bars[i].position.y + 0.1);
 
 	let span = graph1CanvasContainer.querySelector(".graph1-value-" + (i+1));
@@ -500,6 +501,18 @@ function appendValuesToGraph(i) {
 		}
 
 		span.innerText = 0 + "%";
+	} else {
+		let prevValue;
+		if (span.getAttribute("data-counter-value")) {
+			prevValue = span.getAttribute("data-counter-value");
+			span.innerText = workLifeGraphs[graph1CurrentGraph - 1][i] + "%";
+			span.style.left = obj.x + "px";
+			const xDiffBy2 = (span.getBoundingClientRect().width - graph1BarWidth) / 2;
+			if (xDiffBy2 < 0 && xDiffBy2 != -Infinity) {
+				span.style.left = (span.offsetLeft - xDiffBy2) + "px";
+			}
+			span.innerText = prevValue + "%";
+		}
 	}
 }
 
