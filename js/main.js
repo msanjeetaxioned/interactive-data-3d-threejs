@@ -16,7 +16,7 @@ graph1CanvasContainer.insertBefore(graph1Renderer.domElement, graph1CanvasContai
 graph1Canvas = wrapperWorkLife.querySelector("canvas");
 
 const graph1Scene = new THREE.Scene();
-const graph1Camera = new THREE.PerspectiveCamera(45, (document.body.clientWidth * 0.85) / (window.innerHeight * 1.5) , 1, 1000);
+var graph1Camera = new THREE.PerspectiveCamera(45, (document.body.clientWidth * 0.85) / (window.innerHeight * 1.5) , 1, 1000);
 
 const graph1Holder = new THREE.Group();
 graph1Scene.add(graph1Holder);
@@ -212,7 +212,10 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 				if (i == (graph.length - 1)) {
 					graph1ValuesAppended = true;
 				}
-				appendValuesToGraph(i);
+				let timer = setTimeout(() => {
+					clearTimeout(timer);
+					appendValuesToGraph(i);
+				}, 50);
 			}
 		}
 		graph1FirstTime = false;
@@ -449,15 +452,22 @@ const playCounterAnimation = (spanClassName, counterMaxValue, counterDuration) =
 	}, timerInterval);
 }
 
+let graph1BarWidth;
 // Calculates & returns html coordinates of a given bar of graph
 function graph1CalculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = "top") {
-	const vector = new THREE.Vector3(graph1Bars[i].position.x - graph1Bars[i].geometry.parameters.width / 2, yPos, graph1Bars[i].position.z);
-
+	const vector = new THREE.Vector3(graph1Bars[i].position.x - 1.7, yPos, graph1Bars[i].position.z);
 	vector.project(graph1Camera);
 	vector.x = (vector.x + 1) * graph1Canvas.getBoundingClientRect().width / 2;
 	vector.y =  - (vector.y - 1) * graph1Canvas.getBoundingClientRect().height / 2;
-
 	const x = vector.x;
+
+	const vector2 = new THREE.Vector3(graph1Bars[i].position.x + 1.7, yPos, graph1Bars[i].position.z);
+	vector2.project(graph1Camera);
+	vector2.x = (vector2.x + 1) * graph1Canvas.getBoundingClientRect().width / 2;
+	const x2 = vector2.x;
+
+	graph1BarWidth = x2 - x;
+
 	let y;
 	if (appendToTopOrBottom == "top") {
 		y = vector.y - 70;
@@ -477,12 +487,19 @@ function appendValuesToGraph(i) {
 	}
 	
 	if (!graph1CanvasContainer.querySelector(".graph1-value-" + (i+1))) {
-		span.innerText = 0 + "%";
+		span.innerText = workLifeGraphs[graph1CurrentGraph - 1][i] + "%";
 		span.classList.add("graph1-value");
 		span.classList.add("graph1-value-" + (i+1));
 		span.style.top = obj.y + "px";
 		span.style.left = obj.x + "px";
 		graph1CanvasContainer.append(span);
+
+		const xDiffBy2 = (span.getBoundingClientRect().width - graph1BarWidth) / 2;
+		if (xDiffBy2 < 0 && xDiffBy2 != -Infinity) {
+			span.style.left = (span.offsetLeft - xDiffBy2) + "px";
+		}
+
+		span.innerText = 0 + "%";
 	}
 }
 
@@ -492,7 +509,6 @@ const updatePositionOfGraphValues = (i) => {
 
 	let span = graph1CanvasContainer.querySelector(".graph1-value-" + (i+1));
 	span.style.top = obj.y + "px";
-	span.style.left = obj.x + "px";
 }
 
 // Appends values of x-axis of the graph at proper position
@@ -507,6 +523,11 @@ function graph1AppendGraphXValues() {
 		span.style.top = obj.y + "px";
 
 		graph1CanvasContainer.append(span);
+
+		if (!isNaN(graph1BarWidth) && graph1BarWidth != Infinity && graph1BarWidth != -Infinity) {
+			const xDiffBy2 = (span.getBoundingClientRect().width - graph1BarWidth) / 2;
+			span.style.left = (span.offsetLeft - xDiffBy2) + "px";
+		}
 	}
 }
 
