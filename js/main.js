@@ -546,7 +546,7 @@ function graph1AppendGraphXValues() {
 
 const calculateBarsHeightAndAddThemInScene = () => {
 	// Cubes
-	const barColor = 0x4a39ea;
+	const barColor = 0xe31c79;
 	const barMaxHeight = 12;
 	let xPos = -15;
 	let maxValue = graphXValues[0];
