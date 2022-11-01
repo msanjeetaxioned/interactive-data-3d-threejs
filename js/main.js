@@ -547,10 +547,10 @@ function graph1AppendGraphXValues() {
 const calculateBarsHeightAndAddThemInScene = () => {
 	// Cubes
 	const barColor = 0xe31c79;
-	const barMaxHeight = 12;
+	const barMaxHeight = 15;
 	let xPos = -15;
 	let maxValue = graphXValues[0];
-	const individualBarHeight = barMaxHeight / maxValue;
+	let individualBarHeight;
 
 	for (let i = 1; i < graphXValues.length; i++) {
 		if (graphXValues[i] > maxValue) {
@@ -558,28 +558,46 @@ const calculateBarsHeightAndAddThemInScene = () => {
 		}
 	}
 
+	individualBarHeight = barMaxHeight / maxValue;
+
 	for (let i = 0; i < graphXNames.length; i++) {
 		bars[i] = [];
 		for (let j = 0; j < graphXValues[i]; j++) {
-			const geometryBar = new THREE.BoxGeometry(2.5, individualBarHeight, 2.5);
+			const geometryBar = new THREE.BoxGeometry(2.5, individualBarHeight, 2.5).toNonIndexed();
 			geometryBar.translate( 0, individualBarHeight / 2, 0 );
 			const materialBar = new THREE.MeshPhongMaterial({
-				color: barColor,
 				emissive: 0x000000,
 				specular: 0x111111,
 				shininess: 100,
 				reflectivity: 1,
 				refractionRatio: 0.98,
 				combine: THREE.MultiplyOperation,
-				side: THREE.DoubleSide
+				side: THREE.DoubleSide,
+				vertexColors: true
 			});
+			const positionAttribute = geometryBar.getAttribute('position');
+			const color = new THREE.Color();
+			geometryBar.setAttribute('color', new THREE.BufferAttribute(new Float32Array(positionAttribute.count * 3), 3));
+			const color1 = geometryBar.getAttribute('color');
+
+			const botFace = { min: 18, max: 24 };
+			const topFace = { min: 12, max: 18 };
+			for (let i = 0; i < positionAttribute.count; i++) {
+				if ((i >= botFace.min && i < botFace.max) || (i >= topFace.min && i < topFace.max)) {
+					color.setHex(0xadd8e6);
+				} else {
+					color.setHex(barColor);
+				}
+				color1.setXYZ(i, color.r, color.g, color.b);
+			}
+
 			bars[i][j] = new THREE.Mesh(geometryBar, materialBar);
 			bars[i][j].position.x = xPos;
 			
 			if (j == 0 ) {
 				bars[i][j].position.y = 0;
 			} else {
-				bars[i][j].position.y = (individualBarHeight + 0.3) * j;
+				bars[i][j].position.y = (individualBarHeight + 0.2) * j;
 			}
 
 			bars[i][j].rotation.y = Math.PI / 4;
