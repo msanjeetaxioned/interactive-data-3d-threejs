@@ -133,8 +133,6 @@ section {
 	min-height: 100vh;
 	background-color: #000;
 
-	.wrapper { padding: 50px 0 200px; }
-
 	.section-title {
 		width: 100%;
 		margin: 0;
@@ -170,45 +168,6 @@ section {
 	}
 
 	.canvas-container { position: relative; }
-}
-
-.section-note {
-	width: 50%;
-	padding: 20px 45px;
-	border: 2px solid #ff62aa;
-	border-radius: 45px;
-	margin: 4rem auto 0;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	gap: 20px;
-
-	@include breakpoint(small-pc) {
-		width: 70%;
-	}
-
-	&_title {
-		background: linear-gradient(270deg, #4c65f7 8.21%, #ff62aa 66.32%);
-		background-clip: text;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		font-size: 20px;
-		font-weight: 500;
-		text-transform: uppercase;
-
-		&::before {
-			content: "\f24e";
-			margin-right: 5px;
-			font-family: 'FontAwesome';
-			font-size: 20px;
-		}
-
-		&.bars {
-			&::before {
-				content: "\f0c9";
-			}
-		}
-	}
 }
 
 .graph1-value {
