@@ -547,6 +547,7 @@ function graph1AppendGraphXValues() {
 const calculateBarsHeightAndAddThemInScene = () => {
 	// Cubes
 	const barColor = 0xe31c79;
+	const topAndBotFaceColor = 0xf18ebc;
 	const barMaxHeight = 15;
 	let xPos = -15;
 	let maxValue = graphXValues[0];
@@ -578,17 +579,17 @@ const calculateBarsHeightAndAddThemInScene = () => {
 			const positionAttribute = geometryBar.getAttribute('position');
 			const color = new THREE.Color();
 			geometryBar.setAttribute('color', new THREE.BufferAttribute(new Float32Array(positionAttribute.count * 3), 3));
-			const color1 = geometryBar.getAttribute('color');
+			const vertexColor = geometryBar.getAttribute('color');
 
 			const botFace = { min: 18, max: 24 };
 			const topFace = { min: 12, max: 18 };
 			for (let i = 0; i < positionAttribute.count; i++) {
 				if ((i >= botFace.min && i < botFace.max) || (i >= topFace.min && i < topFace.max)) {
-					color.setHex(0xadd8e6);
+					color.setHex(topAndBotFaceColor);
 				} else {
 					color.setHex(barColor);
 				}
-				color1.setXYZ(i, color.r, color.g, color.b);
+				vertexColor.setXYZ(i, color.r, color.g, color.b);
 			}
 
 			bars[i][j] = new THREE.Mesh(geometryBar, materialBar);
