@@ -598,7 +598,7 @@ const calculateBarsHeightAndAddThemInScene = () => {
 			if (j == 0 ) {
 				bars[i][j].position.y = 0;
 			} else {
-				bars[i][j].position.y = (individualBarHeight + 0.2) * j;
+				bars[i][j].position.y = (individualBarHeight + 0.1) * j;
 			}
 
 			bars[i][j].rotation.y = Math.PI / 4;
