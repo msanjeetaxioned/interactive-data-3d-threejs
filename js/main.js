@@ -407,7 +407,7 @@ const setRotationAngleOfBarsBasedOnScrollPosition = () => {
 		if (graph1CurrentWindowY >= 0 && graph1CurrentWindowY <= graph1CanvasHeight) {
 			const percent = Math.round(graph1CurrentWindowY / graph1CanvasHeight * 100);
 			if (percent >= 25 && percent <= 90) {
-				graph1Camera.position.y = scale(percent, 25, 90, 18, -7);
+				graph1Camera.position.y = scale(percent, 25, 90, 15, -2);
 				graph1Camera.lookAt(0, 0, 0);
 			}
 		}
@@ -547,7 +547,7 @@ function graph1AppendGraphXValues() {
 const calculateBarsHeightAndAddThemInScene = () => {
 	// Cubes
 	const barColor = 0xe31c79;
-	const topAndBotFaceColor = 0xf18ebc;
+	const topAndBotFaceColor = 0xf39ec6;
 	const barMaxHeight = 15;
 	let xPos = -15;
 	let maxValue = graphXValues[0];
