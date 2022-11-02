@@ -554,8 +554,12 @@ section {
 			}
 
 			&:hover {
-				background: linear-gradient(#fff, #fff) padding-box, linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%) border-box;
-				color: #000;
+				border: 2px solid white;
+				background: linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%);
+				color: transparent;
+				background-clip: text;
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
 			}
 		}
 	}
