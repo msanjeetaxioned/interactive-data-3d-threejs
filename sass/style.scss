@@ -500,6 +500,10 @@ section {
 		color: #fff;
 		font-size: 22px;
 		text-transform: uppercase;
+
+		@include breakpoint(small-pc) {
+			font-size: 20px;
+		}
 	}
 
 	p {
@@ -508,6 +512,11 @@ section {
 		font-size: 90px;
 		font-weight: bold;
 		line-height: 110px;
+
+		@include breakpoint(small-pc) {
+			font-size: 66px;
+			line-height: 86px;
+		}
 
 		span {
 			background: linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%);
@@ -530,6 +539,11 @@ section {
 			color: #fff;
 			font-size: 18px;
 			text-transform: capitalize;
+
+			@include breakpoint(small-pc) {
+				padding: 8px 16px;
+				font-size: 16px;
+			}
 
 			&:hover {
 				background: linear-gradient(#fff, #fff) padding-box, linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%) border-box;
