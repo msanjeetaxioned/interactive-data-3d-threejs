@@ -96,6 +96,7 @@ h2 {
 /* Styles start */
 .wrapper {
 	width: 85%;
+	height: 100%;
 	padding: 50px 0;
 	margin: 0 auto;
 }
@@ -307,38 +308,94 @@ section {
 	.active + li { margin-left: 0; }
 }
 
-// .previous-button {
-// 	svg {
-// 		display: block;
-// 		width: 50px;
-// 		height: 50px;
-// 	}
-// 	&:hover {
-// 		circle {
-// 			animation: draw1 .75s linear forwards;
-// 		}
-// 	}
+/* Quote section SCSS start */
+.quote-section { 
+	background-color: #07033b; 
 
-// 	span {
-// 		font-size: 0;
-// 	}
-// }
+	.wrapper { display: flex; }
+	figure { 
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		flex-basis: 30%; 
 
-// @keyframes draw1 {
-// 	0% {
-// 			stroke-dasharray: 300;
-// 			stroke-dashoffset: 700;
-// 			stroke-width: 1px;
-// 	}
-// 	75% {
-// 			stroke-dasharray: 900;
-// 			stroke-width: 1px;
-// 	}
-// 	100% {
-// 			stroke-dasharray: 900;
-// 			stroke-width: 1px;
-// 	}
-// }
+		img {
+			width: 250px;
+			height: 250px;
+			border: 10px solid #ff62aa;
+			border-radius: 50%;
+			outline: 2px solid lightblue;
+			display: block;
+		}
+	}
+}
+
+.quote-content {
+	padding-right: 30px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex-basis: 70%;
+
+	.quote-info {
+		margin-bottom: 20px;
+		display: block;
+		color: #fff;
+		font-size: 22px;
+		text-transform: uppercase;
+	}
+
+	p {
+		margin-bottom: 25px;
+		color: #fff;
+		font-size: 36px;
+		line-height: 46px;
+	}
+
+	a {
+		width: fit-content;
+		padding-bottom: 10px;
+		display: inline-block;
+		position: relative;
+		background: linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%);
+		font-size: 24px;
+		font-weight: bold;
+		background-clip: text;
+		-webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+		text-transform: capitalize;
+
+		&::before {
+			width: 100%;
+			height: 2px;
+			display: inline-block;
+			position: absolute;
+			left: 0px;
+			bottom: 0px;
+			background: linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%);
+		}
+
+		&::after {
+			content: '\f178';
+			margin-left: 5px;
+			display: inline-block;
+			color: #fff;
+			font-family: "Font Awesome 6 Free";
+			font-size: 24px;
+			font-weight: 900;
+		}
+	}
+
+	.author-qualification {
+		display: block;
+		color: gray;
+		font-size: 22px;
+		font-weight: bold;
+		line-height: 30px;
+	}
+}
+/* Quote section SCSS end */
 
 /* Graph2 SCSS start */
 .graph2-value {
