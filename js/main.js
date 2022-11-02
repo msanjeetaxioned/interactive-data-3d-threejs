@@ -549,7 +549,7 @@ const calculateBarsHeightAndAddThemInScene = () => {
 	const barColor = 0xe31c79;
 	const topAndBotFaceColor = 0xf39ec6;
 	const barMaxHeight = 15;
-	let xPos = -15;
+	let xPos = -17.5;
 	let maxValue = graphXValues[0];
 	let individualBarHeight;
 
@@ -611,7 +611,7 @@ const calculateBarsHeightAndAddThemInScene = () => {
 				}, 400);
 			}
 		}
-		xPos = xPos + 6;
+		xPos = xPos + 7;
 	}
 }
 

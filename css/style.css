@@ -418,10 +418,20 @@ section {
   font-weight: bold;
   text-transform: capitalize;
 }
+@media screen and (max-width: 1280px) {
+  .graph2-x .graph-x-name {
+    font-size: 18px;
+  }
+}
 .graph2-x .graph-x-value {
   color: #fff;
   font-size: 16px;
   font-weight: bold;
+}
+@media screen and (max-width: 1280px) {
+  .graph2-x .graph-x-value {
+    font-size: 15px;
+  }
 }
 
 /* Graph2 SCSS end */
