@@ -276,10 +276,12 @@ section {
 	display: flex;
 	align-items: center;
 	overflow: hidden;
+
 	li {
 		flex-basis: 16.5%;
 		flex-shrink: 0;
 		text-align: center;
+
 		span {
 			color: #626262;
 			font-size: 24px;
@@ -310,9 +312,13 @@ section {
 
 /* Quote section SCSS start */
 .quote-section { 
-	background-color: #07033b; 
+	margin-top: -200px;
+	position: relative;
+	z-index: 2;
+	background-color: #000; 
 
 	.wrapper { display: flex; }
+
 	figure { 
 		display: flex;
 		flex-direction: column;

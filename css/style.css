@@ -257,7 +257,10 @@ section {
 
 /* Quote section SCSS start */
 .quote-section {
-  background-color: #07033b;
+  margin-top: -200px;
+  position: relative;
+  z-index: 2;
+  background-color: #000;
 }
 .quote-section .wrapper {
   display: flex;
