@@ -327,6 +327,11 @@ section {
 			border-radius: 50%;
 			outline: 2px solid lightblue;
 			display: block;
+
+			@include breakpoint(small-pc) {
+				width: 200px;
+				height: 200px;
+			}
 		}
 	}
 }
@@ -337,6 +342,10 @@ section {
 	flex-direction: column;
 	justify-content: center;
 	flex-basis: 70%;
+	
+	@include breakpoint(small-pc) {
+		padding-right: 20px;
+	}
 
 	.quote-info {
 		margin-bottom: 20px;
@@ -344,6 +353,10 @@ section {
 		color: #fff;
 		font-size: 22px;
 		text-transform: uppercase;
+
+		@include breakpoint(small-pc) {
+			font-size: 20px;
+		}
 	}
 
 	p {
@@ -351,6 +364,11 @@ section {
 		color: #fff;
 		font-size: 36px;
 		line-height: 46px;
+
+		@include breakpoint(small-pc) {
+			font-size: 30px;
+			line-height: 40px;
+		}
 	}
 
 	a {
@@ -365,6 +383,10 @@ section {
 		-webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 		text-transform: capitalize;
+
+		@include breakpoint(small-pc) {
+			font-size: 22px;
+		}
 
 		&::before {
 			width: 100%;
@@ -384,6 +406,10 @@ section {
 			font-family: "Font Awesome 6 Free";
 			font-size: 24px;
 			font-weight: 900;
+
+			@include breakpoint(small-pc) {
+				font-size: 22px;
+			}
 		}
 	}
 
@@ -393,6 +419,11 @@ section {
 		font-size: 22px;
 		font-weight: bold;
 		line-height: 30px;
+
+		@include breakpoint(small-pc) {
+			font-size: 20px;
+			line-height: 26px;
+		}
 	}
 }
 /* Quote section SCSS end */

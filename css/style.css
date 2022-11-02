@@ -277,6 +277,12 @@ section {
   outline: 2px solid lightblue;
   display: block;
 }
+@media screen and (max-width: 1280px) {
+  .quote-section figure img {
+    width: 200px;
+    height: 200px;
+  }
+}
 
 .quote-content {
   padding-right: 30px;
@@ -285,6 +291,11 @@ section {
   justify-content: center;
   flex-basis: 70%;
 }
+@media screen and (max-width: 1280px) {
+  .quote-content {
+    padding-right: 20px;
+  }
+}
 .quote-content .quote-info {
   margin-bottom: 20px;
   display: block;
@@ -292,11 +303,22 @@ section {
   font-size: 22px;
   text-transform: uppercase;
 }
+@media screen and (max-width: 1280px) {
+  .quote-content .quote-info {
+    font-size: 20px;
+  }
+}
 .quote-content p {
   margin-bottom: 25px;
   color: #fff;
   font-size: 36px;
   line-height: 46px;
+}
+@media screen and (max-width: 1280px) {
+  .quote-content p {
+    font-size: 30px;
+    line-height: 40px;
+  }
 }
 .quote-content a {
   width: fit-content;
@@ -310,6 +332,11 @@ section {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-transform: capitalize;
+}
+@media screen and (max-width: 1280px) {
+  .quote-content a {
+    font-size: 22px;
+  }
 }
 .quote-content a::before {
   width: 100%;
@@ -329,12 +356,23 @@ section {
   font-size: 24px;
   font-weight: 900;
 }
+@media screen and (max-width: 1280px) {
+  .quote-content a::after {
+    font-size: 22px;
+  }
+}
 .quote-content .author-qualification {
   display: block;
   color: gray;
   font-size: 22px;
   font-weight: bold;
   line-height: 30px;
+}
+@media screen and (max-width: 1280px) {
+  .quote-content .author-qualification {
+    font-size: 20px;
+    line-height: 26px;
+  }
 }
 
 /* Quote section SCSS end */
