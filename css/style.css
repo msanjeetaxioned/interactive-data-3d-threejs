@@ -425,6 +425,54 @@ section {
 }
 
 /* Graph2 SCSS end */
-.section4 {
-  background-color: darkturquoise;
+/* Lifestyle section start */
+.lifestyle-section {
+  margin-top: -200px;
+  position: relative;
+  z-index: 2;
+  background-color: #000;
 }
+.lifestyle-section .wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.lifestyle-section h3 {
+  margin-bottom: 15px;
+  color: #fff;
+  font-size: 22px;
+  text-transform: uppercase;
+}
+.lifestyle-section p {
+  margin-bottom: 30px;
+  color: #fff;
+  font-size: 90px;
+  font-weight: bold;
+  line-height: 110px;
+}
+.lifestyle-section p span {
+  background: linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.lifestyle-section .share-button-container {
+  text-align: center;
+}
+.lifestyle-section .share-button-container button {
+  padding: 10px 20px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  display: inline-block;
+  background: linear-gradient(#000, #000) padding-box, linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%) border-box;
+  color: #fff;
+  font-size: 18px;
+  text-transform: capitalize;
+}
+.lifestyle-section .share-button-container button:hover {
+  background: linear-gradient(#fff, #fff) padding-box, linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%) border-box;
+  color: #000;
+}
+
+/* Lifestyle section end */
