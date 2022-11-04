@@ -782,6 +782,7 @@ class SpheresInteraction {
 	raycaster;
 	mouse;
 	movementX;
+	movementY;
 	mouseXCanvas;
 	light;
 	data;
@@ -832,6 +833,7 @@ class SpheresInteraction {
 
 	onMouseMove = (event) => {
 		this.movementX =  event.movementX;
+		this.movementY = event.movementY;
 		const rect = event.target.getBoundingClientRect();
 	
 		this.mouseXCanvas = event.clientX - rect.left;
@@ -853,6 +855,17 @@ class SpheresInteraction {
 		if (this.holder.rotation.y != newY) {
 			this.holder.rotation.y = newY;
 		}
+	}
+
+	calculateIntersections = () => {
+		this.raycaster.setFromCamera(this.mouse, this.camera);
+		// calculate objects intersecting the picking ray
+		const intersects = this.raycaster.intersectObjects(this.holder.children);
+		if (intersects.length == 1) {
+			console.log("x: " + this.movementX);
+			console.log("y: " + this.movementY);
+		}
+		this.renderer.render(this.scene, this.camera);
 	}
 }
 
@@ -933,7 +946,7 @@ const animate = () => {
 	renderer.render(scene, camera);
 
 	// Interaction 3
-	spheresInteraction.tiltInteractionBasedOnMouseXPosition();
-	spheresInteraction.renderer.render(spheresInteraction.scene, spheresInteraction.camera);
+	// spheresInteraction.tiltInteractionBasedOnMouseXPosition();
+	spheresInteraction.calculateIntersections();
 }
 animate();
