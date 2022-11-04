@@ -772,6 +772,124 @@ const appendGraphXValues = () => {
 	}
 }
 
+class SpheresInteraction {
+	canvasContainer;
+	canvas;
+	renderer;
+	scene;
+	camera;
+	holder;
+	raycaster;
+	mouse;
+	movementX;
+	mouseXCanvas;
+	light;
+	data;
+	titles;
+	sphere;
+	currentInteractionNum;
+
+	constructor() {
+		this.canvasContainer = document.querySelector(".spheres-section .canvas-container");
+		this.renderer = new THREE.WebGLRenderer({antialias: true});
+		this.renderer.setSize(document.body.clientWidth * 0.85, window.innerHeight * 1.5);
+		this.canvasContainer.insertBefore(this.renderer.domElement, this.canvasContainer.children[0]);
+		this.canvas = this.canvasContainer.querySelector("canvas");
+		this.scene = new THREE.Scene();
+		this.camera = new THREE.PerspectiveCamera(45, (document.body.clientWidth * 0.85) / (window.innerHeight * 1.5) , 1, 1000);
+		this.holder = new THREE.Group();
+		this.scene.add(this.holder);
+		this.raycaster = new THREE.Raycaster();
+		this.mouse = new THREE.Vector2();
+
+		this.canvas.addEventListener("mousemove", this.onMouseMove, false);
+		this.canvas.addEventListener("sphereadded", this.addSphereModelToHolder, false);
+
+		this.light = new THREE.AmbientLight(0xffffff, 1);
+		this.light.position.z = 5;
+		this.holder.add(this.light);
+
+		this.directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+		this.directionalLight.position.set(0, 0, 5);
+		this.holder.add(this.directionalLight);
+
+		this.data = [
+			[{"name": "native", "value": 2.8}, {"name": "kanban", "value": 12.8}, {"name": "mobile", "value": 15.7}, {"name": "sass", "value": 3}, {"name": "scrum", "value": 20.6}, {"name": "management", "value": 3.7}, {"name": "agile", "value": 24.9}, {"name": "waterfall", "value": 4.5}, {"name": "apps", "value": 1.9}],
+			[{"name": "editing", "value": 1.3}, {"name": "content", "value": 3.5}, {"name": "social media", "value": 5.7}, {"name": "email", "value": 1.4}, {"name": "copywriting", "value": 7.9}, {"name": "landing pages", "value": 1.7}, {"name": "advertising", "value": 2}, {"name": "blogging", "value": 12.6}],
+			[{"name": "facebook", "value": 5.6}, {"name": "email", "value": 3.2}, {"name": "strategy", "value": 3.6}, {"name": "content", "value": 5.9}, {"name": "adwords", "value": 4.2}, {"name": "growth", "value": 3}, {"name": "ads", "value": 3}, {"name": "social media", "value": 9}, {"name": "product", "value": 4.9}],
+			[{"name": "content creation", "value": 9.1}, {"name": "design", "value": 2.1}, {"name": "twitter", "value": 9.6}, {"name": "pinterest", "value": 2.2}, {"name": "video", "value": 2.2}, {"name": "facebook", "value": 9.9}, {"name": "management", "value": 2.1}, {"name": "instagram", "value": 14.4}, {"name": "linkedin", "value": 4}],
+			[{"name": "branding", "value": 6.1}, {"name": "print", "value": 2.7}, {"name": "graphic design", "value": 3.3}, {"name": "web", "value": 6.6}, {"name": "mobile", "value": 3.7}, {"name": "ui", "value": 9.1}, {"name": "illustration", "value": 1.6}, {"name": "ux", "value": 9.5}, {"name": "product", "value": 4.4}],
+			[{"name": "java", "value": 2.5}, {"name": "angularjs", "value": 5.2}, {"name": "node", "value": 9.1}, {"name": "vue", "value": 2.6}, {"name": "typescript", "value": 2.9}, {"name": "javascript", "value": 10.5}, {"name": "laravel", "value": 2.5}, {"name": "react", "value": 14}, {"name": "python", "value": 3.8}]
+		];
+
+		this.titles = ["product", "writing", "marketing", "social", "design", "engineering"];
+
+		this.currentInteractionNum = 3;
+
+		this.sphere = new Sphere(this.canvas, this.data[this.currentInteractionNum - 1][0]);
+		this.camera.position.z = 20;
+	}
+
+	onMouseMove = (event) => {
+		this.movementX =  event.movementX;
+		const rect = event.target.getBoundingClientRect();
+	
+		this.mouseXCanvas = event.clientX - rect.left;
+		const mouseYCanvas = event.clientY - rect.top;
+	
+		this.mouse.x = (this.mouseXCanvas / rect.width) * 2 - 1;
+		this.mouse.y = -(mouseYCanvas / rect.height) * 2 + 1;
+	}
+
+	addSphereModelToHolder = () => {
+		this.holder.add(this.sphere.model);
+	}
+}
+
+class Sphere {
+	color;
+	loader;
+	dracoLoader;
+	model;
+	name;
+	value;
+
+	constructor(canvas, data) {
+		this.name = data.name;
+		this.value = data.value;
+
+		this.loader = new THREE.GLTFLoader();
+
+		this.dracoLoader = new THREE.DRACOLoader();
+		this.dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.142.0/examples/js/libs/draco/gltf/');
+		this.loader.setDRACOLoader(this.dracoLoader);
+
+		this.loader.load(
+			'models/sphere.gltf',
+			(gltf) => {
+				this.model = gltf.scene;
+				if (this.model.children[0].children[3] instanceof THREE.Mesh)
+					this.model.children[0].children[3].material.color.setHex(0xe31c79);
+
+				this.model.scale.x = 0.02;
+				this.model.scale.y = 0.02;
+				this.model.scale.z = 0.02;
+
+				const event = new Event("sphereadded");
+				canvas.dispatchEvent(event);
+			},
+			(xhr) => {
+				// console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+			},
+			(error) => {
+				console.log(error)
+			}
+		);
+	}
+}
+
+const spheresInteraction = new SpheresInteraction();
+
 const animate = () => {
 	requestAnimationFrame(animate);
 	graph1Raycaster.setFromCamera(graph1Mouse, graph1Camera);
@@ -803,5 +921,8 @@ const animate = () => {
 	graph2SetRotationAngleOfBarsBasedOnScrollPosition();
 	tiltGraphBasedOnMouseXPosition(canvas, mouseXCanvas, holder);
 	renderer.render(scene, camera);
+
+	// Interaction 3
+	spheresInteraction.renderer.render(spheresInteraction.scene, spheresInteraction.camera);
 }
 animate();

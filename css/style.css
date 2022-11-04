@@ -507,3 +507,14 @@ section {
 }
 
 /* Lifestyle section end */
+/* Spheres section start */
+.spheres-section {
+  height: 100%;
+  min-height: 100vh;
+  background-color: #000;
+}
+.spheres-section .section-title .thin {
+  display: inline-block;
+}
+
+/* Spheres section end */
