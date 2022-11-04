@@ -366,7 +366,7 @@ section {
 }
 .quote-content .author-qualification {
   display: block;
-  color: gray;
+  color: #626262;
   font-size: 22px;
   font-weight: bold;
   line-height: 30px;
@@ -498,7 +498,7 @@ section {
   }
 }
 .lifestyle-section .share-button-container button:hover {
-  border: 2px solid white;
+  border: 2px solid #fff;
   background: linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%);
   color: transparent;
   background-clip: text;
