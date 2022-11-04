@@ -844,6 +844,16 @@ class SpheresInteraction {
 	addSphereModelToHolder = () => {
 		this.holder.add(this.sphere.model);
 	}
+
+	// For tilting graph based on left-right position of mouse cursor
+	tiltInteractionBasedOnMouseXPosition = () => {
+		const percent = Math.round(this.mouseXCanvas / this.canvas.getBoundingClientRect().width * 100);
+		// Tilts graph by 4 degrees both directions based on mouse x position
+		const newY = scale(percent, 0, 100, 0.06981317, -0.06981317);
+		if (this.holder.rotation.y != newY) {
+			this.holder.rotation.y = newY;
+		}
+	}
 }
 
 class Sphere {
@@ -923,6 +933,7 @@ const animate = () => {
 	renderer.render(scene, camera);
 
 	// Interaction 3
+	spheresInteraction.tiltInteractionBasedOnMouseXPosition();
 	spheresInteraction.renderer.render(spheresInteraction.scene, spheresInteraction.camera);
 }
 animate();
