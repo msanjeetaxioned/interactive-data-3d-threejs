@@ -255,9 +255,12 @@ section {
   margin-left: 0;
 }
 
+.minor-section {
+  margin-top: -180px;
+}
+
 /* Quote section SCSS start */
 .quote-section {
-  margin-top: -200px;
   position: relative;
   z-index: 2;
   background-color: #000;
@@ -437,7 +440,6 @@ section {
 /* Graph2 SCSS end */
 /* Lifestyle section start */
 .lifestyle-section {
-  margin-top: -200px;
   position: relative;
   z-index: 2;
   background-color: #000;

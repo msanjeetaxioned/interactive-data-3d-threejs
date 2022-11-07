@@ -311,9 +311,10 @@ section {
 	.active + li { margin-left: 0; }
 }
 
+.minor-section { margin-top: -180px; }
+
 /* Quote section SCSS start */
 .quote-section { 
-	margin-top: -200px;
 	position: relative;
 	z-index: 2;
 	background-color: $black; 
@@ -493,7 +494,6 @@ section {
 
 /* Lifestyle section start */
 .lifestyle-section { 
-	margin-top: -200px;
 	position: relative;
 	z-index: 2;
 	background-color: $black;
