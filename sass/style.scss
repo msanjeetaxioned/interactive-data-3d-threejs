@@ -226,6 +226,7 @@ section {
 	color: $white;
 	font-size: 20px;
 	font-weight: bold;
+	text-transform: capitalize;
 
 	@include breakpoint(small-pc) {
 		font-size: 18px;
@@ -256,7 +257,7 @@ section {
 
 		&.previous-button {
 			top: 0;
-			left: 33%;
+			left: 34%;
 			&::after {
 				content: "\f060";
 				font-family: "Font Awesome 6 Free";
@@ -271,7 +272,7 @@ section {
 
 		&.next-button {
 			top: 0;
-			left: 62%;
+			right: 34%;
 			&::after {
 				content: "\f061";
 				font-family: "Font Awesome 6 Free";
@@ -299,9 +300,9 @@ section {
 	overflow: hidden;
 
 	li {
-		flex-basis: 16.5%;
+		flex-basis: 16%;
 		flex-shrink: 0;
-		text-align: center;
+		text-align: left;
 
 		span {
 			color: $gray;
@@ -315,7 +316,8 @@ section {
 		}
 
 		&.active {
-			flex-basis: 34%;
+			flex-basis: 36%;
+			text-align: center;
 
 			span {
 				color: $white;

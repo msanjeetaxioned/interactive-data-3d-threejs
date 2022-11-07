@@ -71,14 +71,14 @@ graph1DirectionalLight.position.set(1, 0, 0);
 graph1Scene.add(graph1DirectionalLight);
 
 const workLifeGraphs = [
-	[0.9, 7.8, 22.5, 50.3, 18.5],
-	[2.4, 18, 31.4, 38, 10.4],
-	[0.1, 10, 22.2, 48, 19.6],
-	[1.1, 16.9, 30.4, 41, 10.6],
-	[0.7, 10.5, 28.2, 48.4, 12.2],
-	[0.4, 5.9, 17.8, 57.6, 18.3]
+	[8, 8, 8, 10, 7],
+	[8, 8, 8, 8, 8],
+	[10, 10, 10, 10, 8],
+	[9, 9, 9, 9, 8],
+	[9, 8, 9, 9, 9],
+	[9, 9, 9, 9, 10]
 ];
-const graph1XValuesNames = ["< 10", "10 - 20", "20 - 30", "30 - 40", "40+"];
+const graph1XValuesNames = ["communication", "quality", "timeliness", "partnership", "pricing"];
 let graph1FirstTime = true;
 let graph1CurrentGraph = 3;
 
@@ -179,14 +179,8 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 	const graph = workLifeGraphs[graph1CurrentGraph - 1];
 	const barColors = [0x7fff00, 0x8a2be2, 0x8b0000, 0xffd700, 0x008080];
 	const barMaxHeight = 15;
-	let xPos = -12;
-	let maxValue = graph[0];
-
-	for (let i = 1; i < graph.length; i++) {
-		if (graph[i] > maxValue) {
-			maxValue = graph[i];
-		}
-	}
+	let xPos = -16;
+	let maxValue = 10;
 
 	if (graph1FirstTime) {
 		for (let i = 0; i < graph.length; i++) {
@@ -206,7 +200,7 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 			graph1Bars[i].position.x = xPos;
 			graph1Bars[i].rotation.y = Math.PI / 4;
 			graph1Holder.add(graph1Bars[i]);
-			xPos = xPos + 6;
+			xPos = xPos + 8;
 			
 			if (!graph1ValuesAppended) {
 				if (i == (graph.length - 1)) {
@@ -444,7 +438,7 @@ const playCounterAnimation = (spanClassName, counterMaxValue, counterDuration) =
 	const interval = setInterval(() => {
 		if (i <= step) {
 			counterValue += counterIncrement;
-			span.innerText = Math.round(counterValue * 100) / 100 + "%";
+			span.innerText = Math.round(counterValue * 100) / 100;
 			++i;
 		} else {
 			span.setAttribute("data-counter-value", counterMaxValue);
@@ -456,13 +450,13 @@ const playCounterAnimation = (spanClassName, counterMaxValue, counterDuration) =
 let graph1BarWidth;
 // Calculates & returns html coordinates of a given bar of graph
 function graph1CalculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = "top") {
-	const vector = new THREE.Vector3(graph1Bars[i].position.x - 1.7, yPos, graph1Bars[i].position.z);
+	const vector = new THREE.Vector3(graph1Bars[i].position.x - 1.8, yPos, graph1Bars[i].position.z);
 	vector.project(graph1Camera);
 	vector.x = (vector.x + 1) * graph1Canvas.getBoundingClientRect().width / 2;
 	vector.y =  - (vector.y - 1) * graph1Canvas.getBoundingClientRect().height / 2;
 	const x = vector.x;
 
-	const vector2 = new THREE.Vector3(graph1Bars[i].position.x + 1.7, yPos, graph1Bars[i].position.z);
+	const vector2 = new THREE.Vector3(graph1Bars[i].position.x + 1.8, yPos, graph1Bars[i].position.z);
 	vector2.project(graph1Camera);
 	vector2.x = (vector2.x + 1) * graph1Canvas.getBoundingClientRect().width / 2;
 	const x2 = vector2.x;
@@ -488,7 +482,7 @@ function appendOrUpdateValuesInGraph(i) {
 	}
 	
 	if (!graph1CanvasContainer.querySelector(".graph1-value-" + (i+1))) {
-		span.innerText = workLifeGraphs[graph1CurrentGraph - 1][i] + "%";
+		span.innerText = workLifeGraphs[graph1CurrentGraph - 1][i];
 		span.classList.add("graph1-value");
 		span.classList.add("graph1-value-" + (i+1));
 		span.style.top = obj.y + "px";
@@ -500,18 +494,18 @@ function appendOrUpdateValuesInGraph(i) {
 			span.style.left = (span.offsetLeft - xDiffBy2) + "px";
 		}
 
-		span.innerText = 0 + "%";
+		span.innerText = 0;
 	} else {
 		let prevValue;
 		if (span.getAttribute("data-counter-value")) {
 			prevValue = span.getAttribute("data-counter-value");
-			span.innerText = workLifeGraphs[graph1CurrentGraph - 1][i] + "%";
+			span.innerText = workLifeGraphs[graph1CurrentGraph - 1][i];
 			span.style.left = obj.x + "px";
 			const xDiffBy2 = (span.getBoundingClientRect().width - graph1BarWidth) / 2;
 			if (xDiffBy2 < 0 && xDiffBy2 != -Infinity) {
 				span.style.left = (span.offsetLeft - xDiffBy2) + "px";
 			}
-			span.innerText = prevValue + "%";
+			span.innerText = prevValue;
 		}
 	}
 }
@@ -539,6 +533,7 @@ function graph1AppendGraphXValues() {
 
 		if (!isNaN(graph1BarWidth) && graph1BarWidth != Infinity && graph1BarWidth != -Infinity) {
 			const xDiffBy2 = (span.getBoundingClientRect().width - graph1BarWidth) / 2;
+			console.log(xDiffBy2);
 			span.style.left = (span.offsetLeft - xDiffBy2) + "px";
 		}
 	}

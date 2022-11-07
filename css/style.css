@@ -161,6 +161,7 @@ section {
   color: #fff;
   font-size: 20px;
   font-weight: bold;
+  text-transform: capitalize;
 }
 @media screen and (max-width: 1280px) {
   .graph1-x-name {
@@ -194,7 +195,7 @@ section {
 }
 .graph1-names-container .button.previous-button {
   top: 0;
-  left: 33%;
+  left: 34%;
 }
 .graph1-names-container .button.previous-button::after {
   content: "\f060";
@@ -209,7 +210,7 @@ section {
 }
 .graph1-names-container .button.next-button {
   top: 0;
-  left: 62%;
+  right: 34%;
 }
 .graph1-names-container .button.next-button::after {
   content: "\f061";
@@ -235,9 +236,9 @@ section {
   overflow: hidden;
 }
 .graph1-names li {
-  flex-basis: 16.5%;
+  flex-basis: 16%;
   flex-shrink: 0;
-  text-align: center;
+  text-align: left;
 }
 .graph1-names li span {
   color: #626262;
@@ -251,7 +252,8 @@ section {
   }
 }
 .graph1-names li.active {
-  flex-basis: 34%;
+  flex-basis: 36%;
+  text-align: center;
 }
 .graph1-names li.active span {
   color: #fff;
