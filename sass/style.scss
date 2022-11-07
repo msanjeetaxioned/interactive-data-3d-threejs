@@ -150,6 +150,7 @@ section {
 }
 /* Section 1 SCSS end */
 
+/* Graph1 SCSS start */
 .graph-section { 
 	height: 100%;
 	min-height: 100vh;
@@ -331,27 +332,34 @@ section {
 
 	.active + li { margin-left: 0; }
 }
+/* Graph1 SCSS end */
 
-.minor-section { margin-top: -180px; }
-
-/* Quote section SCSS start */
-.quote-section { 
+.minor-section { 
+	margin-top: -180px;
 	position: relative;
 	z-index: 2;
+}
+
+/* Quote section SCSS start */
+.quote-section {
+	height: auto;
 	background-color: $black; 
 
-	.wrapper { display: flex; }
+	li {
+		height: 100vh;
+		display: flex;
+	}
 
 	figure { 
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		flex-basis: 30%; 
+		flex-basis: 35%; 
 
 		img {
-			width: 250px;
-			height: 250px;
+			width: 300px;
+			height: 300px;
 			border: 10px solid #ff62aa;
 			border-radius: 50%;
 			outline: 2px solid lightblue;
@@ -370,17 +378,22 @@ section {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	flex-basis: 70%;
+	flex-basis: 65%;
 	
 	@include breakpoint(small-pc) {
 		padding-right: 20px;
 	}
 
-	.quote-info {
+	h3 {
+		width: fit-content;
 		margin-bottom: 20px;
-		display: block;
-		color: $white;
-		font-size: 22px;
+		display: inline-block;
+		background: linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%);
+		font-size: 32px;
+		font-weight: bold;
+		background-clip: text;
+		-webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 		text-transform: uppercase;
 
 		@include breakpoint(small-pc) {
@@ -389,28 +402,30 @@ section {
 
 		@include breakpoint(large-pc) {
 			margin-bottom: 40px;
+			font-size: 50px;
 		}
 	}
 
 	p {
 		margin-bottom: 25px;
 		color: $white;
-		font-size: 36px;
-		line-height: 46px;
+		font-size: 24px;
+		line-height: 34px;
 
 		@include breakpoint(small-pc) {
-			font-size: 30px;
-			line-height: 40px;
+			font-size: 22px;
+			line-height: 32px;
 		}
 
 		@include breakpoint(large-pc) {
 			margin-bottom: 80px;
+			font-size: 36px;
+			line-height: 56px;
 		}
 	}
 
 	a {
 		width: fit-content;
-		padding-bottom: 10px;
 		display: inline-block;
 		position: relative;
 		background: linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%);
@@ -425,19 +440,15 @@ section {
 			font-size: 22px;
 		}
 
-		@include breakpoint(large-pc) {
-			padding-bottom: 15px;
-		}
-
-		&::before {
-			width: 100%;
-			height: 2px;
-			display: inline-block;
-			position: absolute;
-			left: 0px;
-			bottom: 0px;
-			background: linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%);
-		}
+		// &::before {
+		// 	width: 100%;
+		// 	height: 2px;
+		// 	display: inline-block;
+		// 	position: absolute;
+		// 	left: 0px;
+		// 	bottom: 0px;
+		// 	background: linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%);
+		// }
 
 		&::after {
 			content: '\f178';
@@ -527,8 +538,6 @@ section {
 
 /* Lifestyle section start */
 .lifestyle-section { 
-	position: relative;
-	z-index: 2;
 	background-color: $black;
 
 	.wrapper {
