@@ -778,10 +778,9 @@ const calculateMinorSectionsMargins = () => {
 
 	if (document.body.clientWidth > 1330) {
 		margin = scale(document.body.clientWidth, 1330, 2560, -200, -600);
-	}
-
-	for (let i = 0; i < minorSections.length; i++) {
-		minorSections[i].style.marginTop = margin + "px";
+		for (let i = 0; i < minorSections.length; i++) {
+			minorSections[i].style.marginTop = margin + "px";
+		}
 	}
 }
 calculateMinorSectionsMargins();
