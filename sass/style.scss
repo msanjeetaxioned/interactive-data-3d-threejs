@@ -113,28 +113,42 @@ section {
 	height: 100vh;
 }
 
+/* Section 1 SCSS start */
 .section1 {
-	padding: 10rem 0 12rem;
-	background-image: url('../images/bg.jpg'); 
-	background-position: left 33rem center;
+	position: relative;
+	z-index: 1;
+	overflow: hidden;
 
-	@include breakpoint(small-pc) {
-		background-position: left 17rem center;
-	}
+	h1 {
+		position: absolute;
+		z-index: 2;
+		top: 50px;
+		left: 70px;
 
-	.section-title {
-		font-size: 8.5rem;
-		font-weight: 500;
-		line-height: 1;
-		text-transform: uppercase;
-
-		@include breakpoint(small-pc) {
-			font-size: 7rem;
+		@include breakpoint(large-pc) {
+			left: 110px;
 		}
 
-		.thin { font-family: "Poppins Thin"; }
+		a { 
+			display: inline-block; 
+			&:hover { cursor: pointer; }
+		}
+
+		img {
+			width: 159px;
+			height: 57px;
+			display: inline-block;
+		}
+	}
+
+	video {
+		width: 100%;
+		min-width: 100%;
+		height: auto;
+		display: block;
 	}
 }
+/* Section 1 SCSS end */
 
 .graph-section { 
 	height: 100%;

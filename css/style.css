@@ -49,31 +49,42 @@ section {
   height: 100vh;
 }
 
+/* Section 1 SCSS start */
 .section1 {
-  padding: 10rem 0 12rem;
-  background-image: url("../images/bg.jpg");
-  background-position: left 33rem center;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
 }
-@media screen and (max-width: 1280px) {
-  .section1 {
-    background-position: left 17rem center;
+.section1 h1 {
+  position: absolute;
+  z-index: 2;
+  top: 50px;
+  left: 70px;
+}
+@media screen and (min-width: 1920px) {
+  .section1 h1 {
+    left: 110px;
   }
 }
-.section1 .section-title {
-  font-size: 8.5rem;
-  font-weight: 500;
-  line-height: 1;
-  text-transform: uppercase;
+.section1 h1 a {
+  display: inline-block;
 }
-@media screen and (max-width: 1280px) {
-  .section1 .section-title {
-    font-size: 7rem;
-  }
+.section1 h1 a:hover {
+  cursor: pointer;
 }
-.section1 .section-title .thin {
-  font-family: "Poppins Thin";
+.section1 h1 img {
+  width: 159px;
+  height: 57px;
+  display: inline-block;
+}
+.section1 video {
+  width: 100%;
+  min-width: 100%;
+  height: auto;
+  display: block;
 }
 
+/* Section 1 SCSS end */
 .graph-section {
   height: 100%;
   min-height: 100vh;
