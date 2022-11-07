@@ -263,7 +263,7 @@ section {
 			@include breakpoint(small-pc) {
 				left: 33.5%;
 			}
-			
+
 			&::after {
 				content: "\f060";
 				font-family: "Font Awesome 6 Free";
@@ -360,6 +360,15 @@ section {
 		display: flex;
 	}
 
+	li:nth-child(even) {
+		flex-direction: row-reverse;
+
+		.quote-content { 
+			padding-right: 0;
+			padding-left: 30px;
+		}
+	}
+
 	figure { 
 		display: flex;
 		flex-direction: column;
@@ -385,6 +394,7 @@ section {
 
 .quote-content {
 	padding-right: 30px;
+	padding-left: 0;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
