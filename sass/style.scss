@@ -22,6 +22,7 @@
 $white: #fff;
 $gray: #626262;
 $black: #000;
+$large-pc: 1920px;
 $pc: 1440px;
 $small-pc: 1280px;
 $ipad-pro: 1024px;
@@ -32,7 +33,12 @@ $small-mobile: 320px;
 
 
 @mixin breakpoint($device) {
-  @if($device=='pc'){
+	@if ($device == 'large-pc') {
+		@media screen and (min-width: $large-pc) {
+      @content;
+    }
+	}
+  @else if($device=='pc'){
     @media screen and (max-width: $pc) {
       @content;
     }
@@ -311,9 +317,10 @@ section {
 	.active + li { margin-left: 0; }
 }
 
+.minor-section { margin-top: -180px; }
+
 /* Quote section SCSS start */
 .quote-section { 
-	margin-top: -200px;
 	position: relative;
 	z-index: 2;
 	background-color: $black; 
@@ -364,6 +371,10 @@ section {
 		@include breakpoint(small-pc) {
 			font-size: 20px;
 		}
+
+		@include breakpoint(large-pc) {
+			margin-bottom: 40px;
+		}
 	}
 
 	p {
@@ -375,6 +386,10 @@ section {
 		@include breakpoint(small-pc) {
 			font-size: 30px;
 			line-height: 40px;
+		}
+
+		@include breakpoint(large-pc) {
+			margin-bottom: 80px;
 		}
 	}
 
@@ -393,6 +408,10 @@ section {
 
 		@include breakpoint(small-pc) {
 			font-size: 22px;
+		}
+
+		@include breakpoint(large-pc) {
+			padding-bottom: 15px;
 		}
 
 		&::before {
@@ -493,7 +512,6 @@ section {
 
 /* Lifestyle section start */
 .lifestyle-section { 
-	margin-top: -200px;
 	position: relative;
 	z-index: 2;
 	background-color: $black;
@@ -513,6 +531,10 @@ section {
 		@include breakpoint(small-pc) {
 			font-size: 20px;
 		}
+
+		@include breakpoint(large-pc) {
+			margin-bottom: 35px;
+		}
 	}
 
 	p {
@@ -525,6 +547,10 @@ section {
 		@include breakpoint(small-pc) {
 			font-size: 66px;
 			line-height: 86px;
+		}
+
+		@include breakpoint(large-pc) {
+			margin-bottom: 75px;
 		}
 
 		span {
