@@ -198,6 +198,11 @@ section {
   top: 0;
   left: 34%;
 }
+@media screen and (max-width: 1280px) {
+  .graph1-names-container .button.previous-button {
+    left: 33.5%;
+  }
+}
 .graph1-names-container .button.previous-button::after {
   content: "\f060";
   font-family: "Font Awesome 6 Free";
@@ -212,6 +217,11 @@ section {
 .graph1-names-container .button.next-button {
   top: 0;
   right: 34%;
+}
+@media screen and (max-width: 1280px) {
+  .graph1-names-container .button.next-button {
+    right: 33.5%;
+  }
 }
 .graph1-names-container .button.next-button::after {
   content: "\f061";

@@ -259,6 +259,11 @@ section {
 		&.previous-button {
 			top: 0;
 			left: 34%;
+
+			@include breakpoint(small-pc) {
+				left: 33.5%;
+			}
+			
 			&::after {
 				content: "\f060";
 				font-family: "Font Awesome 6 Free";
@@ -274,6 +279,11 @@ section {
 		&.next-button {
 			top: 0;
 			right: 34%;
+
+			@include breakpoint(small-pc) {
+				right: 33.5%;
+			}
+
 			&::after {
 				content: "\f061";
 				font-family: "Font Awesome 6 Free";
