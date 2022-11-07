@@ -22,6 +22,7 @@
 $white: #fff;
 $gray: #626262;
 $black: #000;
+$large-pc: 1920px;
 $pc: 1440px;
 $small-pc: 1280px;
 $ipad-pro: 1024px;
@@ -32,7 +33,12 @@ $small-mobile: 320px;
 
 
 @mixin breakpoint($device) {
-  @if($device=='pc'){
+	@if ($device == 'large-pc') {
+		@media screen and (min-width: $large-pc) {
+      @content;
+    }
+	}
+  @else if($device=='pc'){
     @media screen and (max-width: $pc) {
       @content;
     }
@@ -513,6 +519,10 @@ section {
 		@include breakpoint(small-pc) {
 			font-size: 20px;
 		}
+
+		@include breakpoint(large-pc) {
+			margin-bottom: 35px;
+		}
 	}
 
 	p {
@@ -525,6 +535,10 @@ section {
 		@include breakpoint(small-pc) {
 			font-size: 66px;
 			line-height: 86px;
+		}
+
+		@include breakpoint(large-pc) {
+			margin-bottom: 75px;
 		}
 
 		span {
