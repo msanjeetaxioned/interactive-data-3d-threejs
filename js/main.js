@@ -774,10 +774,9 @@ const appendGraphXValues = () => {
 
 const calculateMinorSectionsMargins = () => {
 	const minorSections = document.querySelectorAll(".minor-section");
-	let margin;
 
-	if (document.body.clientWidth > 1330) {
-		margin = scale(document.body.clientWidth, 1330, 2560, -200, -600);
+	if (document.body.clientWidth > 1329) {
+		const margin = scale(document.body.clientWidth, 1330, 2560, -200, -600);
 		for (let i = 0; i < minorSections.length; i++) {
 			minorSections[i].style.marginTop = margin + "px";
 		}
