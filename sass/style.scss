@@ -371,6 +371,10 @@ section {
 		@include breakpoint(small-pc) {
 			font-size: 20px;
 		}
+
+		@include breakpoint(large-pc) {
+			margin-bottom: 40px;
+		}
 	}
 
 	p {
@@ -382,6 +386,10 @@ section {
 		@include breakpoint(small-pc) {
 			font-size: 30px;
 			line-height: 40px;
+		}
+
+		@include breakpoint(large-pc) {
+			margin-bottom: 80px;
 		}
 	}
 
@@ -400,6 +408,10 @@ section {
 
 		@include breakpoint(small-pc) {
 			font-size: 22px;
+		}
+
+		@include breakpoint(large-pc) {
+			padding-bottom: 15px;
 		}
 
 		&::before {

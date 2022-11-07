@@ -314,6 +314,11 @@ section {
     font-size: 20px;
   }
 }
+@media screen and (min-width: 1920px) {
+  .quote-content .quote-info {
+    margin-bottom: 40px;
+  }
+}
 .quote-content p {
   margin-bottom: 25px;
   color: #fff;
@@ -324,6 +329,11 @@ section {
   .quote-content p {
     font-size: 30px;
     line-height: 40px;
+  }
+}
+@media screen and (min-width: 1920px) {
+  .quote-content p {
+    margin-bottom: 80px;
   }
 }
 .quote-content a {
@@ -342,6 +352,11 @@ section {
 @media screen and (max-width: 1280px) {
   .quote-content a {
     font-size: 22px;
+  }
+}
+@media screen and (min-width: 1920px) {
+  .quote-content a {
+    padding-bottom: 15px;
   }
 }
 .quote-content a::before {
