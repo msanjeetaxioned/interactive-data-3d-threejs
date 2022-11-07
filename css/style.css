@@ -238,7 +238,7 @@ section {
 .graph1-names li {
   flex-basis: 16%;
   flex-shrink: 0;
-  text-align: left;
+  text-align: center;
 }
 .graph1-names li span {
   color: #626262;
@@ -253,7 +253,6 @@ section {
 }
 .graph1-names li.active {
   flex-basis: 36%;
-  text-align: center;
 }
 .graph1-names li.active span {
   color: #fff;
