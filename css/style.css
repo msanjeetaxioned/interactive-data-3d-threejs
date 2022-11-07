@@ -294,6 +294,10 @@ section {
   height: 100vh;
   display: flex;
 }
+.quote-section li .quote-content {
+  padding-right: 30px;
+  padding-left: 0;
+}
 .quote-section li:nth-child(even) {
   flex-direction: row-reverse;
 }
@@ -324,8 +328,6 @@ section {
 }
 
 .quote-content {
-  padding-right: 30px;
-  padding-left: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
