@@ -540,7 +540,6 @@ section {
 		color: $white;
 		font-size: 20px;
 		font-weight: bold;
-		text-transform: capitalize;
 
 		@include breakpoint(small-pc) {
 			font-size: 18px;

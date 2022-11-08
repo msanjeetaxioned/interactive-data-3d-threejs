@@ -152,8 +152,8 @@ const directionalLight1 = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight1.position.set(1, 0, 0);
 scene.add(directionalLight1);
 
-const graphXNames = ["design", "engineering", "product", "writing", "marketing", "social"];
-const graphXValues = [3, 2, 3, 3, 4, 4];
+const graphXNames = ["JavaScript", "HTML", "CSS", "jQuery", "React", "WordPress"];
+const graphXValues = [41, 36, 36, 30, 22, 16];
 
 let firstTime = true;
 
@@ -533,7 +533,6 @@ function graph1AppendGraphXValues() {
 
 		if (!isNaN(graph1BarWidth) && graph1BarWidth != Infinity && graph1BarWidth != -Infinity) {
 			const xDiffBy2 = (span.getBoundingClientRect().width - graph1BarWidth) / 2;
-			console.log(xDiffBy2);
 			span.style.left = (span.offsetLeft - xDiffBy2) + "px";
 		}
 	}
@@ -544,9 +543,11 @@ const calculateBarsHeightAndAddThemInScene = () => {
 	const barColor = 0xe31c79;
 	const topAndBotFaceColor = 0xf39ec6;
 	const barMaxHeight = 15;
+	const maxBars = 5;
 	let xPos = -17.5;
 	let maxValue = graphXValues[0];
 	let individualBarHeight;
+	let numOfBars = [];
 
 	for (let i = 1; i < graphXValues.length; i++) {
 		if (graphXValues[i] > maxValue) {
@@ -554,11 +555,15 @@ const calculateBarsHeightAndAddThemInScene = () => {
 		}
 	}
 
-	individualBarHeight = barMaxHeight / maxValue;
+	for (let i = 0; i < graphXValues.length; i++) {
+		numOfBars[i] = Math.round(graphXValues[i] / maxValue * maxBars); 
+	}
+
+	individualBarHeight = barMaxHeight / maxBars;
 
 	for (let i = 0; i < graphXNames.length; i++) {
 		bars[i] = [];
-		for (let j = 0; j < graphXValues[i]; j++) {
+		for (let j = 0; j < numOfBars[i]; j++) {
 			const geometryBar = new THREE.BoxGeometry(2.5, individualBarHeight, 2.5).toNonIndexed();
 			geometryBar.translate( 0, individualBarHeight / 2, 0 );
 			const materialBar = new THREE.MeshPhongMaterial({
@@ -599,7 +604,7 @@ const calculateBarsHeightAndAddThemInScene = () => {
 			bars[i][j].rotation.y = Math.PI / 4;
 			holder.add(bars[i][j]);
 
-			if (i == (graphXNames.length - 1) && j == (graphXValues[i] - 1)) {
+			if (i == (graphXNames.length - 1) && j == (numOfBars[i] - 1)) {
 				const timer = setTimeout(() => {
 					clearTimeout(timer);
 					appendGraphXValues();
