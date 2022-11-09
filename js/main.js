@@ -401,7 +401,7 @@ const setRotationAngleOfBarsBasedOnScrollPosition = () => {
 		if (graph1CurrentWindowY >= 0 && graph1CurrentWindowY <= graph1CanvasHeight) {
 			const percent = Math.round(graph1CurrentWindowY / graph1CanvasHeight * 100);
 			if (percent >= 25 && percent <= 90) {
-				graph1Camera.position.y = scale(percent, 25, 90, 15, -2);
+				graph1Camera.position.y = scale(percent, 25, 90, 10, -6);
 				graph1Camera.lookAt(0, 0, 0);
 			}
 		}
