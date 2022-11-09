@@ -309,7 +309,6 @@ nextGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, 1));
 
 graph1CalculateBarsHeightAndAddThemInScene();
 
-graph1Camera.lookAt(new THREE.Vector3(0, 0, 0));
 graph1Camera.position.y = 0;
 graph1Camera.position.z = 55;
 // graph1Orbit.update();
@@ -402,7 +401,6 @@ const setRotationAngleOfBarsBasedOnScrollPosition = () => {
 			const percent = Math.round(graph1CurrentWindowY / graph1CanvasHeight * 100);
 			if (percent >= 25 && percent <= 90) {
 				graph1Camera.position.y = scale(percent, 25, 90, 10, -6);
-				graph1Camera.lookAt(0, 0, 0);
 			}
 		}
 	}
@@ -618,7 +616,6 @@ const calculateBarsHeightAndAddThemInScene = () => {
 
 calculateBarsHeightAndAddThemInScene();
 
-camera.lookAt(new THREE.Vector3(0, 0, 0));
 camera.position.y = 0;
 camera.position.z = 60;
 // orbit.update();
@@ -711,7 +708,6 @@ const graph2SetRotationAngleOfBarsBasedOnScrollPosition = () => {
 			const percent = Math.round(currentWindowY / canvasHeight * 100);
 			if (percent >= 25 && percent <= 90) {
 				camera.position.y = scale(percent, 25, 90, 18, -8);
-				camera.lookAt(0, 0, 0);
 			}
 		}
 	}
