@@ -41,7 +41,7 @@ const graph1OnMouseMove = (event) => {
 	graph1Mouse.x = (graph1MouseXCanvas / rect.width) * 2 - 1;
 	graph1Mouse.y = -(mouseYCanvas / rect.height) * 2 + 1;
 }
-	
+
 graph1Canvas.addEventListener('mousemove', graph1OnMouseMove, false);
 
 const options = {threshold: 0.3};
@@ -84,6 +84,7 @@ let graph1CurrentGraph = 3;
 
 let graph1Bars = [];
 let graph1BarsHeight = [];
+let graph1BarInitialPosition = {};
 
 let graph1ValuesAppended = false;
 let graph1XValuesAppended = false;
@@ -172,6 +173,18 @@ const enableOrDisablePrevAndNextButtons = (enable) => {
 		prevGraphButton.setAttribute("title", "Disabled");
 		nextGraphButton.setAttribute("title", "Disabled");
 	}
+}
+
+const calculateBarsBotPosition = () => {
+	graph1Camera.updateMatrixWorld();
+	const vector = graph1Camera.position.clone();
+	vector.applyMatrix4(graph1Camera.matrixWorld);
+	vector.project(graph1Camera);
+	vector.x = (vector.x + 1) * graph1Canvas.getBoundingClientRect().width / 2;
+	vector.y =  - (vector.y - 1) * graph1Canvas.getBoundingClientRect().height / 2;
+	const x = vector.x;
+	const y = vector.y;
+	return { x, y };
 }
 
 const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
@@ -311,6 +324,7 @@ graph1CalculateBarsHeightAndAddThemInScene();
 
 graph1Camera.position.y = 0;
 graph1Camera.position.z = 55;
+graph1BarInitialPosition = calculateBarsBotPosition();
 // graph1Orbit.update();
 
 let graph1RotationTl = [], graph1CurrentRotationSpeedAndDirectionOfBars = [];
@@ -400,7 +414,9 @@ const setRotationAngleOfBarsBasedOnScrollPosition = () => {
 		if (graph1CurrentWindowY >= 0 && graph1CurrentWindowY <= graph1CanvasHeight) {
 			const percent = Math.round(graph1CurrentWindowY / graph1CanvasHeight * 100);
 			if (percent >= 25 && percent <= 90) {
-				graph1Camera.position.y = scale(percent, 25, 90, 10, -6);
+				graph1Camera.position.y = scale(percent, 25, 90, 15, -6);
+				graph1Camera.setViewOffset(graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight, 0, 0, graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight);
+				graph1Camera.setViewOffset(graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight, 0, calculateBarsBotPosition().y - graph1BarInitialPosition.y, graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight);
 			}
 		}
 	}
