@@ -159,6 +159,7 @@ const graphXValues = [41, 36, 36, 30, 22, 16];
 let firstTime = true;
 
 let bars = [];
+let barsInitialPosition = {};
 let barsHeight = [];
 
 const enableOrDisablePrevAndNextButtons = (enable) => {
@@ -175,13 +176,13 @@ const enableOrDisablePrevAndNextButtons = (enable) => {
 	}
 }
 
-const calculateBarsBotPosition = () => {
-	graph1Camera.updateMatrixWorld();
-	const vector = graph1Camera.position.clone();
-	vector.applyMatrix4(graph1Camera.matrixWorld);
-	vector.project(graph1Camera);
-	vector.x = (vector.x + 1) * graph1Canvas.getBoundingClientRect().width / 2;
-	vector.y =  - (vector.y - 1) * graph1Canvas.getBoundingClientRect().height / 2;
+const calculateBarsBotPosition = (graphCamera, graphCanvas) => {
+	graphCamera.updateMatrixWorld();
+	const vector = graphCamera.position.clone();
+	vector.applyMatrix4(graphCamera.matrixWorld);
+	vector.project(graphCamera);
+	vector.x = (vector.x + 1) * graphCanvas.getBoundingClientRect().width / 2;
+	vector.y =  - (vector.y - 1) * graphCanvas.getBoundingClientRect().height / 2;
 	const x = vector.x;
 	const y = vector.y;
 	return { x, y };
@@ -324,7 +325,7 @@ graph1CalculateBarsHeightAndAddThemInScene();
 
 graph1Camera.position.y = 0;
 graph1Camera.position.z = 55;
-graph1BarInitialPosition = calculateBarsBotPosition();
+graph1BarInitialPosition = calculateBarsBotPosition(graph1Camera, graph1Canvas);
 // graph1Orbit.update();
 
 let graph1RotationTl = [], graph1CurrentRotationSpeedAndDirectionOfBars = [];
@@ -414,9 +415,9 @@ const setRotationAngleOfBarsBasedOnScrollPosition = () => {
 		if (graph1CurrentWindowY >= 0 && graph1CurrentWindowY <= graph1CanvasHeight) {
 			const percent = Math.round(graph1CurrentWindowY / graph1CanvasHeight * 100);
 			if (percent >= 25 && percent <= 90) {
-				graph1Camera.position.y = scale(percent, 25, 90, 15, -6);
+				graph1Camera.position.y = scale(percent, 25, 90, 18, -6);
 				graph1Camera.setViewOffset(graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight, 0, 0, graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight);
-				graph1Camera.setViewOffset(graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight, 0, calculateBarsBotPosition().y - graph1BarInitialPosition.y, graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight);
+				graph1Camera.setViewOffset(graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight, 0, calculateBarsBotPosition(graph1Camera, graph1Canvas).y - graph1BarInitialPosition.y, graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight);
 			}
 		}
 	}
@@ -446,7 +447,7 @@ const playCounterAnimation = (spanClassName, counterMaxValue, counterDuration) =
 	let counterIncrement;
 	let counterValue = counterMinValue;
 
-	counterIncrement = parseFloat(( counterMaxValue - counterMinValue) / step);
+	counterIncrement = parseFloat((counterMaxValue - counterMinValue) / step);
 
 	let i = 1; 
 	const interval = setInterval(() => {
@@ -634,6 +635,7 @@ calculateBarsHeightAndAddThemInScene();
 
 camera.position.y = 0;
 camera.position.z = 60;
+barsInitialPosition = calculateBarsBotPosition(camera, canvas);
 // orbit.update();
 
 let rotationTl = [], currentRotationSpeedAndDirectionOfBars = [];
@@ -724,6 +726,8 @@ const graph2SetRotationAngleOfBarsBasedOnScrollPosition = () => {
 			const percent = Math.round(currentWindowY / canvasHeight * 100);
 			if (percent >= 25 && percent <= 90) {
 				camera.position.y = scale(percent, 25, 90, 18, -8);
+				camera.setViewOffset(canvas.getBoundingClientRect().width, canvasHeight, 0, 0, canvas.getBoundingClientRect().width, canvasHeight);
+				camera.setViewOffset(canvas.getBoundingClientRect().width, canvasHeight, 0, calculateBarsBotPosition(camera, canvas).y - barsInitialPosition.y, canvas.getBoundingClientRect().width, canvasHeight);
 			}
 		}
 	}
