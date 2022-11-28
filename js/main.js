@@ -855,14 +855,23 @@ const Ball = function (t, c, m, r, sMin, sMax, x) {
     this.circle.interactive = true;
     this.circle.hitArea = new PIXI.Circle(0, 0, 1);
     this.circle.scale.x = this.circle.scale.y = this.radius;
-    this.el.addChild(this.circle);
+
+		let bubble = new PIXI.Sprite.from('images/bubble3.png');
+		bubble.anchor.set(0.5, 0.5);
+		bubble.width = 2.35 * r;
+		bubble.height = 2.35 * r;
+		bubble.hitArea = new PIXI.Circle(0, 0, 1);
+		bubble.mask = this.circle;
+		this.el.addChild(bubble);
+
+		this.el.addChild(this.circle);
 
     interaction3Stage.addChild(this.el);
 
     let text = new PIXI.Text(t, {
       fontFamily: 'Poppins Regular',
       fontSize: 14,
-      fill: 0xffffff,
+      fill: 0x000,
       align: 'center',
       wordWrap: true
     });
