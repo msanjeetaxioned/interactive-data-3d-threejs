@@ -814,7 +814,7 @@ let interaction3Data = [
 const interaction3Zoom = 100;
 let interaction3Balls = [];
 
-const interaction3Renderer = PIXI.autoDetectRenderer(interaction3Canvascontainer.getBoundingClientRect().width, window.innerHeight, {
+const interaction3Renderer = PIXI.autoDetectRenderer(interaction3Canvascontainer.getBoundingClientRect().width, window.innerHeight * 1.5, {
   transparent: true, antialias: true
 });
 interaction3Canvascontainer.appendChild(interaction3Renderer.view);

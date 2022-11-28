@@ -566,6 +566,9 @@ section {
   min-height: 100vh;
   background-color: #000;
 }
+.spheres-section .section-title {
+  position: absolute;
+}
 .spheres-section .section-title .thin {
   display: inline-block;
 }

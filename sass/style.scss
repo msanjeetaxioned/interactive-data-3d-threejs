@@ -646,6 +646,7 @@ section {
 	background-color: $black;
 
 	.section-title {
+		position: absolute;
 		.thin { display: inline-block; }
 	}
 }
