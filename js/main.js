@@ -789,6 +789,142 @@ const appendGraphXValues = () => {
 	}
 }
 
+/* Interaction 3 start */
+const interaction3Canvascontainer = document.querySelector(".spheres-section .canvas-container");
+let interaction3Data = [
+  {name: "Pink", color: 0xff2c55, mass: 0.00075, radius: 0.6, sMin: -1/2, sMax: 1/2},
+  {name: "Smashing Pumpkins", color: 0xff0000, mass: 0.0015, radius: 0.75, sMin: -1.5, sMax: 1.5},
+  {name: "Weezer", color: 0x006400, mass: 0.001, radius: 0.65, sMin: -1, sMax: 1},
+  {name: "Blue", color: 0x0000ff, mass: 0.0005, radius: 0.5, sMin: -1/3, sMax: 1/3},
+  {name: "Orange", color: 0xff4500, mass: 0.0005, radius: 0.5, sMin: -1/3, sMax: 1/3},
+  {name: "Sigur Ros", color: 0xff00ff, mass: 0.001, radius: 0.65, sMin: -1, sMax: 1},
+  {name: "Radiohead", color: 0x00ffff, mass: 0.001, radius: 0.65, sMin: -1, sMax: 1},
+  {name: "Chartreuse", color: 0x7fff00, mass: 0.0015, radius: 0.75, sMin: -1.5, sMax: 1.5},
+  {name: "Godspeed!", color: 0xa52a2a, mass: 0.0025, radius: 1, sMin: -3, sMax: 3}
+];
+
+const interaction3Zoom = 100;
+let interaction3Balls = [];
+
+const interaction3Renderer = PIXI.autoDetectRenderer(interaction3Canvascontainer.getBoundingClientRect().width, window.innerHeight * 1.5, {
+  transparent: true, antialias: true
+});
+interaction3Canvascontainer.appendChild(interaction3Renderer.view);
+
+let interaction3Movement = {};
+const interaction3OnMousemove = (event) => {
+  interaction3Movement.x = event.movementX;
+  interaction3Movement.y = event.movementY;
+}
+
+const interaction3Canvas = interaction3Canvascontainer.querySelector("canvas");
+interaction3Canvas.addEventListener("mousemove", interaction3OnMousemove, false);
+
+const interaction3World = new p2.World({gravity: [1, 1]});
+const interaction3Stage = new PIXI.Container();
+interaction3Stage.position.x =  interaction3Renderer.width/2; // center at origin
+interaction3Stage.position.y =  interaction3Renderer.height/2;
+interaction3Stage.scale.x =  interaction3Zoom;  // zoom in
+interaction3Stage.scale.y = -interaction3Zoom; // Note: we flip the y axis to make "up" the physics "up"
+
+//floor
+const planeShape = new p2.Plane();
+const planeBody = new p2.Body({ position:[0,-1] });
+planeBody.addShape(planeShape);
+interaction3World.addBody(planeBody);
+
+const Ball = function (t, c, m, r, sMin, sMax, x) {
+  this.init = function () {
+    this.el = new PIXI.Container();
+    this.radius = r;
+
+    this.circle = new PIXI.Graphics();
+    this.circle.beginFill(c);
+    this.circle.drawCircle(0, 0, 0.99);
+    this.circle.endFill();
+    this.circle.interactive = true;
+    this.circle.hitArea = new PIXI.Circle(0, 0, 1);
+    this.circle.scale.x = this.circle.scale.y = this.radius;
+    this.el.addChild(this.circle);
+
+    interaction3Stage.addChild(this.el);
+
+    let text = new PIXI.Text(t, {
+      fontFamily : 'Arial',
+      fontSize: 14,
+      fill : 0xffffff,
+      align : 'center',
+      wordWrap: true
+    });
+    text.anchor.x = 0.5;
+    text.anchor.y = 0.5;
+    text.position.x = 0;
+    text.scale.x = 0.01;
+    text.scale.y = -0.01;
+    this.el.addChild(text);
+
+    this.shape = new p2.Circle({radius: this.radius});
+
+    let startX = x % 2 === 0 ? 2 + r : -2 - r;
+    let startY = r - Math.random() * (r * 2);
+    this.body = new p2.Body({
+      mass: m,
+      position: [startX, startY],
+      angularVelocity: 0,
+      fixedRotation: true
+    });
+    this.body.addShape(this.shape);
+    interaction3World.addBody(this.body);
+    this.timer = null;
+  }
+
+  this.update = function () {
+    this.body.applyForce([-this.body.position[0] / 100, -this.body.position[1] / 100]);
+
+    this.el.position.x = this.body.position[0];
+    this.el.position.y = this.body.position[1];
+    this.el.rotation = this.body.angle;
+  }
+
+  this.mouseover = function () {
+    if (!this.timer) {
+      let movementX = interaction3Movement.x;
+      let movementY = interaction3Movement.y;
+      if (movementX > 50) {
+        movementX = 50;
+      } else if (movementX < -50) {
+        movementX = -50;
+      }
+
+      if (movementY > 50) {
+        movementY = 50;
+      } else if (movementY < -50) {
+        movementY = -50;
+      }
+
+      let forceX, forceY;
+      forceX = scale(movementX, -50, 50, -Math.abs(sMin * this.body.position[0]), Math.abs(sMax * this.body.position[0]));
+      forceY = scale(movementY, -50, 50, Math.abs(sMin * this.body.position[1]), -Math.abs(sMax * this.body.position[1]));
+      console.log("Name: " + t + ", x: " + movementX + ", y: " + movementY + ", forceX: " + forceX + ", forceY: " + forceY);
+
+      this.body.applyForce([forceX, forceY]);
+      this.timer = setTimeout(() => {
+        clearTimeout(this.timer);
+        this.timer = null;
+      }, 500);
+    }
+  }
+
+  this.init.call(this);
+  this.circle.mouseover = this.mouseover.bind(this);
+}
+
+for (var i = 0; i < interaction3Data.length; i ++) {
+  const ball = new Ball(interaction3Data[i].name, interaction3Data[i].color, interaction3Data[i].mass, interaction3Data[i].radius, interaction3Data[i].sMin, interaction3Data[i].sMax, i);
+  interaction3Balls.push(ball);
+}
+/* Interaction 3 end */
+
 const calculateMinorSectionsMargins = () => {
 	const minorSections = document.querySelectorAll(".minor-section");
 
@@ -832,5 +968,12 @@ const animate = () => {
 	graph2SetRotationAngleOfBarsBasedOnScrollPosition();
 	tiltGraphBasedOnMouseXPosition(canvas, mouseXCanvas, holder);
 	renderer.render(scene, camera);
+
+	// Interaction 3
+	interaction3World.step(1/60);
+  for (var i = 0; i < interaction3Balls.length; i ++) {
+    interaction3Balls[i].update();
+  }
+  interaction3Renderer.render(interaction3Stage);
 }
 animate();
