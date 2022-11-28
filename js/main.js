@@ -49,8 +49,16 @@ const options = {threshold: 0.3};
 const handleIntersect = (entries) => {
 	entries.forEach(entry => {
 		if (entry.isIntersecting) {
-			graph1CalculateBarsHeightAndAddThemInScene();
-			observer.unobserve(entry.target);
+			if (entry.target == interaction3Canvas) {
+				for (var i = 0; i < interaction3Data.length; i ++) {
+					const ball = new Ball(interaction3Data[i].name, interaction3Data[i].color, interaction3Data[i].mass, interaction3Data[i].radius, interaction3Data[i].sMin, interaction3Data[i].sMax, i);
+					interaction3Balls.push(ball);
+					observer2.unobserve(entry.target);
+				}
+			} else {
+				graph1CalculateBarsHeightAndAddThemInScene();
+				observer.unobserve(entry.target);
+			}
 		}
 	});
 }
@@ -822,8 +830,8 @@ interaction3Canvas.addEventListener("mousemove", interaction3OnMousemove, false)
 
 const interaction3World = new p2.World({gravity: [1, 1]});
 const interaction3Stage = new PIXI.Container();
-interaction3Stage.position.x =  interaction3Renderer.width/2; // center at origin
-interaction3Stage.position.y =  interaction3Renderer.height/2;
+interaction3Stage.position.x =  interaction3Renderer.width / 2; // center at origin
+interaction3Stage.position.y =  interaction3Renderer.height / 2;
 interaction3Stage.scale.x =  interaction3Zoom;  // zoom in
 interaction3Stage.scale.y = -interaction3Zoom; // Note: we flip the y axis to make "up" the physics "up"
 
@@ -905,7 +913,6 @@ const Ball = function (t, c, m, r, sMin, sMax, x) {
       let forceX, forceY;
       forceX = scale(movementX, -50, 50, -Math.abs(sMin * this.body.position[0]), Math.abs(sMax * this.body.position[0]));
       forceY = scale(movementY, -50, 50, Math.abs(sMin * this.body.position[1]), -Math.abs(sMax * this.body.position[1]));
-      console.log("Name: " + t + ", x: " + movementX + ", y: " + movementY + ", forceX: " + forceX + ", forceY: " + forceY);
 
       this.body.applyForce([forceX, forceY]);
       this.timer = setTimeout(() => {
@@ -919,10 +926,8 @@ const Ball = function (t, c, m, r, sMin, sMax, x) {
   this.circle.mouseover = this.mouseover.bind(this);
 }
 
-for (var i = 0; i < interaction3Data.length; i ++) {
-  const ball = new Ball(interaction3Data[i].name, interaction3Data[i].color, interaction3Data[i].mass, interaction3Data[i].radius, interaction3Data[i].sMin, interaction3Data[i].sMax, i);
-  interaction3Balls.push(ball);
-}
+const observer2 = new IntersectionObserver(handleIntersect, options);
+observer2.observe(interaction3Canvas);
 /* Interaction 3 end */
 
 const calculateMinorSectionsMargins = () => {
