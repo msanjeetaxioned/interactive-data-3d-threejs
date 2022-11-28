@@ -821,8 +821,10 @@ interaction3Canvascontainer.appendChild(interaction3Renderer.view);
 
 let interaction3Movement = {};
 const interaction3OnMousemove = (event) => {
-  interaction3Movement.x = event.movementX;
-  interaction3Movement.y = event.movementY;
+	if (event.movementX != undefined && event.movementY != undefined) {
+		interaction3Movement.x = event.movementX;
+  	interaction3Movement.y = event.movementY;
+	}
 }
 
 const interaction3Canvas = interaction3Canvascontainer.querySelector("canvas");
