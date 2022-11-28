@@ -808,7 +808,7 @@ let interaction3Data = [
   {name: "Sigur Ros", color: 0xff00ff, mass: 0.001, radius: 0.8, sMin: -1/4, sMax: 1/4},
   {name: "Radiohead", color: 0x00ffff, mass: 0.001, radius: 0.8, sMin: -1/4, sMax: 1/4},
   {name: "Chartreuse", color: 0x7fff00, mass: 0.0015, radius: 0.9, sMin: -1/2, sMax: 1/2},
-  {name: "Godspeed!", color: 0xa52a2a, mass: 0.0025, radius: 1, sMin: -1.5, sMax: 1.5}
+  {name: "Godspeed!", color: 0xa52a2a, mass: 0.0025, radius: 1, sMin: -1, sMax: 1}
 ];
 
 const interaction3Zoom = 100;
