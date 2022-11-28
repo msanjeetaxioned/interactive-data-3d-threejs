@@ -800,15 +800,15 @@ const appendGraphXValues = () => {
 /* Interaction 3 start */
 const interaction3Canvascontainer = document.querySelector(".spheres-section .canvas-container");
 let interaction3Data = [
-  {name: "Pink", color: 0xff2c55, mass: 0.00075, radius: 0.7, sMin: -1/2, sMax: 1/2},
-  {name: "Smashing Pumpkins", color: 0xff0000, mass: 0.0015, radius: 0.9, sMin: -1.5, sMax: 1.5},
-  {name: "Weezer", color: 0x006400, mass: 0.001, radius: 0.8, sMin: -1, sMax: 1},
-  {name: "Blue", color: 0x0000ff, mass: 0.0005, radius: 0.65, sMin: -1/3, sMax: 1/3},
-  {name: "Orange", color: 0xff4500, mass: 0.0005, radius: 0.65, sMin: -1/3, sMax: 1/3},
-  {name: "Sigur Ros", color: 0xff00ff, mass: 0.001, radius: 0.8, sMin: -1, sMax: 1},
-  {name: "Radiohead", color: 0x00ffff, mass: 0.001, radius: 0.8, sMin: -1, sMax: 1},
-  {name: "Chartreuse", color: 0x7fff00, mass: 0.0015, radius: 0.9, sMin: -1.5, sMax: 1.5},
-  {name: "Godspeed!", color: 0xa52a2a, mass: 0.0025, radius: 1, sMin: -3, sMax: 3}
+  {name: "Pink", color: 0xff2c55, mass: 0.00075, radius: 0.7, sMin: -1/6, sMax: 1/6},
+  {name: "Smashing Pumpkins", color: 0xff0000, mass: 0.0015, radius: 0.9, sMin: -1/2, sMax: 1/2},
+  {name: "Weezer", color: 0x006400, mass: 0.001, radius: 0.8, sMin: -1/4, sMax: 1/4},
+  {name: "Blue", color: 0x0000ff, mass: 0.0005, radius: 0.65, sMin: -1/8, sMax: 1/8},
+  {name: "Orange", color: 0xff4500, mass: 0.0005, radius: 0.65, sMin: -1/8, sMax: 1/8},
+  {name: "Sigur Ros", color: 0xff00ff, mass: 0.001, radius: 0.8, sMin: -1/4, sMax: 1/4},
+  {name: "Radiohead", color: 0x00ffff, mass: 0.001, radius: 0.8, sMin: -1/4, sMax: 1/4},
+  {name: "Chartreuse", color: 0x7fff00, mass: 0.0015, radius: 0.9, sMin: -1/2, sMax: 1/2},
+  {name: "Godspeed!", color: 0xa52a2a, mass: 0.0025, radius: 1, sMin: -1.5, sMax: 1.5}
 ];
 
 const interaction3Zoom = 100;
