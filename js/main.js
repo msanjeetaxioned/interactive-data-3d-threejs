@@ -858,8 +858,8 @@ const Ball = function (t, c, m, r, sMin, sMax, x) {
 
 		let bubble = new PIXI.Sprite.from('images/bubble3.png');
 		bubble.anchor.set(0.5, 0.5);
-		bubble.width = 2.35 * r;
-		bubble.height = 2.35 * r;
+		bubble.width = 2.3 * r;
+		bubble.height = 2.3 * r;
 		bubble.hitArea = new PIXI.Circle(0, 0, 1);
 		bubble.mask = this.circle;
 		this.el.addChild(bubble);
