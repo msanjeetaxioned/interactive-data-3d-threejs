@@ -860,10 +860,10 @@ const Ball = function (t, c, m, r, sMin, sMax, x) {
     interaction3Stage.addChild(this.el);
 
     let text = new PIXI.Text(t, {
-      fontFamily : 'Arial',
+      fontFamily: 'Poppins Regular',
       fontSize: 14,
-      fill : 0xffffff,
-      align : 'center',
+      fill: 0xffffff,
+      align: 'center',
       wordWrap: true
     });
     text.anchor.x = 0.5;
