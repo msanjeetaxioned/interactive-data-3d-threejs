@@ -800,7 +800,9 @@ const appendGraphXValues = () => {
 /* Interaction 3 start */
 const interaction3CanvasContainer = document.querySelector(".spheres-section .canvas-container");
 const interaction3PrevButton = interaction3CanvasContainer.querySelector(".previous-button");
-const interaction3NextButton = interaction3CanvasContainer.querySelector(".next-button"); 
+const interaction3NextButton = interaction3CanvasContainer.querySelector(".next-button");
+const interaction3NamesUl = interaction3CanvasContainer.querySelector(".interaction3-names");
+const interaction3NamesLis = interaction3NamesUl.querySelectorAll("li");
 
 const calculateAndSetCurrentValues = () => {
 	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
