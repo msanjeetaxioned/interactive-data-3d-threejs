@@ -863,9 +863,7 @@ const Ball = function (t, c, m, r, sMin, sMax, x) {
 		bubble.hitArea = new PIXI.Circle(0, 0, 1);
 		bubble.mask = this.circle;
 		this.el.addChild(bubble);
-
 		this.el.addChild(this.circle);
-
     interaction3Stage.addChild(this.el);
 
     let text = new PIXI.Text(t, {
