@@ -799,7 +799,42 @@ const appendGraphXValues = () => {
 
 /* Interaction 3 start */
 const interaction3Canvascontainer = document.querySelector(".spheres-section .canvas-container");
-let interaction3Data = [
+
+const calculateAndSetCurrentBubbleValues = () => {
+	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
+
+	for (let i = 0; i < currentValues.length; i++) {
+		interaction3Mass[i] = scale(currentValues[i], 0, 24.9, 0.0005, 0.0025);
+		interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.65, 1);
+		interaction3SpeedMaxNeg[i] = scale(currentValues[i], 0, 24.9, -1/8, -1);
+		interaction3SpeedMax[i] = scale(currentValues[i], 0, 24.9, 1/8, 1);
+	}
+}
+
+const interaction3Values = [
+	[2.8, 12.8, 15.7, 3, 20.6, 3.7, 24.9, 4.5, 1.9],
+	[1.3, 3.5, 5.7, 1.4, 7.9, 1.7, 2, 12.6, 1.3],
+	[5.6, 3.2, 3.6, 5.9, 4.2, 3, 8.8, 9, 4.9],
+	[9.1, 2.1, 9.6, 2.2, 2.2, 9.9, 2.1, 14.4, 4],
+	[6.1, 2.7, 3.3, 6.6, 3.7, 9.1, 1.6, 9.5, 4.4],
+	[2.5, 5.2, 9.1, 2.6, 2.9, 10.5, 2.5, 14, 3.8]
+];
+const interaction3Names = [
+	["native", "kanban", "mobile", "saas", "scrum", "management", "agile", "waterfall", "apps"],
+	["editing", "content", "social media", "email", "copywriting", "landing pages", "advertising", "blogging", "marketing"],
+	["facebook", "email", "strategy", "content", "adwords", "ads", "growth", 'social media', "product"],
+	["content creation", "design", "twitter", "pinterest", "video", "facebook", "management", "instagram", "linkedin"],
+	["branding", "print", "graphic design", "web", "mobile", "ui", "illustration", "ux", "product"],
+	["java", "angularjs", "node", "vue", "typescript", "javascript", "laravel", "react", "python"]
+];
+const interaction3Colors = [0xff2c55, 0x006400, 0xff4500, 0xff00ff, 0x00ffff, 0x7fff00];
+let interaction3Mass = [];
+let interaction3Radius = [];
+let interaction3SpeedMaxNeg = [];
+let interaction3SpeedMax = [];
+let interaction3CurrentSlide = 3;
+
+const interaction3Data = [
   {name: "Pink", color: 0xff2c55, mass: 0.00075, radius: 0.7, sMin: -1/6, sMax: 1/6},
   {name: "Smashing Pumpkins", color: 0xff0000, mass: 0.0015, radius: 0.9, sMin: -1/2, sMax: 1/2},
   {name: "Weezer", color: 0x006400, mass: 0.001, radius: 0.8, sMin: -1/4, sMax: 1/4},
