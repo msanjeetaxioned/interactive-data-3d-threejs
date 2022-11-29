@@ -51,7 +51,7 @@ const handleIntersect = (entries) => {
 		if (entry.isIntersecting) {
 			if (entry.target == interaction3Canvas) {
 				for (var i = 0; i < interaction3Data.length; i ++) {
-					const ball = new Ball(interaction3Data[i].name, interaction3Data[i].color, interaction3Data[i].mass, interaction3Data[i].radius, interaction3Data[i].sMin, interaction3Data[i].sMax, i);
+					const ball = new Ball(interaction3Data[i].name, interaction3Data[i].value + "%", interaction3Data[i].color, interaction3Data[i].mass, interaction3Data[i].radius, interaction3Data[i].sMin, interaction3Data[i].sMax, i);
 					interaction3Balls.push(ball);
 					observer2.unobserve(entry.target);
 				}
@@ -901,7 +901,7 @@ const planeBody = new p2.Body({ position:[0,-1] });
 planeBody.addShape(planeShape);
 interaction3World.addBody(planeBody);
 
-const Ball = function (t, c, m, r, sMin, sMax, x) {
+const Ball = function (t, v, c, m, r, sMin, sMax, x) {
   this.init = function () {
     this.el = new PIXI.Container();
     this.radius = r;
@@ -926,19 +926,33 @@ const Ball = function (t, c, m, r, sMin, sMax, x) {
 		this.el.addChild(this.circle);
     interaction3Stage.addChild(this.el);
 
-    this.text = new PIXI.Text(t, {
+		this.text = new PIXI.Text(v, {
       fontFamily: 'Poppins Regular',
-      fontSize: 14,
+      fontSize: 40,
+			fontWeight: "bold",
       fill: 0x000,
-      align: 'center',
       wordWrap: true
     });
     this.text.anchor.x = 0.5;
-    this.text.anchor.y = 0.5;
+    this.text.anchor.y = 0.7;
     this.text.position.x = 0;
     this.text.scale.x = 0.01;
     this.text.scale.y = -0.01;
     this.el.addChild(this.text);
+
+    this.text2 = new PIXI.Text(t, {
+      fontFamily: 'Poppins Regular',
+      fontSize: 14,
+			fontWeight: "bold",
+      fill: 0x000,
+      wordWrap: true
+    });
+    this.text2.anchor.x = 0.5;
+    this.text2.anchor.y = -1;
+    this.text2.position.x = 0;
+    this.text2.scale.x = 0.01;
+    this.text2.scale.y = -0.01;
+    this.el.addChild(this.text2);
 
     this.shape = new p2.Circle({radius: this.radius});
 
@@ -999,7 +1013,8 @@ const Ball = function (t, c, m, r, sMin, sMax, x) {
 		this.body.mass = interaction3Data[i].mass;
 		this.sMin = interaction3Data[i].sMin;
 		this.sMax = interaction3Data[i].sMax;
-		this.text.text = interaction3Data[i].name;
+		this.text.text = interaction3Data[i].value + "%";
+		this.text.text2 = interaction3Data[i].name;
 	}
 
   this.init.call(this);
