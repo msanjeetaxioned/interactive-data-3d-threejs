@@ -800,7 +800,7 @@ const appendGraphXValues = () => {
 /* Interaction 3 start */
 const interaction3Canvascontainer = document.querySelector(".spheres-section .canvas-container");
 
-const calculateAndSetCurrentBubbleValues = () => {
+const calculateAndSetCurrentValues = () => {
 	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
 
 	for (let i = 0; i < currentValues.length; i++) {
@@ -808,6 +808,15 @@ const calculateAndSetCurrentBubbleValues = () => {
 		interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.65, 1);
 		interaction3SpeedMaxNeg[i] = scale(currentValues[i], 0, 24.9, -1/8, -1);
 		interaction3SpeedMax[i] = scale(currentValues[i], 0, 24.9, 1/8, 1);
+
+		interaction3Data[i] = {};
+		interaction3Data[i].name = interaction3Names[interaction3CurrentSlide-1][i];
+		interaction3Data[i].value = interaction3Values[interaction3CurrentSlide-1][i];
+		interaction3Data[i].mass = interaction3Mass[i];
+		interaction3Data[i].radius = interaction3Radius[i];
+		interaction3Data[i].sMin = interaction3SpeedMaxNeg[i];
+		interaction3Data[i].sMax = interaction3SpeedMax[i];
+		interaction3Data[i].color = interaction3Colors[interaction3CurrentSlide-1];
 	}
 }
 
@@ -833,18 +842,8 @@ let interaction3Radius = [];
 let interaction3SpeedMaxNeg = [];
 let interaction3SpeedMax = [];
 let interaction3CurrentSlide = 3;
-
-const interaction3Data = [
-  {name: "Pink", color: 0xff2c55, mass: 0.00075, radius: 0.7, sMin: -1/6, sMax: 1/6},
-  {name: "Smashing Pumpkins", color: 0xff0000, mass: 0.0015, radius: 0.9, sMin: -1/2, sMax: 1/2},
-  {name: "Weezer", color: 0x006400, mass: 0.001, radius: 0.8, sMin: -1/4, sMax: 1/4},
-  {name: "Blue", color: 0x0000ff, mass: 0.0005, radius: 0.65, sMin: -1/8, sMax: 1/8},
-  {name: "Orange", color: 0xff4500, mass: 0.0005, radius: 0.65, sMin: -1/8, sMax: 1/8},
-  {name: "Sigur Ros", color: 0xff00ff, mass: 0.001, radius: 0.8, sMin: -1/4, sMax: 1/4},
-  {name: "Radiohead", color: 0x00ffff, mass: 0.001, radius: 0.8, sMin: -1/4, sMax: 1/4},
-  {name: "Chartreuse", color: 0x7fff00, mass: 0.0015, radius: 0.9, sMin: -1/2, sMax: 1/2},
-  {name: "Godspeed!", color: 0xa52a2a, mass: 0.0025, radius: 1, sMin: -1, sMax: 1}
-];
+let interaction3Data = [];
+calculateAndSetCurrentValues();
 
 const interaction3Zoom = 100;
 let interaction3Balls = [];
