@@ -1,8 +1,8 @@
 const wrapperWorkLife = document.querySelector(".work-life-balance-graph-section > .wrapper");
 const graph1CanvasContainer = wrapperWorkLife.querySelector(".canvas-container");
 
-const prevGraphButton = graph1CanvasContainer.querySelector(".previous-button");
-const nextGraphButton = graph1CanvasContainer.querySelector(".next-button");
+const graph1PrevButton = graph1CanvasContainer.querySelector(".previous-button");
+const graph1NextButton = graph1CanvasContainer.querySelector(".next-button");
 
 const graphNamesUl = graph1CanvasContainer.querySelector(".graph1-names");
 const graphNamesLis = graphNamesUl.querySelectorAll("li");
@@ -170,17 +170,17 @@ let bars = [];
 let barsInitialPosition = {};
 let barsHeight = [];
 
-const enableOrDisablePrevAndNextButtons = (enable) => {
+const enableOrDisablePrevAndNextButtons = (enable, prevButton, nextButton) => {
 	if (enable) {
-		prevGraphButton.removeAttribute("disabled");
-		nextGraphButton.removeAttribute("disabled");
-		prevGraphButton.setAttribute("title", "Previous");
-		nextGraphButton.setAttribute("title", "Next");
+		prevButton.removeAttribute("disabled");
+		nextButton.removeAttribute("disabled");
+		prevButton.setAttribute("title", "Previous");
+		nextButton.setAttribute("title", "Next");
 	} else {
-		prevGraphButton.setAttribute("disabled", "");
-		nextGraphButton.setAttribute("disabled", "");
-		prevGraphButton.setAttribute("title", "Disabled");
-		nextGraphButton.setAttribute("title", "Disabled");
+		prevButton.setAttribute("disabled", "");
+		nextButton.setAttribute("disabled", "");
+		prevButton.setAttribute("title", "Disabled");
+		nextButton.setAttribute("title", "Disabled");
 	}
 }
 
@@ -245,7 +245,7 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 			graph1BarsHeight[i] = currentBarHeight;
 			let newY;
 
-			enableOrDisablePrevAndNextButtons(false);
+			enableOrDisablePrevAndNextButtons(false, graph1PrevButton, graph1NextButton);
 			if (prevGraphNum == undefined) {
 				newY = graph1BarsHeight[i] / 0.1 * graph1Bars[i].scale.y;
 				playCounterAnimation(".graph1-value-" + (i+1), workLifeGraphs[graph1CurrentGraph - 1][i], 2000);
@@ -257,7 +257,7 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 						updatePositionOfGraphValues(i);
 					},
 					onComplete: () => {
-						enableOrDisablePrevAndNextButtons(true);
+						enableOrDisablePrevAndNextButtons(true, graph1PrevButton, graph1NextButton);
 					}
 				});
 			} else {
@@ -273,7 +273,7 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 						updatePositionOfGraphValues(i);
 					},
 					onComplete: () => {
-						enableOrDisablePrevAndNextButtons(true);
+						enableOrDisablePrevAndNextButtons(true, graph1PrevButton, graph1NextButton);
 					}});
 			}
 		}
@@ -326,8 +326,8 @@ const prevOrNextButtonClick = (prevOrNext) => {
 	graph1CalculateBarsHeightAndAddThemInScene(prevGraph);
 }
 
-prevGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, -1));
-nextGraphButton.addEventListener("click", prevOrNextButtonClick.bind(this, 1));
+graph1PrevButton.addEventListener("click", prevOrNextButtonClick.bind(this, -1));
+graph1NextButton.addEventListener("click", prevOrNextButtonClick.bind(this, 1));
 
 graph1CalculateBarsHeightAndAddThemInScene();
 
@@ -798,7 +798,9 @@ const appendGraphXValues = () => {
 }
 
 /* Interaction 3 start */
-const interaction3Canvascontainer = document.querySelector(".spheres-section .canvas-container");
+const interaction3CanvasContainer = document.querySelector(".spheres-section .canvas-container");
+const interaction3PrevButton = interaction3CanvasContainer.querySelector(".previous-button");
+const interaction3NextButton = interaction3CanvasContainer.querySelector(".next-button"); 
 
 const calculateAndSetCurrentValues = () => {
 	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
@@ -848,10 +850,10 @@ calculateAndSetCurrentValues();
 const interaction3Zoom = 100;
 let interaction3Balls = [];
 
-const interaction3Renderer = PIXI.autoDetectRenderer(interaction3Canvascontainer.getBoundingClientRect().width, window.innerHeight * 1.5, {
+const interaction3Renderer = PIXI.autoDetectRenderer(interaction3CanvasContainer.getBoundingClientRect().width, window.innerHeight * 1.5, {
   transparent: true, antialias: true
 });
-interaction3Canvascontainer.appendChild(interaction3Renderer.view);
+interaction3CanvasContainer.appendChild(interaction3Renderer.view);
 
 let interaction3Movement = {};
 const interaction3OnMousemove = (event) => {
@@ -861,7 +863,7 @@ const interaction3OnMousemove = (event) => {
 	}
 }
 
-const interaction3Canvas = interaction3Canvascontainer.querySelector("canvas");
+const interaction3Canvas = interaction3CanvasContainer.querySelector("canvas");
 interaction3Canvas.addEventListener("mousemove", interaction3OnMousemove, false);
 
 const interaction3World = new p2.World({gravity: [1, 1]});
