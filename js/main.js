@@ -281,31 +281,31 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 }
 
 // Changes graph name with animation when next or previous button is clicked
-const changeGraphNameWithSlideAnimation = (prevSlideNum, currentSlideNum, prevOrNext) => {
-	const prevGraph = graphNamesLis[prevSlideNum - 1];
-	const currentGraph = graphNamesLis[currentSlideNum - 1];
+const changeGraphNameWithSlideAnimation = (prevSlideNum, currentSlideNum, prevOrNext, lis, ul) => {
+	const prevGraph = lis[prevSlideNum - 1];
+	const currentGraph = lis[currentSlideNum - 1];
 
 	prevGraph.classList.remove("active");
 	currentGraph.classList.add("active");
 
 	if (prevOrNext == 1) {
-		graphNamesUl.scroll({
+		ul.scroll({
 			left: prevGraph.getBoundingClientRect().left,
 			behavior: "smooth"
 		});
 		const timer = setTimeout(() => {
 			clearTimeout(timer);
-			graphNamesUl.append(graphNamesUl.children[0]);
-			graphNamesUl.scroll({
+			ul.append(ul.children[0]);
+			ul.scroll({
 				left: 0
 			});
 		}, 500);
 	} else {
-		graphNamesUl.insertBefore(graphNamesUl.children[graphNamesLis.length - 1], graphNamesUl.children[0]);
-		graphNamesUl.scroll({
-			left: graphNamesLis[1].getBoundingClientRect().left
+		ul.insertBefore(ul.children[lis.length - 1], ul.children[0]);
+		ul.scroll({
+			left: lis[1].getBoundingClientRect().left
 		});
-		graphNamesUl.scroll({
+		ul.scroll({
 			left: 0,
 			behavior: "smooth"
 		});
@@ -322,7 +322,7 @@ const prevOrNextButtonClick = (prevOrNext) => {
 	} else {
 		graph1CurrentGraph += prevOrNext;
 	}
-	changeGraphNameWithSlideAnimation(prevGraph, graph1CurrentGraph, prevOrNext);
+	changeGraphNameWithSlideAnimation(prevGraph, graph1CurrentGraph, prevOrNext, graphNamesLis, graphNamesUl);
 	graph1CalculateBarsHeightAndAddThemInScene(prevGraph);
 }
 
@@ -804,7 +804,7 @@ const interaction3NextButton = interaction3CanvasContainer.querySelector(".next-
 const interaction3NamesUl = interaction3CanvasContainer.querySelector(".interaction3-names");
 const interaction3NamesLis = interaction3NamesUl.querySelectorAll("li");
 
-const calculateAndSetCurrentValues = () => {
+const calculateAndSetCurrentValues = (notFirstTime) => {
 	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
 
 	for (let i = 0; i < currentValues.length; i++) {
@@ -821,6 +821,17 @@ const calculateAndSetCurrentValues = () => {
 		interaction3Data[i].sMin = interaction3SpeedMaxNeg[i];
 		interaction3Data[i].sMax = interaction3SpeedMax[i];
 		interaction3Data[i].color = interaction3Colors[interaction3CurrentSlide-1];
+
+		if (notFirstTime) {
+			interaction3Balls[i].circle.scale.x = interaction3Balls[i].circle.scale.y = interaction3Data[i].radius;
+			interaction3Balls[i].bubble.width = 2.3 * interaction3Data[i].radius;
+			interaction3Balls[i].bubble.height = 2.3 * interaction3Data[i].radius;
+			interaction3Balls[i].shape.radius = interaction3Data[i].radius;
+			interaction3Balls[i].body.mass = interaction3Data[i].mass;
+			interaction3Balls[i].sMin = interaction3Data[i].sMin;
+			interaction3Balls[i].sMax = interaction3Data[i].sMax;
+			interaction3Balls[i].text.text = interaction3Data[i].name;
+		}
 	}
 }
 
@@ -857,6 +868,22 @@ const interaction3Renderer = PIXI.autoDetectRenderer(interaction3CanvasContainer
 });
 interaction3CanvasContainer.appendChild(interaction3Renderer.view);
 
+const interaction3PrevOrNextClick = (prevOrNext) => {
+	const prevGraph = interaction3CurrentSlide;
+	if (interaction3CurrentSlide == interaction3Names.length && prevOrNext == 1) {
+		interaction3CurrentSlide = 1;
+	} else if (interaction3CurrentSlide == 1 && prevOrNext == -1) {
+		interaction3CurrentSlide = interaction3Names.length;
+	} else {
+		interaction3CurrentSlide += prevOrNext;
+	}
+	changeGraphNameWithSlideAnimation(prevGraph, interaction3CurrentSlide, prevOrNext, interaction3NamesLis, interaction3NamesUl);
+	calculateAndSetCurrentValues(true);
+}
+
+interaction3PrevButton.addEventListener("click", interaction3PrevOrNextClick.bind(this, -1));
+interaction3NextButton.addEventListener("click", interaction3PrevOrNextClick.bind(this, 1));
+
 let interaction3Movement = {};
 const interaction3OnMousemove = (event) => {
 	if (event.movementX != undefined && event.movementY != undefined) {
@@ -885,6 +912,8 @@ const Ball = function (t, c, m, r, sMin, sMax, x) {
   this.init = function () {
     this.el = new PIXI.Container();
     this.radius = r;
+		this.sMin = sMin;
+		this.sMax = sMax;
 
     this.circle = new PIXI.Graphics();
     this.circle.beginFill(c);
@@ -894,29 +923,29 @@ const Ball = function (t, c, m, r, sMin, sMax, x) {
     this.circle.hitArea = new PIXI.Circle(0, 0, 1);
     this.circle.scale.x = this.circle.scale.y = this.radius;
 
-		let bubble = new PIXI.Sprite.from('images/bubble3.png');
-		bubble.anchor.set(0.5, 0.5);
-		bubble.width = 2.3 * r;
-		bubble.height = 2.3 * r;
-		bubble.hitArea = new PIXI.Circle(0, 0, 1);
-		bubble.mask = this.circle;
-		this.el.addChild(bubble);
+		this.bubble = new PIXI.Sprite.from('images/bubble3.png');
+		this.bubble.anchor.set(0.5, 0.5);
+		this.bubble.width = 2.3 * r;
+		this.bubble.height = 2.3 * r;
+		this.bubble.hitArea = new PIXI.Circle(0, 0, 1);
+		this.bubble.mask = this.circle;
+		this.el.addChild(this.bubble);
 		this.el.addChild(this.circle);
     interaction3Stage.addChild(this.el);
 
-    let text = new PIXI.Text(t, {
+    this.text = new PIXI.Text(t, {
       fontFamily: 'Poppins Regular',
       fontSize: 14,
       fill: 0x000,
       align: 'center',
       wordWrap: true
     });
-    text.anchor.x = 0.5;
-    text.anchor.y = 0.5;
-    text.position.x = 0;
-    text.scale.x = 0.01;
-    text.scale.y = -0.01;
-    this.el.addChild(text);
+    this.text.anchor.x = 0.5;
+    this.text.anchor.y = 0.5;
+    this.text.position.x = 0;
+    this.text.scale.x = 0.01;
+    this.text.scale.y = -0.01;
+    this.el.addChild(this.text);
 
     this.shape = new p2.Circle({radius: this.radius});
 
@@ -958,8 +987,8 @@ const Ball = function (t, c, m, r, sMin, sMax, x) {
       }
 
       let forceX, forceY;
-      forceX = scale(movementX, -50, 50, -Math.abs(sMin * this.body.position[0]), Math.abs(sMax * this.body.position[0]));
-      forceY = scale(movementY, -50, 50, Math.abs(sMin * this.body.position[1]), -Math.abs(sMax * this.body.position[1]));
+      forceX = scale(movementX, -50, 50, -Math.abs(this.sMin * this.body.position[0]), Math.abs(this.sMax * this.body.position[0]));
+      forceY = scale(movementY, -50, 50, Math.abs(this.sMin * this.body.position[1]), -Math.abs(this.sMax * this.body.position[1]));
 
       this.body.applyForce([forceX, forceY]);
       this.timer = setTimeout(() => {
