@@ -823,14 +823,7 @@ const calculateAndSetCurrentValues = (notFirstTime) => {
 		interaction3Data[i].color = interaction3Colors[interaction3CurrentSlide-1];
 
 		if (notFirstTime) {
-			interaction3Balls[i].circle.scale.x = interaction3Balls[i].circle.scale.y = interaction3Data[i].radius;
-			interaction3Balls[i].bubble.width = 2.3 * interaction3Data[i].radius;
-			interaction3Balls[i].bubble.height = 2.3 * interaction3Data[i].radius;
-			interaction3Balls[i].shape.radius = interaction3Data[i].radius;
-			interaction3Balls[i].body.mass = interaction3Data[i].mass;
-			interaction3Balls[i].sMin = interaction3Data[i].sMin;
-			interaction3Balls[i].sMax = interaction3Data[i].sMax;
-			interaction3Balls[i].text.text = interaction3Data[i].name;
+			interaction3Balls[i].updateValues(i);
 		}
 	}
 }
@@ -997,6 +990,17 @@ const Ball = function (t, c, m, r, sMin, sMax, x) {
       }, 500);
     }
   }
+
+	this.updateValues = (i) => {
+		this.circle.scale.x = this.circle.scale.y = interaction3Data[i].radius;
+		this.bubble.width = 2.3 * interaction3Data[i].radius;
+		this.bubble.height = 2.3 * interaction3Data[i].radius;
+		this.shape.radius = interaction3Data[i].radius;
+		this.body.mass = interaction3Data[i].mass;
+		this.sMin = interaction3Data[i].sMin;
+		this.sMax = interaction3Data[i].sMax;
+		this.text.text = interaction3Data[i].name;
+	}
 
   this.init.call(this);
   this.circle.mouseover = this.mouseover.bind(this);
