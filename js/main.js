@@ -829,12 +829,12 @@ const interaction3Values = [
 	[2.5, 5.2, 9.1, 2.6, 2.9, 10.5, 2.5, 14, 3.8]
 ];
 const interaction3Names = [
-	["native", "kanban", "mobile", "saas", "scrum", "management", "agile", "waterfall", "apps"],
-	["editing", "content", "social media", "email", "copywriting", "landing pages", "advertising", "blogging", "marketing"],
-	["facebook", "email", "strategy", "content", "adwords", "ads", "growth", 'social media', "product"],
-	["content creation", "design", "twitter", "pinterest", "video", "facebook", "management", "instagram", "linkedin"],
-	["branding", "print", "graphic design", "web", "mobile", "ui", "illustration", "ux", "product"],
-	["java", "angularjs", "node", "vue", "typescript", "javascript", "laravel", "react", "python"]
+	["NATIVE", "KANBAN", "MOBILE", "SAAS", "SCRUM", "MANAGEMENT", "AGILE", "WATERFALL", "APPS"],
+	["EDITING", "CONTENT", "SOCIAL MEDIA", "EMAIL", "COPYWRITING", "LANDING PAGES", "ADVERTISING", "BLOGGING", "MARKETING"],
+	["FACEBOOK", "EMAIL", "STRATEGY", "CONTENT", "ADWORDS", "ADS", "GROWTH", 'SOCIAL MEDIA', "PRODUCT"],
+	["CONTENT CREATION", "DESIGN", "TWITTER", "PINTEREST", "VIDEO", "FACEBOOK", "MANAGEMENT", "INSTAGRAM", "LINKEDIN"],
+	["BRANDING", "PRINT", "GRAPHIC DESIGN", "WEB", "MOBILE", "UI", "ILLUSTRATION", "UX", "PRODUCT"],
+	["JAVA", "ANGULARJS", "NODE", "VUE", "TYPESCRIPT", "JAVASCRIPT", "LARAVEL", "REACT", "PYTHON"]
 ];
 const interaction3Colors = [0xff2c55, 0x006400, 0xff4500, 0xff00ff, 0x00ffff, 0x7fff00];
 let interaction3Mass = [];
