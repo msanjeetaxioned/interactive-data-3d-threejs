@@ -78,9 +78,8 @@ section {
   display: inline-block;
 }
 .section1 video {
-  width: 100%;
-  min-width: 100%;
-  height: auto;
+  width: auto;
+  min-height: 100%;
   display: block;
 }
 
