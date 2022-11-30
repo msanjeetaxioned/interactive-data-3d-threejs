@@ -1061,6 +1061,8 @@ const onWindowResize = () => {
 	camera.updateProjectionMatrix();
 	renderer.setSize(document.body.clientWidth * 0.85, window.innerHeight * 1.5);
 
+	interaction3Renderer.resize(document.body.clientWidth, window.innerHeight * 1.5);
+
 	animate();
 }
 
