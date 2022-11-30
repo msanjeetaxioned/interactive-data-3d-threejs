@@ -1006,15 +1006,30 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
   }
 
 	this.updateValues = (i) => {
-		this.circle.scale.x = this.circle.scale.y = interaction3Data[i].radius;
-		this.bubble.width = 2.3 * interaction3Data[i].radius;
-		this.bubble.height = 2.3 * interaction3Data[i].radius;
-		this.shape.radius = interaction3Data[i].radius;
-		this.body.mass = interaction3Data[i].mass;
-		this.sMin = interaction3Data[i].sMin;
-		this.sMax = interaction3Data[i].sMax;
-		this.text.text = interaction3Data[i].value + "%";
-		this.text.text2 = interaction3Data[i].name;
+		const r = interaction3Data[i].radius;
+		const delta = 0.05;
+		const dur1 = 0.4;
+		const dur2 = 0.15;
+
+		const tl = gsap.timeline({paused: true});
+		tl.to(this.circle.scale, {keyframes: [{x: r + delta, y: r + delta, duration: dur1}, {x: r - 2*delta, y: r - 2*delta, duration: dur2}, {x: r, y: r, duration: dur2}], 
+			onUpdate: () => {
+				this.shape.radius = this.circle.scale.x;
+				this.body.updateBoundingRadius();
+			},
+			onComplete: () => {
+				this.shape.radius = r;
+				this.body.mass = interaction3Data[i].mass;
+				this.sMin = interaction3Data[i].sMin;
+				this.sMax = interaction3Data[i].sMax;
+				this.text.text = interaction3Data[i].value + "%";
+				this.text.text2 = interaction3Data[i].name;
+			}})
+			.to(this.bubble, {keyframes: [{width: (r + delta) * 2.3, height: (r + delta) * 2.3, duration: dur1}, {width: (r - 2*delta) * 2.3, height: (r - 2*delta) * 2.3, duration: dur2}, {width: 2.3 * r, height: r * 2.3, duration: dur2}]}, "<");
+		// this.circle.scale.x = this.circle.scale.y = interaction3Data[i].radius;
+		// this.bubble.width = 2.3 * interaction3Data[i].radius;
+		// this.bubble.height = 2.3 * interaction3Data[i].radius;
+		tl.play();
 	}
 
   this.init.call(this);
