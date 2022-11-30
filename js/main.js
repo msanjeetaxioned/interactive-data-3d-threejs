@@ -809,7 +809,7 @@ const calculateAndSetCurrentValues = (notFirstTime) => {
 
 	for (let i = 0; i < currentValues.length; i++) {
 		interaction3Mass[i] = scale(currentValues[i], 0, 24.9, 0.0005, 0.0025);
-		interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.65, 1);
+		interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.7, 1);
 		interaction3SpeedMaxNeg[i] = scale(currentValues[i], 0, 24.9, -1/8, -1);
 		interaction3SpeedMax[i] = scale(currentValues[i], 0, 24.9, 1/8, 1);
 
