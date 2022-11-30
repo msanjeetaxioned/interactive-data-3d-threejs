@@ -1051,6 +1051,26 @@ const calculateMinorSectionsMargins = () => {
 }
 calculateMinorSectionsMargins();
 
+const onWindowResize = () => {
+	console.log(document.body.clientWidth);
+	graph1Camera.aspect = (document.body.clientWidth * 0.85) / (window.innerHeight * 1.5);
+	graph1Camera.updateProjectionMatrix();
+	graph1Renderer.setSize(document.body.clientWidth * 0.85, window.innerHeight * 1.5);
+
+	camera.aspect = (document.body.clientWidth * 0.85) / (window.innerHeight * 1.5);
+	camera.updateProjectionMatrix();
+	renderer.setSize(document.body.clientWidth * 0.85, window.innerHeight * 1.5);
+
+	animate();
+}
+
+// Add Window resize handler
+let resizeCompleteTimer;
+window.addEventListener("resize", () => {
+	clearTimeout(resizeCompleteTimer);
+	resizeCompleteTimer = setTimeout(onWindowResize, 200);
+});
+
 const animate = () => {
 	requestAnimationFrame(animate);
 	graph1Raycaster.setFromCamera(graph1Mouse, graph1Camera);
@@ -1085,7 +1105,7 @@ const animate = () => {
 
 	// Interaction 3
 	interaction3World.step(1/60);
-  for (var i = 0; i < interaction3Balls.length; i ++) {
+  for (var i = 0; i < interaction3Balls.length; i++) {
     interaction3Balls[i].update();
   }
   interaction3Renderer.render(interaction3Stage);
