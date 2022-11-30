@@ -944,8 +944,7 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
       fontFamily: 'Poppins Regular',
       fontSize: 14,
 			fontWeight: "bold",
-      fill: 0x000,
-      wordWrap: true
+      fill: 0x000
     });
     this.text2.anchor.x = 0.5;
     this.text2.anchor.y = -1;
@@ -1023,7 +1022,7 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
 				this.sMin = interaction3Data[i].sMin;
 				this.sMax = interaction3Data[i].sMax;
 				this.text.text = interaction3Data[i].value + "%";
-				this.text.text2 = interaction3Data[i].name;
+				this.text2.text = interaction3Data[i].name;
 			}})
 			.to(this.bubble, {keyframes: [{width: (r + delta) * 2.3, height: (r + delta) * 2.3, duration: dur1}, {width: (r - 2*delta) * 2.3, height: (r - 2*delta) * 2.3, duration: dur2}, {width: 2.3 * r, height: r * 2.3, duration: dur2}]}, "<");
 		// this.circle.scale.x = this.circle.scale.y = interaction3Data[i].radius;
