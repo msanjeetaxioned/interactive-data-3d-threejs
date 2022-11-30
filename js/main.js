@@ -408,12 +408,13 @@ const scale = (number, inMin, inMax, outMin, outMax) => {
 
 const graph1CanvasDistanceFromTop = window.pageYOffset + graph1Canvas.getBoundingClientRect().top;
 const graph1CanvasVisibleMin =  graph1CanvasDistanceFromTop - window.innerHeight;
-const graph1CanvasHeight = graph1Canvas.getBoundingClientRect().height;
+let graph1CanvasHeight = graph1Canvas.getBoundingClientRect().height;
 const graph1CanvasVisibleMax = graph1CanvasVisibleMin + graph1CanvasHeight;
 let graph1CurrentWindowY = undefined;
 
 // Sets Vertical rotation of bars based on scroll position 
 const setRotationAngleOfBarsBasedOnScrollPosition = () => {
+	graph1CanvasHeight = graph1Canvas.getBoundingClientRect().height;
 	let windowY;
 	if (graph1CurrentWindowY != undefined) {
 		windowY = graph1CurrentWindowY;
@@ -1055,7 +1056,6 @@ const calculateMinorSectionsMargins = () => {
 calculateMinorSectionsMargins();
 
 const onWindowResize = () => {
-	console.log(document.body.clientWidth);
 	graph1Camera.aspect = fixedCanvasHeight / fixedCanvasWidth;
 	graph1Camera.updateProjectionMatrix();
 	graph1Renderer.setSize(fixedCanvasHeight, fixedCanvasWidth);
