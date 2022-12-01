@@ -426,8 +426,8 @@ const setRotationAngleOfBarsBasedOnScrollPosition = () => {
 	if (graph1CurrentWindowY != windowY && windowY != undefined) {
 		if (graph1CurrentWindowY >= 0 && graph1CurrentWindowY <= graph1CanvasHeight) {
 			const percent = Math.round(graph1CurrentWindowY / graph1CanvasHeight * 100);
-			if (percent >= 25 && percent <= 90) {
-				graph1Camera.position.y = scale(percent, 25, 90, 18, -6);
+			if (percent <= 90) {
+				graph1Camera.position.y = scale(percent, 0, 90, 18, -6);
 				graph1Camera.setViewOffset(graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight, 0, 0, graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight);
 				graph1Camera.setViewOffset(graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight, 0, calculateBarsBotPosition(graph1Camera, graph1Canvas).y - graph1BarInitialPosition.y, graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight);
 			}
