@@ -1,3 +1,9 @@
+$(function() {
+	$.scrollify({
+		section : ".section",
+	});
+});
+
 let fixedCanvasWidth = document.body.clientWidth * 0.85;
 let fixedCanvasHeight = window.innerHeight;
 

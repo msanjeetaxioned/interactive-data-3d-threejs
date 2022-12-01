@@ -85,6 +85,10 @@ section {
 
 /* Section 1 SCSS end */
 /* Graph1 SCSS start */
+.work-life-balance-graph-section {
+  padding-bottom: 200px;
+}
+
 .graph-section {
   height: 100%;
   min-height: 100vh;
@@ -421,6 +425,10 @@ section {
 
 /* Quote section SCSS end */
 /* Graph2 SCSS start */
+.project-by-numbers-section {
+  padding-bottom: 200px;
+}
+
 .graph2-value {
   position: absolute;
   color: #fff;
