@@ -1,6 +1,7 @@
 $(function() {
 	$.scrollify({
 		section : ".section",
+		updateHash: false
 	});
 });
 
