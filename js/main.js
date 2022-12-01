@@ -719,12 +719,13 @@ const rotateBar = (cube, currentBarTL, currentBarRotation) => {
 
 const canvasDistanceFromTop = window.pageYOffset + canvas.getBoundingClientRect().top;
 const canvasVisibleMin =  canvasDistanceFromTop - window.innerHeight;
-const canvasHeight = canvas.getBoundingClientRect().height;
+let canvasHeight = canvas.getBoundingClientRect().height;
 const canvasVisibleMax = canvasVisibleMin + canvasHeight;
 let currentWindowY = undefined;
 
 // Sets Vertical rotation of bars based on scroll position 
 const graph2SetRotationAngleOfBarsBasedOnScrollPosition = () => {
+	canvasHeight = canvas.getBoundingClientRect().height;
 	let windowY;
 	if (currentWindowY != undefined) {
 		windowY = currentWindowY;
