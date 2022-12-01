@@ -426,8 +426,8 @@ const setRotationAngleOfBarsBasedOnScrollPosition = () => {
 	if (graph1CurrentWindowY != windowY && windowY != undefined) {
 		if (graph1CurrentWindowY >= 0 && graph1CurrentWindowY <= graph1CanvasHeight) {
 			const percent = Math.round(graph1CurrentWindowY / graph1CanvasHeight * 100);
-			if (percent <= 90) {
-				graph1Camera.position.y = scale(percent, 0, 90, 18, -6);
+			if (percent >= 25 && percent <= 90) {
+				graph1Camera.position.y = scale(percent, 25, 90, 18, -6);
 				graph1Camera.setViewOffset(graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight, 0, 0, graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight);
 				graph1Camera.setViewOffset(graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight, 0, calculateBarsBotPosition(graph1Camera, graph1Canvas).y - graph1BarInitialPosition.y, graph1Canvas.getBoundingClientRect().width, graph1CanvasHeight);
 			}
@@ -646,7 +646,7 @@ const calculateBarsHeightAndAddThemInScene = () => {
 calculateBarsHeightAndAddThemInScene();
 
 camera.position.y = 0;
-camera.position.z = 60;
+camera.position.z = 40;
 barsInitialPosition = calculateBarsBotPosition(camera, canvas);
 // orbit.update();
 
@@ -1030,9 +1030,6 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
 				this.text2.text = interaction3Data[i].name;
 			}})
 			.to(this.bubble, {keyframes: [{width: (r + delta) * 2.3, height: (r + delta) * 2.3, duration: dur1}, {width: (r - 2*delta) * 2.3, height: (r - 2*delta) * 2.3, duration: dur2}, {width: 2.3 * r, height: r * 2.3, duration: dur2}]}, "<");
-		// this.circle.scale.x = this.circle.scale.y = interaction3Data[i].radius;
-		// this.bubble.width = 2.3 * interaction3Data[i].radius;
-		// this.bubble.height = 2.3 * interaction3Data[i].radius;
 		tl.play();
 	}
 
@@ -1047,8 +1044,6 @@ observer2.observe(interaction3Canvas);
 const onWindowResize = () => {
 	fixedCanvasWidth = document.body.clientWidth * 0.85;
 	fixedCanvasHeight = window.innerHeight;
-	console.log(fixedCanvasWidth);
-	console.log(fixedCanvasHeight);
 
 	graph1Camera.aspect = fixedCanvasWidth / fixedCanvasHeight;
 	graph1Camera.updateProjectionMatrix();
