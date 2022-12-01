@@ -1,5 +1,5 @@
-let fixedCanvasHeight = document.body.clientWidth * 0.85;
-let fixedCanvasWidth = window.innerHeight * 1.5;
+let fixedCanvasWidth = document.body.clientWidth * 0.85;
+let fixedCanvasHeight = window.innerHeight * 1.5;
 
 const wrapperWorkLife = document.querySelector(".work-life-balance-graph-section > .wrapper");
 const graph1CanvasContainer = wrapperWorkLife.querySelector(".canvas-container");
@@ -14,12 +14,12 @@ let graph1Canvas;
 
 // Setting up Scene, Camera & Renderer
 const graph1Renderer = new THREE.WebGLRenderer({antialias: true});
-graph1Renderer.setSize(fixedCanvasHeight, fixedCanvasWidth);
+graph1Renderer.setSize(fixedCanvasWidth, fixedCanvasHeight);
 graph1CanvasContainer.insertBefore(graph1Renderer.domElement, graph1CanvasContainer.children[0]);
 graph1Canvas = wrapperWorkLife.querySelector("canvas");
 
 const graph1Scene = new THREE.Scene();
-var graph1Camera = new THREE.PerspectiveCamera(45, fixedCanvasHeight / fixedCanvasWidth, 1, 1000);
+var graph1Camera = new THREE.PerspectiveCamera(45, fixedCanvasWidth / fixedCanvasHeight, 1, 1000);
 
 const graph1Holder = new THREE.Group();
 graph1Scene.add(graph1Holder);
@@ -107,14 +107,14 @@ let canvas;
 
 // Setting up Scene, Camera & Renderer
 const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(fixedCanvasHeight, fixedCanvasWidth);
+renderer.setSize(fixedCanvasWidth, fixedCanvasHeight);
 renderer.setClearColor(0xffffff, 0);
 
 canvasContainer.insertBefore(renderer.domElement, canvasContainer.children[0]);
 canvas = wrapperProjectByNumbers.querySelector("canvas");
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, fixedCanvasHeight / fixedCanvasWidth , 1, 1000);
+const camera = new THREE.PerspectiveCamera(45, fixedCanvasWidth / fixedCanvasHeight , 1, 1000);
 
 const holder = new THREE.Group();
 scene.add(holder);
@@ -861,7 +861,7 @@ calculateAndSetCurrentValues();
 const interaction3Zoom = 100;
 let interaction3Balls = [];
 
-const interaction3Renderer = PIXI.autoDetectRenderer(interaction3CanvasContainer.getBoundingClientRect().width, fixedCanvasWidth, {
+const interaction3Renderer = PIXI.autoDetectRenderer(interaction3CanvasContainer.getBoundingClientRect().width, fixedCanvasHeight, {
   transparent: true, antialias: true
 });
 interaction3CanvasContainer.appendChild(interaction3Renderer.view);
@@ -1057,18 +1057,18 @@ const calculateMinorSectionsMargins = () => {
 calculateMinorSectionsMargins();
 
 const onWindowResize = () => {
-	fixedCanvasHeight = document.body.clientWidth * 0.85;
-	fixedCanvasWidth = window.innerHeight * 1.5;
+	fixedCanvasWidth = document.body.clientWidth * 0.85;
+	fixedCanvasHeight = window.innerHeight * 1.5;
 
-	graph1Camera.aspect = fixedCanvasHeight / fixedCanvasWidth;
+	graph1Camera.aspect = fixedCanvasWidth / fixedCanvasHeight;
 	graph1Camera.updateProjectionMatrix();
-	graph1Renderer.setSize(fixedCanvasHeight, fixedCanvasWidth);
+	graph1Renderer.setSize(fixedCanvasWidth, fixedCanvasHeight);
 
-	camera.aspect = fixedCanvasHeight / fixedCanvasWidth;
+	camera.aspect = fixedCanvasWidth / fixedCanvasHeight;
 	camera.updateProjectionMatrix();
-	renderer.setSize(fixedCanvasHeight, fixedCanvasWidth);
+	renderer.setSize(fixedCanvasWidth, fixedCanvasHeight);
 
-	interaction3Renderer.resize(document.body.clientWidth, fixedCanvasWidth);
+	interaction3Renderer.resize(document.body.clientWidth, fixedCanvasHeight);
 
 	animate();
 }
