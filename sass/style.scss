@@ -102,7 +102,7 @@ h2 {
 
 /* Styles start */
 .wrapper {
-	width: 85%;
+	width: 85vw;
 	height: 100%;
 	padding: 50px 0;
 	margin: 0 auto;
@@ -176,6 +176,7 @@ section {
 
 	.section-info {
 		padding-top: 10px;
+		margin-bottom: 60px;
 		background: linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%);
 		background-clip: text;
 		-webkit-background-clip: text;
@@ -243,11 +244,13 @@ section {
 		border-radius: 50%;
 		display: inline-block;
 		position: absolute;
+		top: 50%;
 		background-color: transparent;
 		color: $white;
 		font-size: 0;
 		font-weight: bold;
 		text-transform: capitalize;
+		transform: translate(0, -50%);
 		transition: background-color 1s ease-in-out;
 
 		@include breakpoint(small-pc) {
@@ -256,7 +259,6 @@ section {
 		}
 
 		&.previous-button {
-			top: 0;
 			left: 34%;
 
 			@include breakpoint(small-pc) {
@@ -276,7 +278,6 @@ section {
 		}
 
 		&.next-button {
-			top: 0;
 			right: 34%;
 
 			@include breakpoint(small-pc) {
@@ -342,12 +343,6 @@ section {
 	.active + li { margin-left: 0; }
 }
 /* Graph1 SCSS end */
-
-.minor-section { 
-	margin-top: -180px;
-	position: relative;
-	z-index: 2;
-}
 
 /* Quote section SCSS start */
 .quote-section {

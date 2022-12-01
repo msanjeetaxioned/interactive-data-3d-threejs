@@ -1,5 +1,5 @@
 let fixedCanvasWidth = document.body.clientWidth * 0.85;
-let fixedCanvasHeight = window.innerHeight * 1.5;
+let fixedCanvasHeight = window.innerHeight;
 
 const wrapperWorkLife = document.querySelector(".work-life-balance-graph-section > .wrapper");
 const graph1CanvasContainer = wrapperWorkLife.querySelector(".canvas-container");
@@ -335,7 +335,7 @@ graph1NextButton.addEventListener("click", prevOrNextButtonClick.bind(this, 1));
 graph1CalculateBarsHeightAndAddThemInScene();
 
 graph1Camera.position.y = 0;
-graph1Camera.position.z = 55;
+graph1Camera.position.z = 40;
 graph1BarInitialPosition = calculateBarsBotPosition(graph1Camera, graph1Canvas);
 // graph1Orbit.update();
 
@@ -861,7 +861,7 @@ calculateAndSetCurrentValues();
 const interaction3Zoom = 100;
 let interaction3Balls = [];
 
-const interaction3Renderer = PIXI.autoDetectRenderer(interaction3CanvasContainer.getBoundingClientRect().width, fixedCanvasHeight, {
+const interaction3Renderer = PIXI.autoDetectRenderer(interaction3CanvasContainer.getBoundingClientRect().width, fixedCanvasHeight * 1.5, {
   transparent: true, antialias: true
 });
 interaction3CanvasContainer.appendChild(interaction3Renderer.view);
@@ -1044,21 +1044,11 @@ const observer2 = new IntersectionObserver(handleIntersect, options);
 observer2.observe(interaction3Canvas);
 /* Interaction 3 end */
 
-const calculateMinorSectionsMargins = () => {
-	const minorSections = document.querySelectorAll(".minor-section");
-
-	if (document.body.clientWidth > 1329) {
-		const margin = scale(document.body.clientWidth, 1330, 2560, -200, -600);
-		for (let i = 0; i < minorSections.length; i++) {
-			minorSections[i].style.marginTop = margin + "px";
-		}
-	}
-}
-calculateMinorSectionsMargins();
-
 const onWindowResize = () => {
 	fixedCanvasWidth = document.body.clientWidth * 0.85;
-	fixedCanvasHeight = window.innerHeight * 1.5;
+	fixedCanvasHeight = window.innerHeight;
+	console.log(fixedCanvasWidth);
+	console.log(fixedCanvasHeight);
 
 	graph1Camera.aspect = fixedCanvasWidth / fixedCanvasHeight;
 	graph1Camera.updateProjectionMatrix();
@@ -1068,7 +1058,7 @@ const onWindowResize = () => {
 	camera.updateProjectionMatrix();
 	renderer.setSize(fixedCanvasWidth, fixedCanvasHeight);
 
-	interaction3Renderer.resize(document.body.clientWidth, fixedCanvasHeight);
+	interaction3Renderer.resize(document.body.clientWidth, fixedCanvasHeight * 1.5);
 
 	animate();
 }
