@@ -1,5 +1,5 @@
-const fixedCanvasHeight = document.body.clientWidth * 0.85;
-const fixedCanvasWidth = window.innerHeight * 1.5;
+let fixedCanvasHeight = document.body.clientWidth * 0.85;
+let fixedCanvasWidth = window.innerHeight * 1.5;
 
 const wrapperWorkLife = document.querySelector(".work-life-balance-graph-section > .wrapper");
 const graph1CanvasContainer = wrapperWorkLife.querySelector(".canvas-container");
@@ -1057,6 +1057,9 @@ const calculateMinorSectionsMargins = () => {
 calculateMinorSectionsMargins();
 
 const onWindowResize = () => {
+	fixedCanvasHeight = document.body.clientWidth * 0.85;
+	fixedCanvasWidth = window.innerHeight * 1.5;
+
 	graph1Camera.aspect = fixedCanvasHeight / fixedCanvasWidth;
 	graph1Camera.updateProjectionMatrix();
 	graph1Renderer.setSize(fixedCanvasHeight, fixedCanvasWidth);
