@@ -208,7 +208,7 @@ const calculateBarsBotPosition = (graphCamera, graphCanvas) => {
 }
 
 const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
-	// Cubes
+	// Bars
 	const graph = workLifeGraphs[graph1CurrentGraph - 1];
 	const barColors = [0x7fff00, 0x8a2be2, 0x8b0000, 0xffd700, 0x008080];
 	const barMaxHeight = 15;
@@ -588,7 +588,7 @@ function graph1AppendOrUpdateGraphXValues(update = false) {
 }
 
 const calculateBarsHeightAndAddThemInScene = () => {
-	// Cubes
+	// Bars
 	const barColor = 0xe31c79;
 	const topAndBotFaceColor = 0xf39ec6;
 	const barMaxHeight = 15;
