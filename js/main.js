@@ -249,7 +249,7 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 	} else {
 		if (!graph1XValuesAppended) {
 			graph1XValuesAppended = true;
-			graph1AppendGraphXValues();
+			graph1AppendOrUpdateGraphXValues();
 		}
 		for (let i = 0; i < graph.length; i++) {
 			const currentBarHeight = graph[i] / maxValue * barMaxHeight;
@@ -562,17 +562,23 @@ const updatePositionOfGraphValues = (i, updateBothPositions = false) => {
 }
 
 // Appends values of x-axis of the graph at proper position
-function graph1AppendGraphXValues() {
+function graph1AppendOrUpdateGraphXValues(update = false) {
 	for (let i = 0; i < graph1XValuesNames.length; i++) {
 		const obj = graph1CalculateCoordinatesOfBarInCanvas(i, graph1Bars[i].position.y, "bottom");
+		let span;
 
-		const span = document.createElement("span");
-		span.classList.add("graph1-x-name");
-		span.innerText = graph1XValuesNames[i];
-		span.style.left = obj.x + "px";
-		span.style.top = obj.y + "px";
-
-		graph1CanvasContainer.append(span);
+		if (update) {
+			span = graph1CanvasContainer.querySelectorAll(".graph1-x-name")[i];
+			span.style.left = obj.x + "px";
+			span.style.top = obj.y + "px";
+		} else {
+			span = document.createElement("span");
+			span.classList.add("graph1-x-name");
+			span.innerText = graph1XValuesNames[i];
+			span.style.left = obj.x + "px";
+			span.style.top = obj.y + "px";
+			graph1CanvasContainer.append(span);
+		}
 
 		if (!isNaN(graph1BarWidth) && graph1BarWidth != Infinity && graph1BarWidth != -Infinity) {
 			const xDiffBy2 = (span.getBoundingClientRect().width - graph1BarWidth) / 2;
@@ -1067,6 +1073,7 @@ const onWindowResize = () => {
 	for (let i = 0; i < graph1Bars.length; i++) {
 		updatePositionOfGraphValues(i, true);
 	}
+	graph1AppendOrUpdateGraphXValues(true);
 
 	canvasContainerBCR = canvasContainer.getBoundingClientRect();
 	camera.aspect = canvasContainerBCR.width / canvasContainerBCR.height;
