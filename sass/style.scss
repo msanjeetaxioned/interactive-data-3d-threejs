@@ -656,6 +656,8 @@ section {
 	min-height: 100vh;
 	background-color: $black;
 
+	.canvas-container { padding-top: 50px; }
+
 	.absolute-content { 
 		width: 100%;
 		position: absolute;
