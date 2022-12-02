@@ -1070,6 +1070,7 @@ const observer2 = new IntersectionObserver(handleIntersect, options);
 observer2.observe(interaction3Canvas);
 /* Interaction 3 end */
 
+// Window resize handler
 const onWindowResize = () => {
 	fixedCanvasHeight = window.innerHeight;
 
@@ -1086,6 +1087,7 @@ const onWindowResize = () => {
 	camera.aspect = canvasContainerBCR.width / canvasContainerBCR.height;
 	camera.updateProjectionMatrix();
 	renderer.setSize(canvasContainerBCR.width, canvasContainerBCR.height);
+	appendGraphXValues(true);
 
 	interaction3CanvasContainerBCR = interaction3CanvasContainer.getBoundingClientRect();
 	interaction3Renderer.resize(interaction3CanvasContainerBCR.width, fixedCanvasHeight * 1.5);
