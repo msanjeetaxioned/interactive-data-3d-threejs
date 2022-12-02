@@ -162,6 +162,11 @@ section {
   text-align: center;
   text-transform: uppercase;
 }
+@media screen and (max-width: 1280px) {
+  .graph1-info-and-buttons > span {
+    margin: 50px 0 20px;
+  }
+}
 
 .graph1-x-name {
   margin-top: 40px;
@@ -173,6 +178,7 @@ section {
 }
 @media screen and (max-width: 1280px) {
   .graph1-x-name {
+    margin-top: 30px;
     font-size: 18px;
   }
 }
@@ -460,6 +466,11 @@ section {
   margin-top: 40px;
   position: absolute;
   text-align: center;
+}
+@media screen and (max-width: 1280px) {
+  .graph2-x {
+    margin-top: 30px;
+  }
 }
 .graph2-x span {
   display: block;

@@ -797,26 +797,33 @@ function calculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = "top")
 }
 
 // Appends values of x-axis of the graph at proper position
-const appendGraphXValues = () => {
+const appendGraphXValues = (update) => {
 	for (let i = 0; i < graphXNames.length; i++) {
 		const obj = calculateCoordinatesOfBarInCanvas(i, bars[i][0].position.y, "bottom");
 
-		const div = document.createElement("div");
-		div.classList.add("graph2-x");
-		div.style.left = obj.x + "px";
-		div.style.top = obj.y + "px";
+		let div;
+		if (update) {
+			div = canvasContainer.querySelectorAll(".graph2-x")[i];
+			div.style.left = obj.x + "px";
+			div.style.top = obj.y + "px";
+		} else {
+			div = document.createElement("div");
+			div.classList.add("graph2-x");
+			div.style.left = obj.x + "px";
+			div.style.top = obj.y + "px";
 
-		const span1 = document.createElement("span");
-		span1.classList.add("graph-x-name");
-		span1.innerText = graphXNames[i];
-		div.append(span1);
+			const span1 = document.createElement("span");
+			span1.classList.add("graph-x-name");
+			span1.innerText = graphXNames[i];
+			div.append(span1);
 
-		const span2 = document.createElement("span");
-		span2.classList.add("graph-x-value");
-		span2.innerText = graphXValues[i];
-		div.append(span2);
+			const span2 = document.createElement("span");
+			span2.classList.add("graph-x-value");
+			span2.innerText = graphXValues[i];
+			div.append(span2);
 
-		canvasContainer.append(div);
+			canvasContainer.append(div);
+		}
 
 		const xDiffBy2 = (div.getBoundingClientRect().width - barWidthInHTMLCordinates) / 2;
 		div.style.left = (div.offsetLeft - xDiffBy2) + "px";
