@@ -547,11 +547,18 @@ function appendOrUpdateValuesInGraph(i) {
 }
 
 // Updates y-position of appended percent graph values when bar size changes
-const updatePositionOfGraphValues = (i) => {
+const updatePositionOfGraphValues = (i, updateBothPositions = false) => {
 	const obj = graph1CalculateCoordinatesOfBarInCanvas(i, graph1Bars[i].position.y + graph1Bars[i].scale.y * 0.1);
 
 	let span = graph1CanvasContainer.querySelector(".graph1-value-" + (i+1));
 	span.style.top = obj.y + "px";
+	if (updateBothPositions) {
+		span.style.left = obj.x + "px";
+		const xDiffBy2 = (span.getBoundingClientRect().width - graph1BarWidth) / 2;
+		if (xDiffBy2 < 0 && xDiffBy2 != -Infinity) {
+			span.style.left = (span.offsetLeft - xDiffBy2) + "px";
+		}
+	}
 }
 
 // Appends values of x-axis of the graph at proper position
@@ -1057,6 +1064,9 @@ const onWindowResize = () => {
 	graph1Camera.aspect = graph1CanvasContainerBCR.width / graph1CanvasContainerBCR.height;
 	graph1Camera.updateProjectionMatrix();
 	graph1Renderer.setSize(graph1CanvasContainerBCR.width, graph1CanvasContainerBCR.height);
+	for (let i = 0; i < graph1Bars.length; i++) {
+		updatePositionOfGraphValues(i, true);
+	}
 
 	canvasContainerBCR = canvasContainer.getBoundingClientRect();
 	camera.aspect = canvasContainerBCR.width / canvasContainerBCR.height;
