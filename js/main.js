@@ -5,11 +5,11 @@ $(function() {
 	});
 });
 
-let fixedCanvasWidth = document.body.clientWidth * 0.85;
 let fixedCanvasHeight = window.innerHeight;
 
 const wrapperWorkLife = document.querySelector(".work-life-balance-graph-section > .wrapper");
 const graph1CanvasContainer = wrapperWorkLife.querySelector(".canvas-container");
+let graph1CanvasContainerBCR = graph1CanvasContainer.getBoundingClientRect();
 
 const graph1PrevButton = graph1CanvasContainer.querySelector(".previous-button");
 const graph1NextButton = graph1CanvasContainer.querySelector(".next-button");
@@ -21,12 +21,12 @@ let graph1Canvas;
 
 // Setting up Scene, Camera & Renderer
 const graph1Renderer = new THREE.WebGLRenderer({antialias: true});
-graph1Renderer.setSize(fixedCanvasWidth, fixedCanvasHeight);
+graph1Renderer.setSize(graph1CanvasContainerBCR.width, fixedCanvasHeight);
 graph1CanvasContainer.insertBefore(graph1Renderer.domElement, graph1CanvasContainer.children[0]);
 graph1Canvas = wrapperWorkLife.querySelector("canvas");
 
 const graph1Scene = new THREE.Scene();
-var graph1Camera = new THREE.PerspectiveCamera(45, fixedCanvasWidth / fixedCanvasHeight, 1, 1000);
+var graph1Camera = new THREE.PerspectiveCamera(45, graph1CanvasContainerBCR.width / fixedCanvasHeight, 1, 1000);
 
 const graph1Holder = new THREE.Group();
 graph1Scene.add(graph1Holder);
@@ -109,19 +109,20 @@ let graph1XValuesAppended = false;
 
 const wrapperProjectByNumbers = document.querySelector(".project-by-numbers-section > .wrapper");
 const canvasContainer = wrapperProjectByNumbers.querySelector(".canvas-container");
+let canvasContainerBCR = canvasContainer.getBoundingClientRect();
 
 let canvas;
 
 // Setting up Scene, Camera & Renderer
 const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(fixedCanvasWidth, fixedCanvasHeight);
+renderer.setSize(canvasContainerBCR.width, fixedCanvasHeight);
 renderer.setClearColor(0xffffff, 0);
 
 canvasContainer.insertBefore(renderer.domElement, canvasContainer.children[0]);
 canvas = wrapperProjectByNumbers.querySelector("canvas");
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, fixedCanvasWidth / fixedCanvasHeight , 1, 1000);
+const camera = new THREE.PerspectiveCamera(45, canvasContainerBCR.width / fixedCanvasHeight , 1, 1000);
 
 const holder = new THREE.Group();
 scene.add(holder);
@@ -811,6 +812,7 @@ const appendGraphXValues = () => {
 
 /* Interaction 3 start */
 const interaction3CanvasContainer = document.querySelector(".spheres-section .canvas-container");
+let interaction3CanvasContainerBCR = interaction3CanvasContainer.getBoundingClientRect();
 const interaction3PrevButton = interaction3CanvasContainer.querySelector(".previous-button");
 const interaction3NextButton = interaction3CanvasContainer.querySelector(".next-button");
 const interaction3NamesUl = interaction3CanvasContainer.querySelector(".interaction3-names");
@@ -868,7 +870,7 @@ calculateAndSetCurrentValues();
 const interaction3Zoom = 100;
 let interaction3Balls = [];
 
-const interaction3Renderer = PIXI.autoDetectRenderer(interaction3CanvasContainer.getBoundingClientRect().width, fixedCanvasHeight * 1.5, {
+const interaction3Renderer = PIXI.autoDetectRenderer(interaction3CanvasContainerBCR.width, fixedCanvasHeight * 1.5, {
   transparent: true, antialias: true
 });
 interaction3CanvasContainer.appendChild(interaction3Renderer.view);
@@ -1049,18 +1051,20 @@ observer2.observe(interaction3Canvas);
 /* Interaction 3 end */
 
 const onWindowResize = () => {
-	fixedCanvasWidth = document.body.clientWidth * 0.85;
 	fixedCanvasHeight = window.innerHeight;
 
-	graph1Camera.aspect = fixedCanvasWidth / fixedCanvasHeight;
+	graph1CanvasContainerBCR = graph1CanvasContainer.getBoundingClientRect();
+	graph1Camera.aspect = graph1CanvasContainerBCR.width / graph1CanvasContainerBCR.height;
 	graph1Camera.updateProjectionMatrix();
-	graph1Renderer.setSize(fixedCanvasWidth, fixedCanvasHeight);
+	graph1Renderer.setSize(graph1CanvasContainerBCR.width, graph1CanvasContainerBCR.height);
 
-	camera.aspect = fixedCanvasWidth / fixedCanvasHeight;
+	canvasContainerBCR = canvasContainer.getBoundingClientRect();
+	camera.aspect = canvasContainerBCR.width / canvasContainerBCR.height;
 	camera.updateProjectionMatrix();
-	renderer.setSize(fixedCanvasWidth, fixedCanvasHeight);
+	renderer.setSize(canvasContainerBCR.width, canvasContainerBCR.height);
 
-	interaction3Renderer.resize(document.body.clientWidth, fixedCanvasHeight * 1.5);
+	interaction3CanvasContainerBCR = interaction3CanvasContainer.getBoundingClientRect();
+	interaction3Renderer.resize(interaction3CanvasContainerBCR.width, fixedCanvasHeight * 1.5);
 
 	animate();
 }
