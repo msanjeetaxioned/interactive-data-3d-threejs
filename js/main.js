@@ -931,7 +931,7 @@ interaction3Stage.scale.y = -interaction3Zoom; // Note: we flip the y axis to ma
 
 //floor
 const planeShape = new p2.Plane();
-const planeBody = new p2.Body({ position:[0,-1] });
+const planeBody = new p2.Body({ position:[0, -1] });
 planeBody.addShape(planeShape);
 interaction3World.addBody(planeBody);
 
@@ -1091,6 +1091,9 @@ const onWindowResize = () => {
 
 	interaction3CanvasContainerBCR = interaction3CanvasContainer.getBoundingClientRect();
 	interaction3Renderer.resize(interaction3CanvasContainerBCR.width, fixedCanvasHeight * 1.5);
+	interaction3Stage.position.x =  interaction3CanvasContainerBCR.width / 2; // center at origin
+	interaction3Stage.position.y =  interaction3CanvasContainerBCR.height / 2;
+	planeBody.position = [0, -1];
 
 	animate();
 }
