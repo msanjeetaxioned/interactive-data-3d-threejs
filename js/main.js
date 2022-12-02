@@ -561,7 +561,7 @@ const updatePositionOfGraphValues = (i, updateBothPositions = false) => {
 	}
 }
 
-// Appends values of x-axis of the graph at proper position
+// Appends or updates names of x-axis of graph
 function graph1AppendOrUpdateGraphXValues(update = false) {
 	for (let i = 0; i < graph1XValuesNames.length; i++) {
 		const obj = graph1CalculateCoordinatesOfBarInCanvas(i, graph1Bars[i].position.y, "bottom");
