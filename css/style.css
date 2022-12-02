@@ -133,6 +133,7 @@ section {
 }
 
 .graph1-value {
+  margin-top: -70px;
   position: absolute;
   color: #fff;
   font-size: 26px;
@@ -140,6 +141,7 @@ section {
 }
 @media screen and (max-width: 1280px) {
   .graph1-value {
+    margin-top: -60px;
     font-size: 22px;
   }
 }
@@ -162,6 +164,7 @@ section {
 }
 
 .graph1-x-name {
+  margin-top: 40px;
   position: absolute;
   color: #fff;
   font-size: 20px;

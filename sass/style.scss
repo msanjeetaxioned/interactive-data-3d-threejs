@@ -196,12 +196,14 @@ section {
 }
 
 .graph1-value {
+	margin-top: -70px;
 	position: absolute;
 	color: $white;
 	font-size: 26px;
 	font-weight: bold;
 
 	@include breakpoint(small-pc) {
+		margin-top: -60px;
 		font-size: 22px;
 	}
 }
@@ -225,6 +227,7 @@ section {
 }
 
 .graph1-x-name {
+	margin-top: 40px;
 	position: absolute;
 	color: $white;
 	font-size: 20px;
