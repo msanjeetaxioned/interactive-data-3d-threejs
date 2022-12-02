@@ -548,9 +548,13 @@ function appendOrUpdateValuesInGraph(i) {
 
 // Updates y-position of appended percent graph values when bar size changes
 const updatePositionOfGraphValues = (i, updateBothPositions = false) => {
+	let span = graph1CanvasContainer.querySelector(".graph1-value-" + (i+1));
+	if (!span) {
+		return;
+	}
+
 	const obj = graph1CalculateCoordinatesOfBarInCanvas(i, graph1Bars[i].position.y + graph1Bars[i].scale.y * 0.1);
 
-	let span = graph1CanvasContainer.querySelector(".graph1-value-" + (i+1));
 	span.style.top = obj.y + "px";
 	if (updateBothPositions) {
 		span.style.left = obj.x + "px";
@@ -569,6 +573,9 @@ function graph1AppendOrUpdateGraphXValues(update = false) {
 
 		if (update) {
 			span = graph1CanvasContainer.querySelectorAll(".graph1-x-name")[i];
+			if (!span) {
+				return;
+			}
 			span.style.left = obj.x + "px";
 			span.style.top = obj.y + "px";
 		} else {
@@ -804,6 +811,9 @@ const appendGraphXValues = (update) => {
 		let div;
 		if (update) {
 			div = canvasContainer.querySelectorAll(".graph2-x")[i];
+			if (!div) {
+				return;
+			}
 			div.style.left = obj.x + "px";
 			div.style.top = obj.y + "px";
 		} else {
