@@ -789,9 +789,9 @@ function calculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = "top")
 
 	let y;
 	if (appendToTopOrBottom == "top") {
-		y = vector.y - 70;
+		y = vector.y;
 	} else if (appendToTopOrBottom == "bottom") {
-		y = vector.y + 50;
+		y = vector.y;
 	}
 	return {x, y};
 }

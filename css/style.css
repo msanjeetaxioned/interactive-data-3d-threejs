@@ -457,6 +457,7 @@ section {
 }
 
 .graph2-x {
+  margin-top: 40px;
   position: absolute;
   text-align: center;
 }
