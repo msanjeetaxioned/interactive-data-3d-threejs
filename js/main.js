@@ -1083,8 +1083,6 @@ observer2.observe(interaction3Canvas);
 
 // Window resize handler
 const onWindowResize = () => {
-	// fixedCanvasHeight = window.innerHeight;
-
 	graph1CanvasContainerBCR = graph1CanvasContainer.getBoundingClientRect();
 	graph1Camera.aspect = graph1CanvasContainerBCR.width / (graph1CanvasContainerBCR.width / widthToHeightRatio);
 	graph1Camera.updateProjectionMatrix();
@@ -1095,9 +1093,9 @@ const onWindowResize = () => {
 	graph1AppendOrUpdateGraphXValues(true);
 
 	canvasContainerBCR = canvasContainer.getBoundingClientRect();
-	camera.aspect = canvasContainerBCR.width / (graph1CanvasContainerBCR.width / widthToHeightRatio);
+	camera.aspect = canvasContainerBCR.width / (canvasContainerBCR.width / widthToHeightRatio);
 	camera.updateProjectionMatrix();
-	renderer.setSize(canvasContainerBCR.width, graph1CanvasContainerBCR.width / widthToHeightRatio);
+	renderer.setSize(canvasContainerBCR.width, canvasContainerBCR.width / widthToHeightRatio);
 	barsInitialPosition = calculateBarsBotPosition(camera, canvas);
 	appendGraphXValues(true);
 
@@ -1114,7 +1112,7 @@ const onWindowResize = () => {
 let resizeCompleteTimer;
 window.addEventListener("resize", () => {
 	clearTimeout(resizeCompleteTimer);
-	resizeCompleteTimer = setTimeout(onWindowResize, 200);
+	resizeCompleteTimer = setTimeout(onWindowResize, 300);
 });
 
 const animate = () => {
