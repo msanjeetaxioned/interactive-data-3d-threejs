@@ -414,15 +414,17 @@ const scale = (number, inMin, inMax, outMin, outMax) => {
 	return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 }
 
-const graph1CanvasDistanceFromTop = window.pageYOffset + graph1Canvas.getBoundingClientRect().top;
-const graph1CanvasVisibleMin =  graph1CanvasDistanceFromTop - window.innerHeight;
-let graph1CanvasHeight = graph1Canvas.getBoundingClientRect().height;
-const graph1CanvasVisibleMax = graph1CanvasVisibleMin + graph1CanvasHeight;
+let graph1CanvasDistanceFromTop;
+let graph1CanvasVisibleMin;
+let graph1CanvasHeight;
 let graph1CurrentWindowY = undefined;
 
 // Sets Vertical rotation of bars based on scroll position 
 const setRotationAngleOfBarsBasedOnScrollPosition = () => {
-	graph1CanvasHeight = graph1Canvas.getBoundingClientRect().height;
+	graph1CanvasDistanceFromTop = document.documentElement.scrollTop + graph1Canvas.getBoundingClientRect().top;
+	graph1CanvasVisibleMin =  graph1CanvasDistanceFromTop - window.innerHeight;
+	graph1CanvasHeight = graph1Canvas.getBoundingClientRect().width / 1.73;
+
 	let windowY;
 	if (graph1CurrentWindowY != undefined) {
 		windowY = graph1CurrentWindowY;
@@ -1087,6 +1089,7 @@ const onWindowResize = () => {
 	graph1Camera.aspect = graph1CanvasContainerBCR.width / (graph1CanvasContainerBCR.width / widthToHeightRatio);
 	graph1Camera.updateProjectionMatrix();
 	graph1Renderer.setSize(graph1CanvasContainerBCR.width, graph1CanvasContainerBCR.width / widthToHeightRatio);
+	graph1BarInitialPosition = calculateBarsBotPosition(graph1Camera, graph1Canvas);
 	for (let i = 0; i < graph1Bars.length; i++) {
 		updatePositionOfGraphValues(i, true);
 	}
