@@ -5,7 +5,7 @@ $(function() {
 	});
 });
 
-let fixedCanvasHeight = window.innerHeight;
+const widthToHeightRatio = 1.73;
 
 const wrapperWorkLife = document.querySelector(".work-life-balance-graph-section > .wrapper");
 const graph1CanvasContainer = wrapperWorkLife.querySelector(".canvas-container");
@@ -21,12 +21,12 @@ let graph1Canvas;
 
 // Setting up Scene, Camera & Renderer
 const graph1Renderer = new THREE.WebGLRenderer({antialias: true});
-graph1Renderer.setSize(graph1CanvasContainerBCR.width, fixedCanvasHeight);
+graph1Renderer.setSize(graph1CanvasContainerBCR.width, graph1CanvasContainerBCR.width / widthToHeightRatio);
 graph1CanvasContainer.insertBefore(graph1Renderer.domElement, graph1CanvasContainer.children[0]);
 graph1Canvas = wrapperWorkLife.querySelector("canvas");
 
 const graph1Scene = new THREE.Scene();
-var graph1Camera = new THREE.PerspectiveCamera(45, graph1CanvasContainerBCR.width / fixedCanvasHeight, 1, 1000);
+var graph1Camera = new THREE.PerspectiveCamera(45, graph1CanvasContainerBCR.width / (graph1CanvasContainerBCR.width / widthToHeightRatio), 1, 1000);
 
 const graph1Holder = new THREE.Group();
 graph1Scene.add(graph1Holder);
@@ -115,14 +115,14 @@ let canvas;
 
 // Setting up Scene, Camera & Renderer
 const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(canvasContainerBCR.width, fixedCanvasHeight);
+renderer.setSize(canvasContainerBCR.width, canvasContainerBCR.width / widthToHeightRatio);
 renderer.setClearColor(0xffffff, 0);
 
 canvasContainer.insertBefore(renderer.domElement, canvasContainer.children[0]);
 canvas = wrapperProjectByNumbers.querySelector("canvas");
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, canvasContainerBCR.width / fixedCanvasHeight , 1, 1000);
+const camera = new THREE.PerspectiveCamera(45, canvasContainerBCR.width / (canvasContainerBCR.width / widthToHeightRatio) , 1, 1000);
 
 const holder = new THREE.Group();
 scene.add(holder);
@@ -201,7 +201,7 @@ const calculateBarsBotPosition = (graphCamera, graphCanvas) => {
 	vector.applyMatrix4(graphCamera.matrixWorld);
 	vector.project(graphCamera);
 	vector.x = (vector.x + 1) * graphCanvas.getBoundingClientRect().width / 2;
-	vector.y =  - (vector.y - 1) * graphCanvas.getBoundingClientRect().height / 2;
+	vector.y =  - (vector.y - 1) * (graphCanvas.getBoundingClientRect().width / widthToHeightRatio) / 2;
 	const x = vector.x;
 	const y = vector.y;
 	return { x, y };
@@ -745,15 +745,16 @@ const rotateBar = (cube, currentBarTL, currentBarRotation) => {
 	}
 }
 
-const canvasDistanceFromTop = window.pageYOffset + canvas.getBoundingClientRect().top;
-const canvasVisibleMin =  canvasDistanceFromTop - window.innerHeight;
-let canvasHeight = canvas.getBoundingClientRect().height;
-const canvasVisibleMax = canvasVisibleMin + canvasHeight;
+let canvasDistanceFromTop;
+let canvasVisibleMin;
+let canvasHeight;
 let currentWindowY = undefined;
 
 // Sets Vertical rotation of bars based on scroll position 
 const graph2SetRotationAngleOfBarsBasedOnScrollPosition = () => {
-	canvasHeight = canvas.getBoundingClientRect().height;
+	canvasDistanceFromTop = document.documentElement.scrollTop + canvas.getBoundingClientRect().top;
+	canvasVisibleMin = canvasDistanceFromTop - window.innerHeight;
+	canvasHeight = canvas.getBoundingClientRect().width / widthToHeightRatio;
 	let windowY;
 	if (currentWindowY != undefined) {
 		windowY = currentWindowY;
@@ -900,7 +901,7 @@ calculateAndSetCurrentValues();
 const interaction3Zoom = 100;
 let interaction3Balls = [];
 
-const interaction3Renderer = PIXI.autoDetectRenderer(interaction3CanvasContainerBCR.width, fixedCanvasHeight * 1.5, {
+const interaction3Renderer = PIXI.autoDetectRenderer(interaction3CanvasContainerBCR.width, interaction3CanvasContainerBCR.width, {
   transparent: true, antialias: true
 });
 interaction3CanvasContainer.appendChild(interaction3Renderer.view);
@@ -1082,27 +1083,28 @@ observer2.observe(interaction3Canvas);
 
 // Window resize handler
 const onWindowResize = () => {
-	fixedCanvasHeight = window.innerHeight;
+	// fixedCanvasHeight = window.innerHeight;
 
 	graph1CanvasContainerBCR = graph1CanvasContainer.getBoundingClientRect();
-	graph1Camera.aspect = graph1CanvasContainerBCR.width / graph1CanvasContainerBCR.height;
+	graph1Camera.aspect = graph1CanvasContainerBCR.width / (graph1CanvasContainerBCR.width / widthToHeightRatio);
 	graph1Camera.updateProjectionMatrix();
-	graph1Renderer.setSize(graph1CanvasContainerBCR.width, graph1CanvasContainerBCR.height);
+	graph1Renderer.setSize(graph1CanvasContainerBCR.width, graph1CanvasContainerBCR.width / widthToHeightRatio);
 	for (let i = 0; i < graph1Bars.length; i++) {
 		updatePositionOfGraphValues(i, true);
 	}
 	graph1AppendOrUpdateGraphXValues(true);
 
 	canvasContainerBCR = canvasContainer.getBoundingClientRect();
-	camera.aspect = canvasContainerBCR.width / canvasContainerBCR.height;
+	camera.aspect = canvasContainerBCR.width / (graph1CanvasContainerBCR.width / widthToHeightRatio);
 	camera.updateProjectionMatrix();
-	renderer.setSize(canvasContainerBCR.width, canvasContainerBCR.height);
+	renderer.setSize(canvasContainerBCR.width, graph1CanvasContainerBCR.width / widthToHeightRatio);
+	barsInitialPosition = calculateBarsBotPosition(camera, canvas);
 	appendGraphXValues(true);
 
 	interaction3CanvasContainerBCR = interaction3CanvasContainer.getBoundingClientRect();
-	interaction3Renderer.resize(interaction3CanvasContainerBCR.width, fixedCanvasHeight * 1.5);
+	interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3CanvasContainerBCR.width);
 	interaction3Stage.position.x =  interaction3CanvasContainerBCR.width / 2; // center at origin
-	interaction3Stage.position.y =  interaction3CanvasContainerBCR.height / 2;
+	interaction3Stage.position.y =  interaction3CanvasContainerBCR.width / 2;
 	planeBody.position = [0, -1];
 
 	animate();
