@@ -1109,7 +1109,7 @@ const onWindowResize = () => {
 	interaction3Stage.position.y =  interaction3CanvasContainerBCR.width / 2;
 	planeBody.position = [0, -1];
 
-	animate();
+	onAnimateChanges();
 }
 
 // Add Window resize handler
@@ -1119,8 +1119,7 @@ window.addEventListener("resize", () => {
 	resizeCompleteTimer = setTimeout(onWindowResize, 300);
 });
 
-const animate = () => {
-	requestAnimationFrame(animate);
+const onAnimateChanges = () => {
 	graph1Raycaster.setFromCamera(graph1Mouse, graph1Camera);
 	// calculate objects intersecting the picking ray
 	const graph1Intersects = graph1Raycaster.intersectObjects(graph1Holder.children);
@@ -1157,5 +1156,10 @@ const animate = () => {
     interaction3Balls[i].update();
   }
   interaction3Renderer.render(interaction3Stage);
+}
+
+const animate = () => {
+	requestAnimationFrame(animate);
+	onAnimateChanges();
 }
 animate();
