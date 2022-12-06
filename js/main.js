@@ -489,7 +489,12 @@ const playCounterAnimation = (spanClassName, counterMaxValue, counterDuration) =
 let graph1BarWidth;
 // Calculates & returns html coordinates of a given bar of graph
 function graph1CalculateCoordinatesOfBarInCanvas(i, yPos) {
-	const vector = new THREE.Vector3(graph1Bars[i].position.x - 1.7, yPos, graph1Bars[i].position.z);
+	const boundingBox = new THREE.Box3().setFromObject(graph1Bars[i]);
+	const vector1 = new THREE.Vector3();
+	const size = boundingBox.getSize(vector1);
+	const width = size.x;
+	
+	const vector = new THREE.Vector3(graph1Bars[i].position.x - width/2, yPos, graph1Bars[i].position.z);
 	vector.project(graph1Camera);
 	vector.x = (vector.x + 1) * graph1Canvas.getBoundingClientRect().width / 2;
 	vector.y =  - (vector.y - 1) * graph1Canvas.getBoundingClientRect().height / 2;
@@ -497,7 +502,7 @@ function graph1CalculateCoordinatesOfBarInCanvas(i, yPos) {
 	const y = vector.y;
 
 	if (!graph1BarWidth) {
-		const vector2 = new THREE.Vector3(graph1Bars[i].position.x + 1.7, yPos, graph1Bars[i].position.z);
+		const vector2 = new THREE.Vector3(graph1Bars[i].position.x + width/2, yPos, graph1Bars[i].position.z);
 		vector2.project(graph1Camera);
 		vector2.x = (vector2.x + 1) * graph1Canvas.getBoundingClientRect().width / 2;
 		const x2 = vector2.x;
