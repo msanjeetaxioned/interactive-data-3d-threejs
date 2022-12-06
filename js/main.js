@@ -220,7 +220,7 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 	if (graph1FirstTime) {
 		for (let i = 0; i < graph.length; i++) {
 			const geometryBar = new THREE.BoxGeometry(2.5, 0.1, 2.5);
-			geometryBar.translate( 0, 0.1 / 2, 0 );
+			geometryBar.translate(0, 0.1 / 2, 0);
 			const materialBar = new THREE.MeshPhongMaterial({
 				color: barColors[i],
 				emissive: 0x000000,
