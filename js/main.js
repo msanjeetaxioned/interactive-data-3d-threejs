@@ -488,12 +488,13 @@ const playCounterAnimation = (spanClassName, counterMaxValue, counterDuration) =
 
 let graph1BarWidth;
 // Calculates & returns html coordinates of a given bar of graph
-function graph1CalculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = "top") {
+function graph1CalculateCoordinatesOfBarInCanvas(i, yPos) {
 	const vector = new THREE.Vector3(graph1Bars[i].position.x - 1.7, yPos, graph1Bars[i].position.z);
 	vector.project(graph1Camera);
 	vector.x = (vector.x + 1) * graph1Canvas.getBoundingClientRect().width / 2;
 	vector.y =  - (vector.y - 1) * graph1Canvas.getBoundingClientRect().height / 2;
 	const x = vector.x;
+	const y = vector.y;
 
 	if (!graph1BarWidth) {
 		const vector2 = new THREE.Vector3(graph1Bars[i].position.x + 1.7, yPos, graph1Bars[i].position.z);
@@ -502,13 +503,7 @@ function graph1CalculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = 
 		const x2 = vector2.x;
 		graph1BarWidth = x2 - x;
 	}
-
-	let y;
-	if (appendToTopOrBottom == "top") {
-		y = vector.y;
-	} else if (appendToTopOrBottom == "bottom") {
-		y = vector.y;
-	}
+	
 	return {x, y};
 }
 
@@ -572,7 +567,7 @@ const updatePositionOfGraphValues = (i, updateBothPositions = false) => {
 // Appends or updates names of x-axis of graph
 function graph1AppendOrUpdateGraphXValues(update = false) {
 	for (let i = 0; i < graph1XValuesNames.length; i++) {
-		const obj = graph1CalculateCoordinatesOfBarInCanvas(i, graph1Bars[i].position.y, "bottom");
+		const obj = graph1CalculateCoordinatesOfBarInCanvas(i, graph1Bars[i].position.y);
 		let span;
 
 		if (update) {
