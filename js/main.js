@@ -1124,6 +1124,7 @@ const onWindowResize = () => {
 	camera.aspect = canvasContainerBCR.width / (canvasContainerBCR.width / widthToHeightRatio);
 	camera.updateProjectionMatrix();
 	renderer.setSize(canvasContainerBCR.width, canvasContainerBCR.width / widthToHeightRatio);
+	calculateGraphBarWidth(true, bars[0][0], camera, canvas, 2);
 	barsInitialPosition = calculateBarsBotPosition(camera, canvas);
 	appendGraphXValues(true);
 
