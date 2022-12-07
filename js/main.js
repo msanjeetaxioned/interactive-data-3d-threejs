@@ -198,13 +198,19 @@ const enableOrDisablePrevAndNextButtons = (enable, prevButton, nextButton) => {
 }
 
 let graph1BarWidth;
+let barWidthInHTMLCordinates;
 const calculateGraphBarWidth = (resize, bar, graphCamera, graphCanvas, graphNum) => {
 	if (graphNum == 1) {
 		if (graph1BarWidth && !resize) {
 			return;
 		}
 	}
-	if (!graph1BarWidth || resize) {
+	if (graphNum == 2) {
+		if (barWidthInHTMLCordinates && !resize) {
+			return;
+		}
+	}
+	if (!graph1BarWidth || !barWidthInHTMLCordinates || resize) {
 		const boundingBox = new THREE.Box3().setFromObject(bar);
 		const vector1 = new THREE.Vector3();
 		const size = boundingBox.getSize(vector1);
@@ -800,8 +806,6 @@ const graph2SetRotationAngleOfBarsBasedOnScrollPosition = () => {
 		}
 	}
 }
-
-let barWidthInHTMLCordinates;
 
 // Calculates & returns html coordinates of a given bar of graph
 function calculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = "top") {
