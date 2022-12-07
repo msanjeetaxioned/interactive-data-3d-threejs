@@ -899,6 +899,19 @@ const calculateAndSetCurrentValues = (notFirstTime) => {
 	}
 }
 
+const updateRadiusOnResize = (reso) => {
+	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
+	for (let i = 0; i < currentValues.length; i++) {
+		if (reso == "tablet") {
+			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.6, 0.85);
+		} else if (reso == "desktop") {
+			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.7, 1);
+		}
+		interaction3Data[i].radius = interaction3Radius[i];
+		interaction3Balls[i].updateOnResize(i, reso);
+	}
+}
+
 const interaction3Values = [
 	[2.8, 12.8, 15.7, 3, 20.6, 3.7, 24.9, 4.5, 1.9],
 	[1.3, 3.5, 5.7, 1.4, 7.9, 1.7, 2, 12.6, 1.3],
@@ -1099,6 +1112,21 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
 		tl.play();
 	}
 
+	this.updateOnResize = (i, reso) => {
+		const r = interaction3Data[i].radius;
+		this.circle.scale.x = this.circle.scale.y = r;
+		this.bubble.width = this.bubble.height = r * 2.3;
+		this.shape.radius = r;
+		this.body.updateBoundingRadius();
+		if (reso == "tablet") {
+			this.text.style.fontSize = 34;
+			this.text2.style.wordWrap = true;
+		} else if (reso == "desktop") {
+			this.text.style.fontSize = 40;
+			this.text2.style.wordWrap = false;
+		}
+	}
+
   this.init.call(this);
   this.circle.mouseover = this.mouseover.bind(this);
 }
@@ -1106,6 +1134,20 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
 const observer2 = new IntersectionObserver(handleIntersect, options);
 observer2.observe(interaction3Canvas);
 /* Interaction 3 end */
+
+let currentReso = "";
+const setCurrentReso = () => {
+	const width = document.body.clientWidth;
+
+	if (width < 768) {
+		currentReso = "mobile";
+	} else if (width < 1024) {
+		currentReso = "tablet";
+	} else {
+		currentReso = "desktop";
+	}
+}
+setCurrentReso();
 
 // Window resize handler
 const onWindowResize = () => {
@@ -1133,6 +1175,19 @@ const onWindowResize = () => {
 	interaction3Stage.position.x = interaction3CanvasContainerBCR.width / 2; // center at origin
 	interaction3Stage.position.y = interaction3FixedWidth / 2;
 	planeBody.position = [0, -1];
+
+	const windowWidth = document.body.clientWidth;
+	if (windowWidth >= 768 && windowWidth < 1024) {
+		if (currentReso != "tablet") {
+			updateRadiusOnResize("tablet");
+			setCurrentReso();
+		}
+	} else if (windowWidth >= 1024) {
+		if (currentReso != "desktop") {
+			updateRadiusOnResize("desktop");
+			setCurrentReso();
+		}
+	}
 
 	onAnimateChanges();
 }
