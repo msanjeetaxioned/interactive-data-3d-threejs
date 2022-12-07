@@ -648,7 +648,7 @@ const calculateBarsHeightAndAddThemInScene = () => {
 	}
 
 	for (let i = 0; i < graphXValues.length; i++) {
-		numOfBars[i] = Math.round(graphXValues[i] / maxValue * maxBars); 
+		numOfBars[i] = Math.round(graphXValues[i] / maxValue * maxBars);
 	}
 
 	individualBarHeight = barMaxHeight / maxBars;
