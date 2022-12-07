@@ -867,6 +867,21 @@ const appendGraphXValues = (update) => {
 	}
 }
 
+// Sets Current Resolution
+let currentReso = "";
+const setCurrentReso = () => {
+	const width = document.body.clientWidth;
+
+	if (width < 768) {
+		currentReso = "mobile";
+	} else if (width < 1024) {
+		currentReso = "tablet";
+	} else {
+		currentReso = "desktop";
+	}
+}
+setCurrentReso();
+
 /* Interaction 3 start */
 const interaction3CanvasContainer = document.querySelector(".spheres-section .canvas-container");
 let interaction3CanvasContainerBCR = interaction3CanvasContainer.getBoundingClientRect();
@@ -880,7 +895,11 @@ const calculateAndSetCurrentValues = (notFirstTime) => {
 
 	for (let i = 0; i < currentValues.length; i++) {
 		interaction3Mass[i] = scale(currentValues[i], 0, 24.9, 0.0005, 0.0025);
-		interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.7, 1);
+		if (currentReso == "tablet") {
+			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.55, 0.85);
+		} else if (currentReso == "desktop") {
+			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.7, 1);
+		}
 		interaction3SpeedMaxNeg[i] = scale(currentValues[i], 0, 24.9, -1/8, -1);
 		interaction3SpeedMax[i] = scale(currentValues[i], 0, 24.9, 1/8, 1);
 
@@ -903,7 +922,7 @@ const updateRadiusOnResize = (reso) => {
 	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
 	for (let i = 0; i < currentValues.length; i++) {
 		if (reso == "tablet") {
-			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.6, 0.85);
+			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.55, 0.85);
 		} else if (reso == "desktop") {
 			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.7, 1);
 		}
@@ -1022,6 +1041,10 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
     this.text.position.x = 0;
     this.text.scale.x = 0.01;
     this.text.scale.y = -0.01;
+		if (currentReso == "tablet") {
+			this.text.anchor.y = 0.8;
+			this.text.style.fontSize = 34;
+		}
     this.el.addChild(this.text);
 
     this.text2 = new PIXI.Text(t, {
@@ -1035,6 +1058,10 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
     this.text2.position.x = 0;
     this.text2.scale.x = 0.01;
     this.text2.scale.y = -0.01;
+		if (currentReso == "tablet") {
+			this.text2.anchor.y = -0.4;
+			this.text2.style.wordWrap = true;
+		}
     this.el.addChild(this.text2);
 
     this.shape = new p2.Circle({radius: this.radius});
@@ -1120,9 +1147,12 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
 		this.body.updateBoundingRadius();
 		if (reso == "tablet") {
 			this.text.style.fontSize = 34;
+			this.text.anchor.y = 0.8;
+			this.text2.anchor.y = -0.4;
 			this.text2.style.wordWrap = true;
 		} else if (reso == "desktop") {
 			this.text.style.fontSize = 40;
+			this.text2.anchor.y = -1;
 			this.text2.style.wordWrap = false;
 		}
 	}
@@ -1134,20 +1164,6 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
 const observer2 = new IntersectionObserver(handleIntersect, options);
 observer2.observe(interaction3Canvas);
 /* Interaction 3 end */
-
-let currentReso = "";
-const setCurrentReso = () => {
-	const width = document.body.clientWidth;
-
-	if (width < 768) {
-		currentReso = "mobile";
-	} else if (width < 1024) {
-		currentReso = "tablet";
-	} else {
-		currentReso = "desktop";
-	}
-}
-setCurrentReso();
 
 // Window resize handler
 const onWindowResize = () => {
