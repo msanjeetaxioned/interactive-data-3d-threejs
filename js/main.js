@@ -227,7 +227,11 @@ const calculateGraphBarWidth = (resize, bar, graphCamera, graphCanvas, graphNum)
 		vector2.project(graphCamera);
 		vector2.x = (vector2.x + 1) * graphCanvas.getBoundingClientRect().width / 2;
 		const x2 = vector2.x;
-		graph1BarWidth = x2 - x;
+		if (graphNum == 1) {
+			graph1BarWidth = x2 - x;
+		} else if (graphNum == 2) {
+			barWidthInHTMLCordinates = x2 - x;
+		}
 	}
 }
 
@@ -695,6 +699,7 @@ const calculateBarsHeightAndAddThemInScene = () => {
 			if (i == (graphXNames.length - 1) && j == (numOfBars[i] - 1)) {
 				const timer = setTimeout(() => {
 					clearTimeout(timer);
+					calculateGraphBarWidth(false, bars[0][0], camera, canvas, 2);
 					appendGraphXValues();
 				}, 400);
 			}
@@ -809,22 +814,18 @@ const graph2SetRotationAngleOfBarsBasedOnScrollPosition = () => {
 
 // Calculates & returns html coordinates of a given bar of graph
 function calculateCoordinatesOfBarInCanvas(i, yPos) {
-	const vector = new THREE.Vector3(bars[i][0].position.x - 1.7, yPos, bars[i][0].position.z);
+	const boundingBox = new THREE.Box3().setFromObject(bars[i][0]);
+	const vector1 = new THREE.Vector3();
+	const size = boundingBox.getSize(vector1);
+	const width = size.x;
 
+	const vector = new THREE.Vector3(bars[i][0].position.x - width/2, yPos, bars[i][0].position.z);
 	vector.project(camera);
 	vector.x = (vector.x + 1) * canvas.getBoundingClientRect().width / 2;
 	vector.y =  - (vector.y - 1) * canvas.getBoundingClientRect().height / 2;
 
 	const x = vector.x;
 	const y = vector.y;
-
-	if (!barWidthInHTMLCordinates) {
-		const vector2 = new THREE.Vector3(bars[i][0].position.x + 1.7, yPos, bars[i][0].position.z);
-		vector2.project(camera);
-		vector2.x = (vector2.x + 1) * canvas.getBoundingClientRect().width / 2;
-		const x2 = vector2.x;
-		barWidthInHTMLCordinates = x2 - x;
-	}
 
 	return {x, y};
 }
