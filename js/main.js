@@ -961,14 +961,14 @@ interaction3Canvas.addEventListener("mousemove", interaction3OnMousemove, false)
 
 const interaction3World = new p2.World({gravity: [1, 1]});
 const interaction3Stage = new PIXI.Container();
-interaction3Stage.position.x =  interaction3Renderer.width / 2; // center at origin
-interaction3Stage.position.y =  interaction3FixedWidth / 2;
-interaction3Stage.scale.x =  interaction3Zoom;  // zoom in
+interaction3Stage.position.x = interaction3Renderer.width / 2; // center at origin
+interaction3Stage.position.y = interaction3FixedWidth / 2;
+interaction3Stage.scale.x = interaction3Zoom; // zoom in
 interaction3Stage.scale.y = -interaction3Zoom; // Note: we flip the y axis to make "up" the physics "up"
 
 //floor
 const planeShape = new p2.Plane();
-const planeBody = new p2.Body({ position:[0, -1] });
+const planeBody = new p2.Body({position:[0, -1]});
 planeBody.addShape(planeShape);
 interaction3World.addBody(planeBody);
 
@@ -1130,8 +1130,8 @@ const onWindowResize = () => {
 
 	interaction3CanvasContainerBCR = interaction3CanvasContainer.getBoundingClientRect();
 	interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3FixedWidth);
-	interaction3Stage.position.x =  interaction3CanvasContainerBCR.width / 2; // center at origin
-	interaction3Stage.position.y =  interaction3FixedWidth / 2;
+	interaction3Stage.position.x = interaction3CanvasContainerBCR.width / 2; // center at origin
+	interaction3Stage.position.y = interaction3FixedWidth / 2;
 	planeBody.position = [0, -1];
 
 	onAnimateChanges();
