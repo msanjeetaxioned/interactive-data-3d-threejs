@@ -808,7 +808,7 @@ const graph2SetRotationAngleOfBarsBasedOnScrollPosition = () => {
 }
 
 // Calculates & returns html coordinates of a given bar of graph
-function calculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = "top") {
+function calculateCoordinatesOfBarInCanvas(i, yPos) {
 	const vector = new THREE.Vector3(bars[i][0].position.x - 1.7, yPos, bars[i][0].position.z);
 
 	vector.project(camera);
@@ -816,6 +816,7 @@ function calculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = "top")
 	vector.y =  - (vector.y - 1) * canvas.getBoundingClientRect().height / 2;
 
 	const x = vector.x;
+	const y = vector.y;
 
 	if (!barWidthInHTMLCordinates) {
 		const vector2 = new THREE.Vector3(bars[i][0].position.x + 1.7, yPos, bars[i][0].position.z);
@@ -825,19 +826,13 @@ function calculateCoordinatesOfBarInCanvas(i, yPos, appendToTopOrBottom = "top")
 		barWidthInHTMLCordinates = x2 - x;
 	}
 
-	let y;
-	if (appendToTopOrBottom == "top") {
-		y = vector.y;
-	} else if (appendToTopOrBottom == "bottom") {
-		y = vector.y;
-	}
 	return {x, y};
 }
 
 // Appends values of x-axis of the graph at proper position
 const appendGraphXValues = (update) => {
 	for (let i = 0; i < graphXNames.length; i++) {
-		const obj = calculateCoordinatesOfBarInCanvas(i, bars[i][0].position.y, "bottom");
+		const obj = calculateCoordinatesOfBarInCanvas(i, bars[i][0].position.y);
 
 		let div;
 		if (update) {
