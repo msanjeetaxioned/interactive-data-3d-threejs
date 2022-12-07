@@ -671,13 +671,13 @@ const calculateBarsHeightAndAddThemInScene = () => {
 
 			const botFace = { min: 18, max: 24 };
 			const topFace = { min: 12, max: 18 };
-			for (let i = 0; i < positionAttribute.count; i++) {
-				if ((i >= botFace.min && i < botFace.max) || (i >= topFace.min && i < topFace.max)) {
+			for (let k = 0; k < positionAttribute.count; k++) {
+				if ((k >= botFace.min && k < botFace.max) || (k >= topFace.min && k < topFace.max)) {
 					color.setHex(topAndBotFaceColor);
 				} else {
 					color.setHex(barColor);
 				}
-				vertexColor.setXYZ(i, color.r, color.g, color.b);
+				vertexColor.setXYZ(k, color.r, color.g, color.b);
 			}
 
 			bars[i][j] = new THREE.Mesh(geometryBar, materialBar);
