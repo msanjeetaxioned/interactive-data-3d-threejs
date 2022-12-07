@@ -591,6 +591,10 @@ section {
 		margin-top: 30px;
 	}
 
+	@include breakpoint(tablet) {
+		margin-top: 25px;
+	}
+
 	span { display: block; }
 
 	.graph-x-name {
@@ -602,6 +606,10 @@ section {
 		@include breakpoint(small-pc) {
 			font-size: 18px;
 		}
+
+		@include breakpoint(tablet) {
+			font-size: 16px;
+		}
 	}
 
 	.graph-x-value {
@@ -611,6 +619,10 @@ section {
 
 		@include breakpoint(small-pc) {
 			font-size: 15px;
+		}
+
+		@include breakpoint(tablet) {
+			font-size: 14px;
 		}
 	}
 }

@@ -524,6 +524,11 @@ section {
     margin-top: 30px;
   }
 }
+@media screen and (max-width: 1023px) {
+  .graph2-x {
+    margin-top: 25px;
+  }
+}
 .graph2-x span {
   display: block;
 }
@@ -538,6 +543,11 @@ section {
     font-size: 18px;
   }
 }
+@media screen and (max-width: 1023px) {
+  .graph2-x .graph-x-name {
+    font-size: 16px;
+  }
+}
 .graph2-x .graph-x-value {
   color: #fff;
   font-size: 16px;
@@ -546,6 +556,11 @@ section {
 @media screen and (max-width: 1280px) {
   .graph2-x .graph-x-value {
     font-size: 15px;
+  }
+}
+@media screen and (max-width: 1023px) {
+  .graph2-x .graph-x-value {
+    font-size: 14px;
   }
 }
 
