@@ -198,24 +198,28 @@ const enableOrDisablePrevAndNextButtons = (enable, prevButton, nextButton) => {
 }
 
 let graph1BarWidth;
-const calculateGraph1BarWidth = (resize) => {
-	const barNum = 0;
+const calculateGraphBarWidth = (resize, bar, graphCamera, graphCanvas, graphNum) => {
+	if (graphNum == 1) {
+		if (graph1BarWidth && !resize) {
+			return;
+		}
+	}
 	if (!graph1BarWidth || resize) {
-		const boundingBox = new THREE.Box3().setFromObject(graph1Bars[barNum]);
+		const boundingBox = new THREE.Box3().setFromObject(bar);
 		const vector1 = new THREE.Vector3();
 		const size = boundingBox.getSize(vector1);
 		const width = size.x;
 
-		const vector = new THREE.Vector3(graph1Bars[barNum].position.x - width/2, graph1Bars[barNum].position.y, graph1Bars[barNum].position.z);
-		vector.project(graph1Camera);
-		vector.x = (vector.x + 1) * graph1Canvas.getBoundingClientRect().width / 2;
-		vector.y =  - (vector.y - 1) * graph1Canvas.getBoundingClientRect().height / 2;
+		const vector = new THREE.Vector3(bar.position.x - width/2, bar.position.y, bar.position.z);
+		vector.project(graphCamera);
+		vector.x = (vector.x + 1) * graphCanvas.getBoundingClientRect().width / 2;
+		vector.y =  - (vector.y - 1) * graphCanvas.getBoundingClientRect().height / 2;
 		const x = vector.x;
 		const y = vector.y;
 	
-		const vector2 = new THREE.Vector3(graph1Bars[barNum].position.x + width/2, graph1Bars[barNum].position.y, graph1Bars[barNum].position.z);
-		vector2.project(graph1Camera);
-		vector2.x = (vector2.x + 1) * graph1Canvas.getBoundingClientRect().width / 2;
+		const vector2 = new THREE.Vector3(bar.position.x + width/2, bar.position.y, bar.position.z);
+		vector2.project(graphCamera);
+		vector2.x = (vector2.x + 1) * graphCanvas.getBoundingClientRect().width / 2;
 		const x2 = vector2.x;
 		graph1BarWidth = x2 - x;
 	}
@@ -268,7 +272,7 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 				let timer = setTimeout(() => {
 					clearTimeout(timer);
 					if (i == 0) {
-						calculateGraph1BarWidth();
+						calculateGraphBarWidth(false, graph1Bars[0], graph1Camera, graph1Canvas, 1);
 					}
 					appendOrUpdateValuesInGraph(i);
 				}, 50);
@@ -1109,7 +1113,7 @@ const onWindowResize = () => {
 	graph1Camera.aspect = graph1CanvasContainerBCR.width / (graph1CanvasContainerBCR.width / widthToHeightRatio);
 	graph1Camera.updateProjectionMatrix();
 	graph1Renderer.setSize(graph1CanvasContainerBCR.width, graph1CanvasContainerBCR.width / widthToHeightRatio);
-	calculateGraph1BarWidth(true);
+	calculateGraphBarWidth(true, graph1Bars[0], graph1Camera, graph1Canvas, 1);
 	graph1BarInitialPosition = calculateBarsBotPosition(graph1Camera, graph1Canvas);
 	for (let i = 0; i < graph1Bars.length; i++) {
 		updatePositionOfGraphValues(i, true);
