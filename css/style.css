@@ -43,6 +43,11 @@ h2 {
   padding: 50px 0;
   margin: 0 auto;
 }
+@media screen and (max-width: 1023px) {
+  .wrapper {
+    width: 92vw;
+  }
+}
 
 section {
   width: 100%;
@@ -145,6 +150,12 @@ section {
     font-size: 22px;
   }
 }
+@media screen and (max-width: 1023px) {
+  .graph1-value {
+    margin-top: -50px;
+    font-size: 18px;
+  }
+}
 
 .graph1-info-and-buttons {
   width: 100%;
@@ -182,10 +193,25 @@ section {
     font-size: 18px;
   }
 }
+@media screen and (max-width: 1023px) {
+  .graph1-x-name {
+    font-size: 14px;
+  }
+}
 
 .slider-names-container {
   height: 50px;
   position: relative;
+}
+@media screen and (max-width: 1280px) {
+  .slider-names-container {
+    height: 44px;
+  }
+}
+@media screen and (max-width: 1023px) {
+  .slider-names-container {
+    height: 36px;
+  }
 }
 .slider-names-container .button {
   width: 50px;
@@ -209,6 +235,12 @@ section {
     height: 44px;
   }
 }
+@media screen and (max-width: 1023px) {
+  .slider-names-container .button {
+    width: 36px;
+    height: 36px;
+  }
+}
 .slider-names-container .button.previous-button {
   left: 34%;
 }
@@ -228,6 +260,11 @@ section {
     font-size: 20px;
   }
 }
+@media screen and (max-width: 1023px) {
+  .slider-names-container .button.previous-button::after {
+    font-size: 18px;
+  }
+}
 .slider-names-container .button.next-button {
   right: 34%;
 }
@@ -245,6 +282,11 @@ section {
 @media screen and (max-width: 1280px) {
   .slider-names-container .button.next-button::after {
     font-size: 20px;
+  }
+}
+@media screen and (max-width: 1023px) {
+  .slider-names-container .button.next-button::after {
+    font-size: 18px;
   }
 }
 .slider-names-container .button:hover {
@@ -275,6 +317,11 @@ section {
     font-size: 20px;
   }
 }
+@media screen and (max-width: 1023px) {
+  .slider-names li span {
+    font-size: 16px;
+  }
+}
 .slider-names li.active {
   flex-basis: 36%;
 }
@@ -285,6 +332,11 @@ section {
 @media screen and (max-width: 1280px) {
   .slider-names li.active span {
     font-size: 24px;
+  }
+}
+@media screen and (max-width: 1023px) {
+  .slider-names li.active span {
+    font-size: 18px;
   }
 }
 .slider-names .active + li {

@@ -58,6 +58,11 @@ $small-mobile: 320px;
       @content;
     }
   }
+	@else if($device=='tablet') {
+    @media screen and (max-width: 1023px) {
+      @content;
+    }
+  }
   @else if($device=='large-mobile') {
     @media screen and (max-width: $large-mobile) {
       @content;
@@ -106,6 +111,9 @@ h2 {
 	height: 100%;
 	padding: 50px 0;
 	margin: 0 auto;
+	@include breakpoint(tablet) {
+		width: 92vw;
+	}
 }
 
 section {
@@ -206,6 +214,11 @@ section {
 		margin-top: -60px;
 		font-size: 22px;
 	}
+
+	@include breakpoint(tablet) {
+		margin-top: -50px;
+		font-size: 18px;
+	}
 }
 
 .graph1-info-and-buttons {
@@ -242,11 +255,24 @@ section {
 		margin-top: 30px;
 		font-size: 18px;
 	}
+
+	@include breakpoint(tablet) {
+		font-size: 14px;
+	}
 }
 
 .slider-names-container { 
 	height: 50px;
 	position: relative;
+
+	@include breakpoint(small-pc) {
+		height: 44px;
+	}
+
+	@include breakpoint(tablet) {
+		height: 36px;
+	}
+
 	.button {
 		width: 50px;
 		height: 50px;
@@ -268,6 +294,11 @@ section {
 			height: 44px;
 		}
 
+		@include breakpoint(tablet) {
+			width: 36px;
+			height: 36px;
+		}
+
 		&.previous-button {
 			left: 34%;
 
@@ -283,6 +314,10 @@ section {
 
 				@include breakpoint(small-pc) {
 					font-size: 20px;
+				}
+
+				@include breakpoint(tablet) {
+					font-size: 18px;
 				}
 			}
 		}
@@ -302,6 +337,10 @@ section {
 
 				@include breakpoint(small-pc) {
 					font-size: 20px;
+				}
+
+				@include breakpoint(tablet) {
+					font-size: 18px;
 				}
 			}
 		}
@@ -334,6 +373,10 @@ section {
 			@include breakpoint(small-pc) {
 				font-size: 20px;
 			}
+
+			@include breakpoint(tablet) {
+				font-size: 16px;
+			}
 		}
 
 		&.active {
@@ -345,6 +388,10 @@ section {
 
 				@include breakpoint(small-pc) {
 					font-size: 24px;
+				}
+
+				@include breakpoint(tablet) {
+					font-size: 18px;
 				}
 			}
 		}
