@@ -90,14 +90,13 @@ section {
 
 /* Section 1 SCSS end */
 /* Graph1 SCSS start */
-.work-life-balance-graph-section {
-  padding-bottom: 200px;
-}
-
 .graph-section {
+  padding-bottom: 50vh;
+  background-color: #000;
+}
+.graph-section .wrapper {
   height: 100%;
   min-height: 100vh;
-  background-color: #000;
 }
 .graph-section .section-title {
   width: 100%;
@@ -486,10 +485,6 @@ section {
 
 /* Quote section SCSS end */
 /* Graph2 SCSS start */
-.project-by-numbers-section {
-  padding-bottom: 200px;
-}
-
 .graph2-value {
   position: absolute;
   color: #fff;
@@ -648,6 +643,7 @@ section {
 .spheres-section {
   height: 100%;
   min-height: 100vh;
+  padding-bottom: 0;
   background-color: #000;
 }
 .spheres-section .canvas-container {
