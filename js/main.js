@@ -868,16 +868,19 @@ const appendGraphXValues = (update) => {
 }
 
 // Sets Current Resolution
+const mobile = "mobile";
+const tablet = "tablet";
+const desktop = "desktop";
 let currentReso = "";
 const setCurrentReso = () => {
 	const width = document.body.clientWidth;
 
 	if (width < 768) {
-		currentReso = "mobile";
+		currentReso = mobile;
 	} else if (width < 1024) {
-		currentReso = "tablet";
+		currentReso = tablet;
 	} else {
-		currentReso = "desktop";
+		currentReso = desktop;
 	}
 }
 setCurrentReso();
@@ -895,9 +898,9 @@ const calculateAndSetCurrentValues = (notFirstTime) => {
 
 	for (let i = 0; i < currentValues.length; i++) {
 		interaction3Mass[i] = scale(currentValues[i], 0, 24.9, 0.0005, 0.0025);
-		if (currentReso == "tablet") {
+		if (currentReso == tablet) {
 			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.55, 0.85);
-		} else if (currentReso == "desktop") {
+		} else if (currentReso == desktop) {
 			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.7, 1);
 		}
 		interaction3SpeedMaxNeg[i] = scale(currentValues[i], 0, 24.9, -1/8, -1);
@@ -921,9 +924,9 @@ const calculateAndSetCurrentValues = (notFirstTime) => {
 const updateRadiusOnResize = (reso) => {
 	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
 	for (let i = 0; i < currentValues.length; i++) {
-		if (reso == "tablet") {
+		if (reso == tablet) {
 			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.55, 0.85);
-		} else if (reso == "desktop") {
+		} else if (reso == desktop) {
 			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.7, 1);
 		}
 		interaction3Data[i].radius = interaction3Radius[i];
@@ -1041,7 +1044,7 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
     this.text.position.x = 0;
     this.text.scale.x = 0.01;
     this.text.scale.y = -0.01;
-		if (currentReso == "tablet") {
+		if (currentReso == tablet) {
 			this.text.anchor.y = 0.8;
 			this.text.style.fontSize = 34;
 		}
@@ -1058,7 +1061,7 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
     this.text2.position.x = 0;
     this.text2.scale.x = 0.01;
     this.text2.scale.y = -0.01;
-		if (currentReso == "tablet") {
+		if (currentReso == tablet) {
 			this.text2.anchor.y = -0.4;
 			this.text2.style.wordWrap = true;
 		}
@@ -1145,12 +1148,12 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
 		this.bubble.width = this.bubble.height = r * 2.3;
 		this.shape.radius = r;
 		this.body.updateBoundingRadius();
-		if (reso == "tablet") {
+		if (reso == tablet) {
 			this.text.style.fontSize = 34;
 			this.text.anchor.y = 0.8;
 			this.text2.anchor.y = -0.4;
 			this.text2.style.wordWrap = true;
-		} else if (reso == "desktop") {
+		} else if (reso == desktop) {
 			this.text.style.fontSize = 40;
 			this.text2.anchor.y = -1;
 			this.text2.style.wordWrap = false;
@@ -1194,13 +1197,13 @@ const onWindowResize = () => {
 
 	const windowWidth = document.body.clientWidth;
 	if (windowWidth >= 768 && windowWidth < 1024) {
-		if (currentReso != "tablet") {
-			updateRadiusOnResize("tablet");
+		if (currentReso != tablet) {
+			updateRadiusOnResize(tablet);
 			setCurrentReso();
 		}
 	} else if (windowWidth >= 1024) {
-		if (currentReso != "desktop") {
-			updateRadiusOnResize("desktop");
+		if (currentReso != desktop) {
+			updateRadiusOnResize(desktop);
 			setCurrentReso();
 		}
 	}
