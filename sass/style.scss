@@ -26,6 +26,7 @@ $large-pc: 1920px;
 $pc: 1440px;
 $small-pc: 1280px;
 $ipad-pro: 1024px;
+$tablet: 1023px;
 $ipad: 768px;
 $large-mobile: 425px;
 $med-mobile: 375px;
@@ -59,7 +60,7 @@ $small-mobile: 320px;
     }
   }
 	@else if($device=='tablet') {
-    @media screen and (max-width: 1023px) {
+    @media screen and (max-width: $tablet) {
       @content;
     }
   }
