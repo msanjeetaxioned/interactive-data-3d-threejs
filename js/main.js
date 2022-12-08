@@ -1,9 +1,29 @@
-$(function() {
-	$.scrollify({
-		section : ".section",
-		updateHash: false
+// Sets Current Resolution
+const mobile = "mobile";
+const tablet = "tablet";
+const desktop = "desktop";
+let currentReso = "";
+const setCurrentReso = () => {
+	const width = document.body.clientWidth;
+
+	if (width < 768) {
+		currentReso = mobile;
+	} else if (width < 1024) {
+		currentReso = tablet;
+	} else {
+		currentReso = desktop;
+	}
+}
+setCurrentReso();
+
+if (currentReso != mobile) {
+	$(function() {
+		$.scrollify({
+			section : ".section",
+			updateHash: false
+		});
 	});
-});
+}
 
 const widthToHeightRatio = 1.73;
 const interaction3TabletHeight = 850;
@@ -867,24 +887,6 @@ const appendGraphXValues = (update) => {
 	}
 }
 
-// Sets Current Resolution
-const mobile = "mobile";
-const tablet = "tablet";
-const desktop = "desktop";
-let currentReso = "";
-const setCurrentReso = () => {
-	const width = document.body.clientWidth;
-
-	if (width < 768) {
-		currentReso = mobile;
-	} else if (width < 1024) {
-		currentReso = tablet;
-	} else {
-		currentReso = desktop;
-	}
-}
-setCurrentReso();
-
 /* Interaction 3 start */
 const interaction3CanvasContainer = document.querySelector(".spheres-section .canvas-container");
 let interaction3CanvasContainerBCR = interaction3CanvasContainer.getBoundingClientRect();
@@ -1198,12 +1200,22 @@ const onWindowResize = () => {
 	interaction3CanvasContainerBCR = interaction3CanvasContainer.getBoundingClientRect();
 
 	const windowWidth = document.body.clientWidth;
-	if (windowWidth >= 768 && windowWidth < 1024) {
+	if (windowWidth < 768) {
+		if (currentReso != mobile) {
+			setCurrentReso();
+			if (!$.scrollify.isDisabled()) {
+				$.scrollify.disable();
+			}
+		}
+	} else if (windowWidth < 1024) {
 		if (currentReso != tablet) {
 			setCurrentReso();
 			interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3TabletHeight);
 			interaction3Stage.position.y = interaction3TabletHeight / 2;
 			updateRadiusOnResize(tablet);
+			if ($.scrollify.isDisabled()) {
+				$.scrollify.enable();
+			}
 		}
 	} else if (windowWidth >= 1024) {
 		if (currentReso != desktop) {
@@ -1211,6 +1223,9 @@ const onWindowResize = () => {
 			interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3DesktopHeight);
 			interaction3Stage.position.y = interaction3DesktopHeight / 2;
 			updateRadiusOnResize(desktop);
+			if ($.scrollify.isDisabled()) {
+				$.scrollify.enable();
+			}
 		}
 	}
 
