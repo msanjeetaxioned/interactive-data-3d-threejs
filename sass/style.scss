@@ -28,6 +28,7 @@ $small-pc: 1280px;
 $ipad-pro: 1024px;
 $tablet: 1023px;
 $ipad: 768px;
+$mobile: 767px;
 $large-mobile: 425px;
 $med-mobile: 375px;
 $small-mobile: 320px;
@@ -61,6 +62,11 @@ $small-mobile: 320px;
   }
 	@else if($device=='tablet') {
     @media screen and (max-width: $tablet) {
+      @content;
+    }
+  }
+	@else if($device=='mobile') {
+    @media screen and (max-width: $mobile) {
       @content;
     }
   }
@@ -112,8 +118,14 @@ h2 {
 	height: 100%;
 	padding: 50px 0;
 	margin: 0 auto;
+
 	@include breakpoint(tablet) {
 		width: 92vw;
+	}
+
+	@include breakpoint(mobile) {
+		width: calc(100% - 10px);
+		margin: 0 5px;
 	}
 }
 
