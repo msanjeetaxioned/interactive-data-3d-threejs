@@ -6,7 +6,8 @@ $(function() {
 });
 
 const widthToHeightRatio = 1.73;
-const interaction3FixedHeight = 1050;
+const interaction3TabletHeight = 850;
+const interaction3DesktopHeight = 1050;
 
 const wrapperWorkLife = document.querySelector(".work-life-balance-graph-section > .wrapper");
 const graph1CanvasContainer = wrapperWorkLife.querySelector(".canvas-container");
@@ -963,9 +964,9 @@ let interaction3Balls = [];
 
 let interaction3Height;
 if (currentReso == tablet) {
-	interaction3Height = 850;
+	interaction3Height = interaction3TabletHeight;
 } else if (currentReso == desktop) {
-	interaction3Height = interaction3FixedHeight;
+	interaction3Height = interaction3DesktopHeight;
 }
 const interaction3Renderer = PIXI.autoDetectRenderer(interaction3CanvasContainerBCR.width, interaction3Height, {
   transparent: true, antialias: true
@@ -1200,15 +1201,15 @@ const onWindowResize = () => {
 	if (windowWidth >= 768 && windowWidth < 1024) {
 		if (currentReso != tablet) {
 			setCurrentReso();
-			interaction3Renderer.resize(interaction3CanvasContainerBCR.width, 850);
-			interaction3Stage.position.y = 850 / 2;
+			interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3TabletHeight);
+			interaction3Stage.position.y = interaction3TabletHeight / 2;
 			updateRadiusOnResize(tablet);
 		}
 	} else if (windowWidth >= 1024) {
 		if (currentReso != desktop) {
 			setCurrentReso();
-			interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3FixedHeight);
-			interaction3Stage.position.y = interaction3FixedHeight / 2;
+			interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3DesktopHeight);
+			interaction3Stage.position.y = interaction3DesktopHeight / 2;
 			updateRadiusOnResize(desktop);
 		}
 	}
