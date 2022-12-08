@@ -1,8 +1,7 @@
 $(function() {
 	$.scrollify({
 		section : ".section",
-		updateHash: false,
-		touchScroll: false
+		updateHash: false
 	});
 });
 
