@@ -1197,13 +1197,13 @@ const onWindowResize = () => {
 	const windowWidth = document.body.clientWidth;
 	if (windowWidth >= 768 && windowWidth < 1024) {
 		if (currentReso != tablet) {
-			updateRadiusOnResize(tablet);
 			setCurrentReso();
+			updateRadiusOnResize(tablet);
 		}
 	} else if (windowWidth >= 1024) {
 		if (currentReso != desktop) {
-			updateRadiusOnResize(desktop);
 			setCurrentReso();
+			updateRadiusOnResize(desktop);
 		}
 	}
 
