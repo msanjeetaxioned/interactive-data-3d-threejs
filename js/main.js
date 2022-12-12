@@ -902,7 +902,7 @@ const calculateAndSetCurrentValues = (notFirstTime) => {
 	for (let i = 0; i < currentValues.length; i++) {
 		interaction3Mass[i] = scale(currentValues[i], 0, 24.9, 0.0005, 0.0025);
 		if (currentReso == mobile) {
-			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.4, 0.65);
+			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.4, 0.6);
 		} else if (currentReso == tablet) {
 			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.55, 0.85);
 		} else if (currentReso == desktop) {
@@ -930,7 +930,7 @@ const updateRadiusOnResize = (reso) => {
 	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
 	for (let i = 0; i < currentValues.length; i++) {
 		if (currentReso == mobile) {
-			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.4, 0.65);
+			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.4, 0.6);
 		} else if (reso == tablet) {
 			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.55, 0.85);
 		} else if (reso == desktop) {
