@@ -129,6 +129,11 @@ section {
     font-size: 7rem;
   }
 }
+@media screen and (max-width: 767px) {
+  .graph-section .section-title {
+    font-size: 4.5rem;
+  }
+}
 .graph-section .section-title .thin {
   display: block;
   font-family: "Poppins Thin";
@@ -265,6 +270,11 @@ section {
     left: 33.5%;
   }
 }
+@media screen and (max-width: 767px) {
+  .slider-names-container .button.previous-button {
+    left: 5%;
+  }
+}
 .slider-names-container .button.previous-button::after {
   content: "\f060";
   font-family: "Font Awesome 6 Free";
@@ -287,6 +297,11 @@ section {
 @media screen and (max-width: 1280px) {
   .slider-names-container .button.next-button {
     right: 33.5%;
+  }
+}
+@media screen and (max-width: 767px) {
+  .slider-names-container .button.next-button {
+    right: 5%;
   }
 }
 .slider-names-container .button.next-button::after {
@@ -322,6 +337,11 @@ section {
   flex-shrink: 0;
   text-align: center;
 }
+@media screen and (max-width: 767px) {
+  .slider-names li {
+    flex-basis: 100%;
+  }
+}
 .slider-names li span {
   color: #626262;
   font-size: 24px;
@@ -340,6 +360,11 @@ section {
 }
 .slider-names li.active {
   flex-basis: 36%;
+}
+@media screen and (max-width: 767px) {
+  .slider-names li.active {
+    flex-basis: 100%;
+  }
 }
 .slider-names li.active span {
   color: #fff;
