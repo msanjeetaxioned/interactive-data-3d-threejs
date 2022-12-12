@@ -698,6 +698,10 @@ section {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+
+		@include breakpoint(mobile) {
+			text-align: center;
+		}
 	}
 
 	h3 {
@@ -712,6 +716,11 @@ section {
 
 		@include breakpoint(large-pc) {
 			margin-bottom: 35px;
+		}
+
+		@include breakpoint(mobile) {
+			margin-bottom: 20px;
+			font-size: 18px;
 		}
 	}
 
@@ -729,6 +738,12 @@ section {
 
 		@include breakpoint(large-pc) {
 			margin-bottom: 75px;
+		}
+
+		@include breakpoint(mobile) {
+			margin-bottom: 15px;
+			font-size: 40px;
+			line-height: 50px;
 		}
 
 		span {

@@ -636,6 +636,11 @@ section {
   flex-direction: column;
   justify-content: center;
 }
+@media screen and (max-width: 767px) {
+  .lifestyle-section .wrapper {
+    text-align: center;
+  }
+}
 .lifestyle-section h3 {
   margin-bottom: 15px;
   color: #fff;
@@ -650,6 +655,12 @@ section {
 @media screen and (min-width: 1920px) {
   .lifestyle-section h3 {
     margin-bottom: 35px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .lifestyle-section h3 {
+    margin-bottom: 20px;
+    font-size: 18px;
   }
 }
 .lifestyle-section p {
@@ -668,6 +679,13 @@ section {
 @media screen and (min-width: 1920px) {
   .lifestyle-section p {
     margin-bottom: 75px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .lifestyle-section p {
+    margin-bottom: 15px;
+    font-size: 40px;
+    line-height: 50px;
   }
 }
 .lifestyle-section p span {
