@@ -94,13 +94,13 @@ $small-mobile: 320px;
 
 * {
 	font-family: "Poppins Regular", sans-serif; 
-	box-sizing: border-box; 
+	box-sizing: border-box;
 }
 
 body { 
 	margin: 0;
 	color: $white;
-	font-family: "Poppins Regular", sans-serif; 
+	font-family: "Poppins Regular", sans-serif;
 }
 
 h2 {
@@ -150,6 +150,10 @@ section {
 			left: 110px;
 		}
 
+		@include breakpoint(mobile) {
+			left: 50px;
+		}
+
 		a { 
 			display: inline-block; 
 			&:hover { cursor: pointer; }
@@ -159,6 +163,11 @@ section {
 			width: 159px;
 			height: 57px;
 			display: inline-block;
+
+			@include breakpoint(mobile) {
+				width: 126px;
+				height: 45px;
+			}
 		}
 	}
 

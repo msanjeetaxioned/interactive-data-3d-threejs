@@ -77,6 +77,11 @@ section {
     left: 110px;
   }
 }
+@media screen and (max-width: 767px) {
+  .section1 h1 {
+    left: 50px;
+  }
+}
 .section1 h1 a {
   display: inline-block;
 }
@@ -87,6 +92,12 @@ section {
   width: 159px;
   height: 57px;
   display: inline-block;
+}
+@media screen and (max-width: 767px) {
+  .section1 h1 img {
+    width: 126px;
+    height: 45px;
+  }
 }
 .section1 video {
   width: auto;
