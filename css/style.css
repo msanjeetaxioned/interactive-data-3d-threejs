@@ -363,15 +363,34 @@ section {
 /* Quote section SCSS start */
 .quote-section {
   height: auto;
+  padding: 50px 0;
   background-color: #000;
 }
 .quote-section li {
   height: 100vh;
   display: flex;
 }
+@media screen and (max-width: 767px) {
+  .quote-section li {
+    height: auto;
+    padding: 0;
+    margin-bottom: 40px;
+    display: block;
+  }
+}
+@media screen and (max-width: 767px) {
+  .quote-section li:last-child {
+    margin-bottom: 0;
+  }
+}
 .quote-section li .quote-content {
   padding-right: 30px;
   padding-left: 0;
+}
+@media screen and (max-width: 767px) {
+  .quote-section li .quote-content {
+    padding: 0;
+  }
 }
 .quote-section li:nth-child(even) {
   flex-direction: row-reverse;
@@ -379,6 +398,11 @@ section {
 .quote-section li:nth-child(even) .quote-content {
   padding-right: 0;
   padding-left: 30px;
+}
+@media screen and (max-width: 767px) {
+  .quote-section li:nth-child(even) .quote-content {
+    padding: 0;
+  }
 }
 .quote-section figure {
   display: flex;
@@ -413,6 +437,13 @@ section {
     padding-right: 20px;
   }
 }
+@media screen and (max-width: 767px) {
+  .quote-content {
+    padding: 0;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+}
 .quote-content h3 {
   width: fit-content;
   margin-bottom: 20px;
@@ -436,6 +467,13 @@ section {
     font-size: 50px;
   }
 }
+@media screen and (max-width: 767px) {
+  .quote-content h3 {
+    width: 100%;
+    display: block;
+    font-size: 20px;
+  }
+}
 .quote-content p {
   margin-bottom: 25px;
   color: #fff;
@@ -455,6 +493,12 @@ section {
     line-height: 56px;
   }
 }
+@media screen and (max-width: 767px) {
+  .quote-content p {
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+}
 .quote-content a {
   width: fit-content;
   display: inline-block;
@@ -470,6 +514,12 @@ section {
 @media screen and (max-width: 1280px) {
   .quote-content a {
     font-size: 22px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .quote-content a {
+    width: 100%;
+    font-size: 18px;
   }
 }
 .quote-content a::after {

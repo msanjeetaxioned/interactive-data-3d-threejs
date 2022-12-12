@@ -428,15 +428,31 @@ section {
 /* Quote section SCSS start */
 .quote-section {
 	height: auto;
+	padding: 50px 0;
 	background-color: $black; 
 
 	li {
 		height: 100vh;
 		display: flex;
 
+		@include breakpoint(mobile) {
+			height: auto;
+			padding: 0;
+			margin-bottom: 40px;
+			display: block;
+		}
+
+		&:last-child {
+			@include breakpoint(mobile) {
+				margin-bottom: 0;
+			}
+		}
+
 		.quote-content {
 			padding-right: 30px;
 			padding-left: 0;
+
+			@include breakpoint(mobile) { padding: 0; }
 		}
 	}
 
@@ -446,6 +462,8 @@ section {
 		.quote-content { 
 			padding-right: 0;
 			padding-left: 30px;
+
+			@include breakpoint(mobile) { padding: 0; }
 		}
 	}
 
@@ -482,6 +500,12 @@ section {
 		padding-right: 20px;
 	}
 
+	@include breakpoint(mobile) {
+		padding: 0;
+		margin-bottom: 30px;
+		text-align: center;
+	}
+
 	h3 {
 		width: fit-content;
 		margin-bottom: 20px;
@@ -502,6 +526,12 @@ section {
 			margin-bottom: 40px;
 			font-size: 50px;
 		}
+
+		@include breakpoint(mobile) {
+			width: 100%;
+			display: block;
+			font-size: 20px;
+		}
 	}
 
 	p {
@@ -520,6 +550,11 @@ section {
 			font-size: 36px;
 			line-height: 56px;
 		}
+
+		@include breakpoint(mobile) {
+			margin-bottom: 20px;
+			font-size: 18px;
+		}
 	}
 
 	a {
@@ -536,6 +571,11 @@ section {
 
 		@include breakpoint(small-pc) {
 			font-size: 22px;
+		}
+
+		@include breakpoint(mobile) {
+			width: 100%;
+			font-size: 18px;
 		}
 
 		// &::before {
