@@ -26,7 +26,7 @@ if (currentReso != mobile) {
 }
 
 const widthToHeightRatio = 1.73;
-const interaction3MobileHeight = 700;
+const interaction3MobileHeight = 650;
 const interaction3TabletHeight = 850;
 const interaction3DesktopHeight = 1050;
 
@@ -901,7 +901,9 @@ const calculateAndSetCurrentValues = (notFirstTime) => {
 
 	for (let i = 0; i < currentValues.length; i++) {
 		interaction3Mass[i] = scale(currentValues[i], 0, 24.9, 0.0005, 0.0025);
-		if (currentReso == tablet) {
+		if (currentReso == mobile) {
+			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.4, 0.65);
+		} else if (currentReso == tablet) {
 			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.55, 0.85);
 		} else if (currentReso == desktop) {
 			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.7, 1);
@@ -927,7 +929,9 @@ const calculateAndSetCurrentValues = (notFirstTime) => {
 const updateRadiusOnResize = (reso) => {
 	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
 	for (let i = 0; i < currentValues.length; i++) {
-		if (reso == tablet) {
+		if (currentReso == mobile) {
+			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.4, 0.65);
+		} else if (reso == tablet) {
 			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.55, 0.85);
 		} else if (reso == desktop) {
 			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.7, 1);
@@ -1058,6 +1062,9 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
 		if (currentReso == tablet) {
 			this.text.anchor.y = 0.8;
 			this.text.style.fontSize = 34;
+		} else if (currentReso == mobile) {
+			this.text.anchor.y = 0.8;
+			this.text.style.fontSize = 24;
 		}
     this.el.addChild(this.text);
 
@@ -1075,7 +1082,11 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
 		if (currentReso == tablet) {
 			this.text2.anchor.y = -0.4;
 			this.text2.style.wordWrap = true;
-		}
+		} else if (currentReso == mobile) {
+			this.text2.anchor.y = -0.3;
+			this.text2.style.fontSize = 12;
+			this.text2.style.wordWrap = true;
+	}
     this.el.addChild(this.text2);
 
     this.shape = new p2.Circle({radius: this.radius});
@@ -1159,7 +1170,13 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
 		this.bubble.width = this.bubble.height = r * 2.3;
 		this.shape.radius = r;
 		this.body.updateBoundingRadius();
-		if (reso == tablet) {
+		if (reso == mobile) {
+			this.text.style.fontSize = 24;
+			this.text.anchor.y = 0.8;
+			this.text2.anchor.y = -0.3;
+			this.text2.style.fontSize = 12;
+			this.text2.style.wordWrap = true;
+		} else if (reso == tablet) {
 			this.text.style.fontSize = 34;
 			this.text.anchor.y = 0.8;
 			this.text2.anchor.y = -0.4;
@@ -1208,6 +1225,7 @@ const onWindowResize = () => {
 			setCurrentReso();
 			interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3MobileHeight);
 			interaction3Stage.position.y = interaction3MobileHeight / 2;
+			updateRadiusOnResize(mobile);
 			if (!$.scrollify.isDisabled()) {
 				$.scrollify.disable();
 			}
