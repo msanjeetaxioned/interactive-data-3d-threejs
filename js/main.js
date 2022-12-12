@@ -1170,6 +1170,7 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
 		this.bubble.width = this.bubble.height = r * 2.3;
 		this.shape.radius = r;
 		this.body.updateBoundingRadius();
+		this.text2.style.fontSize = 14;
 		if (reso == mobile) {
 			this.text.style.fontSize = 24;
 			this.text.anchor.y = 0.8;
@@ -1183,6 +1184,7 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
 			this.text2.style.wordWrap = true;
 		} else if (reso == desktop) {
 			this.text.style.fontSize = 40;
+			this.text.anchor.y = 0.7;
 			this.text2.anchor.y = -1;
 			this.text2.style.wordWrap = false;
 		}
