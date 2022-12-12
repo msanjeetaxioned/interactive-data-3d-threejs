@@ -26,6 +26,7 @@ if (currentReso != mobile) {
 }
 
 const widthToHeightRatio = 1.73;
+const interaction3MobileHeight = 700;
 const interaction3TabletHeight = 850;
 const interaction3DesktopHeight = 1050;
 
@@ -965,7 +966,9 @@ const interaction3Zoom = 100;
 let interaction3Balls = [];
 
 let interaction3Height;
-if (currentReso == tablet) {
+if (currentReso == mobile) {
+	interaction3Height = interaction3MobileHeight;
+} else if (currentReso == tablet) {
 	interaction3Height = interaction3TabletHeight;
 } else if (currentReso == desktop) {
 	interaction3Height = interaction3DesktopHeight;
@@ -1203,6 +1206,8 @@ const onWindowResize = () => {
 	if (windowWidth < 768) {
 		if (currentReso != mobile) {
 			setCurrentReso();
+			interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3MobileHeight);
+			interaction3Stage.position.y = interaction3MobileHeight / 2;
 			if (!$.scrollify.isDisabled()) {
 				$.scrollify.disable();
 			}
