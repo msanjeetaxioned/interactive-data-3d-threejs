@@ -629,6 +629,7 @@ section {
 /* Graph2 SCSS end */
 /* Lifestyle section start */
 .lifestyle-section {
+  height: 100%;
   background-color: #000;
 }
 .lifestyle-section .wrapper {
