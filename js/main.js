@@ -26,7 +26,7 @@ if (currentReso != mobile) {
 }
 
 const widthToHeightRatio = 1.73;
-const interaction3MobileHeight = 650;
+const interaction3MobileHeight = 700;
 const interaction3TabletHeight = 850;
 const interaction3DesktopHeight = 1050;
 
