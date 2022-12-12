@@ -720,7 +720,7 @@ section {
 		}
 
 		@include breakpoint(mobile) {
-			margin-bottom: 20px;
+			margin-bottom: 25px;
 			font-size: 18px;
 		}
 	}
@@ -742,7 +742,7 @@ section {
 		}
 
 		@include breakpoint(mobile) {
-			margin-bottom: 15px;
+			margin-bottom: 25px;
 			font-size: 40px;
 			line-height: 50px;
 		}
