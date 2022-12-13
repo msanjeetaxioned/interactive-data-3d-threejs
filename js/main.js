@@ -943,6 +943,9 @@ const calculateAndSetCurrentValues = (notFirstTime) => {
 }
 
 const updateRadiusOnResize = (reso) => {
+	if (interaction3Balls.length == 0) {
+		return;
+	}
 	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
 	for (let i = 0; i < currentValues.length; i++) {
 		if (currentReso == mobile) {
