@@ -31,7 +31,11 @@ const scrollToRightSlideNameForMobile = (ul, lis, pos) => {
 	});
 }
 
-const widthToHeightRatio = 1.75;
+let widthToHeightRatio = 1.75;
+if (currentReso == mobile) {
+	widthToHeightRatio = 1.85;
+}
+
 const interaction3MobileHeight = 700;
 const interaction3TabletHeight = 850;
 const interaction3DesktopHeight = 1050;
@@ -1243,6 +1247,15 @@ const changeGraph1BarsPositionOnResize = (reso) => {
 const onWindowResize = () => {
 	const windowWidth = document.body.clientWidth;
 
+	if (windowWidth < 768) {
+		if (currentReso != mobile) {
+			widthToHeightRatio = 1.85;
+		}
+	} else {
+		if (currentReso == mobile) {
+			widthToHeightRatio = 1.75;
+		}
+	}
 	graph1CanvasContainerBCR = graph1CanvasContainer.getBoundingClientRect();
 	graph1Camera.aspect = graph1CanvasContainerBCR.width / (graph1CanvasContainerBCR.width / widthToHeightRatio);
 	graph1Camera.updateProjectionMatrix();
