@@ -1245,8 +1245,13 @@ const changeGraph1BarsPositionOnResize = (reso) => {
 	}
 }
 
+// Remove Set section heights of Scrollify in Mobile
 const removeScrollifySectionHeightInMobile = () => {
+	const sections = document.querySelectorAll(".section");
 
+	for (let i = 0; i < sections.length; i++) {
+		sections[i].style.height = "";
+	}
 }
 
 // Window resize handler
@@ -1300,6 +1305,8 @@ const onWindowResize = () => {
 			updateRadiusOnResize(mobile);
 			if (!$.scrollify.isDisabled()) {
 				$.scrollify.disable();
+				$.scrollify.setOptions({setHeights: false});
+				removeScrollifySectionHeightInMobile();
 			}
 		}
 	} else if (windowWidth < 1024) {
@@ -1310,6 +1317,7 @@ const onWindowResize = () => {
 			updateRadiusOnResize(tablet);
 			if ($.scrollify.isDisabled()) {
 				$.scrollify.enable();
+				$.scrollify.setOptions({setHeights: true});
 			}
 		}
 	} else if (windowWidth >= 1024) {
@@ -1320,6 +1328,7 @@ const onWindowResize = () => {
 			updateRadiusOnResize(desktop);
 			if ($.scrollify.isDisabled()) {
 				$.scrollify.enable();
+				$.scrollify.setOptions({setHeights: true});
 			}
 		}
 	}
