@@ -1218,12 +1218,41 @@ const observer2 = new IntersectionObserver(handleIntersect, options);
 observer2.observe(interaction3Canvas);
 /* Interaction 3 end */
 
+const changeGraph1BarsPositionOnResize = (reso) => {
+	let xPos = -16;
+	let xDiff = 8;
+	let widthDepth = 2.5 / 3;
+	if (reso == mobile) {
+		xPos = -22;
+		xDiff = 11;
+		widthDepth = 3 / 2.5;
+	}
+
+	for (let i = 0; i < graph1Bars.length; i++) {
+		graph1Bars[i].position.x = xPos;
+		xPos += xDiff;
+		graph1Bars[i].scale.x = widthDepth;
+		graph1Bars[i].scale.z = widthDepth;
+	}
+}
+
 // Window resize handler
 const onWindowResize = () => {
+	const windowWidth = document.body.clientWidth;
+
 	graph1CanvasContainerBCR = graph1CanvasContainer.getBoundingClientRect();
 	graph1Camera.aspect = graph1CanvasContainerBCR.width / (graph1CanvasContainerBCR.width / widthToHeightRatio);
 	graph1Camera.updateProjectionMatrix();
 	graph1Renderer.setSize(graph1CanvasContainerBCR.width, graph1CanvasContainerBCR.width / widthToHeightRatio);
+	if (windowWidth < 768) {
+		if (currentReso != mobile) {
+			changeGraph1BarsPositionOnResize(mobile);
+		}
+	} else {
+		if (currentReso == mobile) {
+			changeGraph1BarsPositionOnResize();
+		}
+	}
 	calculateGraphBarWidth(true, graph1Bars[0], graph1Camera, graph1Canvas, 1);
 	graph1BarInitialPosition = calculateBarsBotPosition(graph1Camera, graph1Canvas);
 	for (let i = 0; i < graph1Bars.length; i++) {
@@ -1241,7 +1270,6 @@ const onWindowResize = () => {
 
 	interaction3CanvasContainerBCR = interaction3CanvasContainer.getBoundingClientRect();
 
-	const windowWidth = document.body.clientWidth;
 	if (windowWidth < 768) {
 		interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3MobileHeight);
 		interaction3Stage.position.y = interaction3MobileHeight / 2;
