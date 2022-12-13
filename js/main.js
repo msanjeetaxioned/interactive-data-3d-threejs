@@ -1350,8 +1350,8 @@ const onWindowResize = () => {
 			setCurrentReso();
 			updateRadiusOnResize(tablet);
 			if ($.scrollify.isDisabled()) {
-				$.scrollify.enable();
 				$.scrollify.setOptions({setHeights: true});
+				$.scrollify.enable();
 			}
 		}
 	} else if (windowWidth >= 1024) {
@@ -1361,8 +1361,8 @@ const onWindowResize = () => {
 			setCurrentReso();
 			updateRadiusOnResize(desktop);
 			if ($.scrollify.isDisabled()) {
-				$.scrollify.enable();
 				$.scrollify.setOptions({setHeights: true});
+				$.scrollify.enable();
 			}
 		}
 	}
