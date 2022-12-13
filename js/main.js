@@ -148,20 +148,20 @@ let graph1XValuesAppended = false;
 
 const wrapperProjectByNumbers = body.querySelector(".project-by-numbers-section > .wrapper");
 const canvasContainer = wrapperProjectByNumbers.querySelector(".canvas-container");
-let canvasContainerBCR = canvasContainer.getBoundingClientRect();
+let canvasContainerWidth = canvasContainer.getBoundingClientRect().width;
 
 let canvas;
 
 // Setting up Scene, Camera & Renderer
 const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(canvasContainerBCR.width, canvasContainerBCR.width / widthToHeightRatio);
+renderer.setSize(canvasContainerWidth, canvasContainerWidth / widthToHeightRatio);
 renderer.setClearColor(0xffffff, 0);
 
 canvasContainer.insertBefore(renderer.domElement, canvasContainer.children[0]);
 canvas = wrapperProjectByNumbers.querySelector("canvas");
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, canvasContainerBCR.width / (canvasContainerBCR.width / widthToHeightRatio) , 1, 1000);
+const camera = new THREE.PerspectiveCamera(45, canvasContainerWidth / (canvasContainerWidth / widthToHeightRatio) , 1, 1000);
 
 const holder = new THREE.Group();
 scene.add(holder);
@@ -1297,9 +1297,9 @@ const onWindowResize = () => {
 	graph1AppendOrUpdateGraphXValues(true);
 
 	canvasContainerBCR = canvasContainer.getBoundingClientRect();
-	camera.aspect = canvasContainerBCR.width / (canvasContainerBCR.width / widthToHeightRatio);
+	camera.aspect = canvasContainerWidth / (canvasContainerWidth / widthToHeightRatio);
 	camera.updateProjectionMatrix();
-	renderer.setSize(canvasContainerBCR.width, canvasContainerBCR.width / widthToHeightRatio);
+	renderer.setSize(canvasContainerWidth, canvasContainerWidth / widthToHeightRatio);
 	calculateGraphBarWidth(true, bars[0][0], camera, canvas, 2);
 	barsInitialPosition = calculateBarsBotPosition(camera, canvas);
 	appendGraphXValues(true);
