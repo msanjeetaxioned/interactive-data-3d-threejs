@@ -685,7 +685,6 @@ const calculateBarsHeightAndAddThemInScene = () => {
 	if (currentReso == mobile) {
 		xPos = -22.5;
 		xDiff = 9;
-		widthDepth = 3;
 	}
 	let maxValue = graphXValues[0];
 	let individualBarHeight;
@@ -1254,6 +1253,24 @@ const changeGraph1BarsPositionOnResize = (reso) => {
 	}
 }
 
+// Change Graph2 Bars x-position, width & depth in Mobile & >Mobile
+const changeGraph2BarsPositionOnResize = (reso) => {
+	let xPos = -17.5;
+	let xDiff = 7;
+	if (reso == mobile) {
+		xPos = -22.5;
+		xDiff = 9;
+	}
+	const initialXPosValue = xPos;
+
+	for (let i = 0; i < bars.length; i++) {
+		for (let j = 0; j < bars[i].length; j++) {
+			bars[i][j].position.x = xPos;
+		}
+		xPos += xDiff;
+	}
+}
+
 // Remove Set section heights of Scrollify in Mobile
 const removeScrollifySectionHeightInMobile = () => {
 	const sections = body.querySelectorAll(".section");
@@ -1299,6 +1316,15 @@ const onWindowResize = () => {
 	camera.aspect = canvasContainerWidth / (canvasContainerWidth / widthToHeightRatio);
 	camera.updateProjectionMatrix();
 	renderer.setSize(canvasContainerWidth, canvasContainerWidth / widthToHeightRatio);
+	if (windowWidth < 768) {
+		if (currentReso != mobile) {
+			changeGraph2BarsPositionOnResize(mobile);
+		}
+	} else {
+		if (currentReso == mobile) {
+			changeGraph2BarsPositionOnResize();
+		}
+	}
 	calculateGraphBarWidth(true, bars[0][0], camera, canvas, 2);
 	barsInitialPosition = calculateBarsBotPosition(camera, canvas);
 	appendGraphXValues(true);
