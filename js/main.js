@@ -680,6 +680,13 @@ const calculateBarsHeightAndAddThemInScene = () => {
 	const barMaxHeight = 15;
 	const maxBars = 5;
 	let xPos = -17.5;
+	let widthDepth = 2.5;
+	let xDiff = 7;
+	if (currentReso == mobile) {
+		xPos = -22.5;
+		xDiff = 9;
+		widthDepth = 3;
+	}
 	let maxValue = graphXValues[0];
 	let individualBarHeight;
 	let numOfBars = [];
@@ -699,7 +706,7 @@ const calculateBarsHeightAndAddThemInScene = () => {
 	for (let i = 0; i < graphXNames.length; i++) {
 		bars[i] = [];
 		for (let j = 0; j < numOfBars[i]; j++) {
-			const geometryBar = new THREE.BoxGeometry(2.5, individualBarHeight, 2.5).toNonIndexed();
+			const geometryBar = new THREE.BoxGeometry(widthDepth, individualBarHeight, widthDepth).toNonIndexed();
 			geometryBar.translate( 0, individualBarHeight / 2, 0 );
 			const materialBar = new THREE.MeshPhongMaterial({
 				emissive: 0x000000,
@@ -747,7 +754,7 @@ const calculateBarsHeightAndAddThemInScene = () => {
 				}, 400);
 			}
 		}
-		xPos = xPos + 7;
+		xPos = xPos + xDiff;
 	}
 }
 
