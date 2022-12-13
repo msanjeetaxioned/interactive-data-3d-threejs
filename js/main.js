@@ -1,10 +1,12 @@
+const body = document.body;
+
 // Sets Current Resolution
 const mobile = "mobile";
 const tablet = "tablet";
 const desktop = "desktop";
 let currentReso = "";
 const setCurrentReso = () => {
-	const width = document.body.clientWidth;
+	const width = body.clientWidth;
 
 	if (width < 768) {
 		currentReso = mobile;
@@ -40,7 +42,7 @@ const interaction3MobileHeight = 700;
 const interaction3TabletHeight = 850;
 const interaction3DesktopHeight = 1050;
 
-const wrapperWorkLife = document.querySelector(".work-life-balance-graph-section > .wrapper");
+const wrapperWorkLife = body.querySelector(".work-life-balance-graph-section > .wrapper");
 const graph1CanvasContainer = wrapperWorkLife.querySelector(".canvas-container");
 let graph1CanvasContainerBCR = graph1CanvasContainer.getBoundingClientRect();
 
@@ -144,7 +146,7 @@ let graph1BarInitialPosition = {};
 let graph1ValuesAppended = false;
 let graph1XValuesAppended = false;
 
-const wrapperProjectByNumbers = document.querySelector(".project-by-numbers-section > .wrapper");
+const wrapperProjectByNumbers = body.querySelector(".project-by-numbers-section > .wrapper");
 const canvasContainer = wrapperProjectByNumbers.querySelector(".canvas-container");
 let canvasContainerBCR = canvasContainer.getBoundingClientRect();
 
@@ -909,7 +911,7 @@ const appendGraphXValues = (update) => {
 }
 
 /* Interaction 3 start */
-const interaction3CanvasContainer = document.querySelector(".spheres-section .canvas-container");
+const interaction3CanvasContainer = body.querySelector(".spheres-section .canvas-container");
 let interaction3CanvasContainerBCR = interaction3CanvasContainer.getBoundingClientRect();
 const interaction3PrevButton = interaction3CanvasContainer.querySelector(".previous-button");
 const interaction3NextButton = interaction3CanvasContainer.querySelector(".next-button");
@@ -1247,7 +1249,7 @@ const changeGraph1BarsPositionOnResize = (reso) => {
 
 // Remove Set section heights of Scrollify in Mobile
 const removeScrollifySectionHeightInMobile = () => {
-	const sections = document.querySelectorAll(".section");
+	const sections = body.querySelectorAll(".section");
 
 	for (let i = 0; i < sections.length; i++) {
 		sections[i].style.height = "";
@@ -1256,7 +1258,7 @@ const removeScrollifySectionHeightInMobile = () => {
 
 // Window resize handler
 const onWindowResize = () => {
-	const windowWidth = document.body.clientWidth;
+	const windowWidth = body.clientWidth;
 
 	if (windowWidth < 768) {
 		if (currentReso != mobile) {
