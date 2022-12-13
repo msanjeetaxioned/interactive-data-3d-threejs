@@ -1237,30 +1237,30 @@ const onWindowResize = () => {
 
 	const windowWidth = document.body.clientWidth;
 	if (windowWidth < 768) {
+		interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3MobileHeight);
+		interaction3Stage.position.y = interaction3MobileHeight / 2;
 		if (currentReso != mobile) {
 			setCurrentReso();
-			interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3MobileHeight);
-			interaction3Stage.position.y = interaction3MobileHeight / 2;
 			updateRadiusOnResize(mobile);
 			if (!$.scrollify.isDisabled()) {
 				$.scrollify.disable();
 			}
 		}
 	} else if (windowWidth < 1024) {
+		interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3TabletHeight);
+		interaction3Stage.position.y = interaction3TabletHeight / 2;
 		if (currentReso != tablet) {
 			setCurrentReso();
-			interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3TabletHeight);
-			interaction3Stage.position.y = interaction3TabletHeight / 2;
 			updateRadiusOnResize(tablet);
 			if ($.scrollify.isDisabled()) {
 				$.scrollify.enable();
 			}
 		}
 	} else if (windowWidth >= 1024) {
+		interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3DesktopHeight);
+		interaction3Stage.position.y = interaction3DesktopHeight / 2;
 		if (currentReso != desktop) {
 			setCurrentReso();
-			interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3DesktopHeight);
-			interaction3Stage.position.y = interaction3DesktopHeight / 2;
 			updateRadiusOnResize(desktop);
 			if ($.scrollify.isDisabled()) {
 				$.scrollify.enable();
