@@ -212,7 +212,6 @@ let firstTime = true;
 
 let bars = [];
 let barsInitialPosition = {};
-let barsHeight = [];
 
 const enableOrDisablePrevAndNextButtons = (enable, prevButton, nextButton) => {
 	if (enable) {
