@@ -919,7 +919,7 @@ const appendGraphXValues = (update) => {
 
 /* Interaction 3 start */
 const interaction3CanvasContainer = body.querySelector(".spheres-section .canvas-container");
-let interaction3CanvasContainerBCR = interaction3CanvasContainer.getBoundingClientRect();
+let interaction3CanvasContainerWidth = interaction3CanvasContainer.getBoundingClientRect().width;
 const interaction3PrevButton = interaction3CanvasContainer.querySelector(".previous-button");
 const interaction3NextButton = interaction3CanvasContainer.querySelector(".next-button");
 const interaction3NamesUl = interaction3CanvasContainer.querySelector(".interaction3-names");
@@ -1013,7 +1013,7 @@ if (currentReso == mobile) {
 } else if (currentReso == desktop) {
 	interaction3Height = interaction3DesktopHeight;
 }
-const interaction3Renderer = PIXI.autoDetectRenderer(interaction3CanvasContainerBCR.width, interaction3Height, {
+const interaction3Renderer = PIXI.autoDetectRenderer(interaction3CanvasContainerWidth, interaction3Height, {
   transparent: true, antialias: true
 });
 interaction3CanvasContainer.appendChild(interaction3Renderer.view);
@@ -1257,7 +1257,6 @@ const changeGraph1BarsPositionOnResize = (reso) => {
 // Remove Set section heights of Scrollify in Mobile
 const removeScrollifySectionHeightInMobile = () => {
 	const sections = body.querySelectorAll(".section");
-
 	for (let i = 0; i < sections.length; i++) {
 		sections[i].style.height = "";
 	}
@@ -1304,10 +1303,10 @@ const onWindowResize = () => {
 	barsInitialPosition = calculateBarsBotPosition(camera, canvas);
 	appendGraphXValues(true);
 
-	interaction3CanvasContainerBCR = interaction3CanvasContainer.getBoundingClientRect();
+	interaction3CanvasContainerWidth = interaction3CanvasContainer.getBoundingClientRect().width;
 
 	if (windowWidth < 768) {
-		interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3MobileHeight);
+		interaction3Renderer.resize(interaction3CanvasContainerWidth, interaction3MobileHeight);
 		interaction3Stage.position.y = interaction3MobileHeight / 2;
 		if (currentReso != mobile) {
 			setCurrentReso();
@@ -1319,7 +1318,7 @@ const onWindowResize = () => {
 			}
 		}
 	} else if (windowWidth < 1024) {
-		interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3TabletHeight);
+		interaction3Renderer.resize(interaction3CanvasContainerWidth, interaction3TabletHeight);
 		interaction3Stage.position.y = interaction3TabletHeight / 2;
 		if (currentReso != tablet) {
 			setCurrentReso();
@@ -1330,7 +1329,7 @@ const onWindowResize = () => {
 			}
 		}
 	} else if (windowWidth >= 1024) {
-		interaction3Renderer.resize(interaction3CanvasContainerBCR.width, interaction3DesktopHeight);
+		interaction3Renderer.resize(interaction3CanvasContainerWidth, interaction3DesktopHeight);
 		interaction3Stage.position.y = interaction3DesktopHeight / 2;
 		if (currentReso != desktop) {
 			setCurrentReso();
@@ -1342,7 +1341,7 @@ const onWindowResize = () => {
 		}
 	}
 
-	interaction3Stage.position.x = interaction3CanvasContainerBCR.width / 2; // center at origin
+	interaction3Stage.position.x = interaction3CanvasContainerWidth / 2; // center at origin
 	planeBody.position = [0, -1];
 
 	onAnimateChanges();
