@@ -44,7 +44,7 @@ const interaction3DesktopHeight = 1050;
 
 const wrapperWorkLife = body.querySelector(".work-life-balance-graph-section > .wrapper");
 const graph1CanvasContainer = wrapperWorkLife.querySelector(".canvas-container");
-let graph1CanvasContainerBCR = graph1CanvasContainer.getBoundingClientRect();
+let graph1CanvasContainerWidth = graph1CanvasContainer.getBoundingClientRect().width;
 
 const graph1PrevButton = graph1CanvasContainer.querySelector(".previous-button");
 const graph1NextButton = graph1CanvasContainer.querySelector(".next-button");
@@ -56,12 +56,12 @@ let graph1Canvas;
 
 // Setting up Scene, Camera & Renderer
 const graph1Renderer = new THREE.WebGLRenderer({antialias: true});
-graph1Renderer.setSize(graph1CanvasContainerBCR.width, graph1CanvasContainerBCR.width / widthToHeightRatio);
+graph1Renderer.setSize(graph1CanvasContainerWidth, graph1CanvasContainerWidth / widthToHeightRatio);
 graph1CanvasContainer.insertBefore(graph1Renderer.domElement, graph1CanvasContainer.children[0]);
 graph1Canvas = wrapperWorkLife.querySelector("canvas");
 
 const graph1Scene = new THREE.Scene();
-var graph1Camera = new THREE.PerspectiveCamera(45, graph1CanvasContainerBCR.width / (graph1CanvasContainerBCR.width / widthToHeightRatio), 1, 1000);
+var graph1Camera = new THREE.PerspectiveCamera(45, graph1CanvasContainerWidth / (graph1CanvasContainerWidth / widthToHeightRatio), 1, 1000);
 
 const graph1Holder = new THREE.Group();
 graph1Scene.add(graph1Holder);
@@ -1276,10 +1276,10 @@ const onWindowResize = () => {
 			widthToHeightRatio = 1.73;
 		}
 	}
-	graph1CanvasContainerBCR = graph1CanvasContainer.getBoundingClientRect();
-	graph1Camera.aspect = graph1CanvasContainerBCR.width / (graph1CanvasContainerBCR.width / widthToHeightRatio);
+	graph1CanvasContainerWidth = graph1CanvasContainer.getBoundingClientRect().width;
+	graph1Camera.aspect = graph1CanvasContainerWidth / (graph1CanvasContainerWidth / widthToHeightRatio);
 	graph1Camera.updateProjectionMatrix();
-	graph1Renderer.setSize(graph1CanvasContainerBCR.width, graph1CanvasContainerBCR.width / widthToHeightRatio);
+	graph1Renderer.setSize(graph1CanvasContainerWidth, graph1CanvasContainerWidth / widthToHeightRatio);
 	if (windowWidth < 768) {
 		if (currentReso != mobile) {
 			changeGraph1BarsPositionOnResize(mobile);
@@ -1296,7 +1296,7 @@ const onWindowResize = () => {
 	}
 	graph1AppendOrUpdateGraphXValues(true);
 
-	canvasContainerBCR = canvasContainer.getBoundingClientRect();
+	canvasContainerWidth = canvasContainer.getBoundingClientRect().width;
 	camera.aspect = canvasContainerWidth / (canvasContainerWidth / widthToHeightRatio);
 	camera.updateProjectionMatrix();
 	renderer.setSize(canvasContainerWidth, canvasContainerWidth / widthToHeightRatio);
