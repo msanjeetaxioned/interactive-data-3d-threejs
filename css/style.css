@@ -665,6 +665,12 @@ section {
   text-align: center;
   text-transform: uppercase;
 }
+@media screen and (max-width: 767px) {
+  .graph2-info > span {
+    margin: 65px 0 20px;
+    font-size: 12px;
+  }
+}
 
 .graph2-x {
   margin-top: 40px;
@@ -679,6 +685,11 @@ section {
 @media screen and (max-width: 1023px) {
   .graph2-x {
     margin-top: 25px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .graph2-x {
+    margin-top: 20px;
   }
 }
 .graph2-x span {
@@ -700,6 +711,11 @@ section {
     font-size: 16px;
   }
 }
+@media screen and (max-width: 767px) {
+  .graph2-x .graph-x-name {
+    font-size: 10px;
+  }
+}
 .graph2-x .graph-x-value {
   color: #fff;
   font-size: 16px;
@@ -713,6 +729,11 @@ section {
 @media screen and (max-width: 1023px) {
   .graph2-x .graph-x-value {
     font-size: 14px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .graph2-x .graph-x-value {
+    font-size: 10px;
   }
 }
 

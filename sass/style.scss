@@ -714,6 +714,11 @@ section {
 		font-weight: bold;
 		text-align: center;
 		text-transform: uppercase;
+
+		@include breakpoint(mobile) {
+			margin: 65px 0 20px;
+			font-size: 12px;
+		}
 	}
 }
 
@@ -728,6 +733,10 @@ section {
 
 	@include breakpoint(tablet) {
 		margin-top: 25px;
+	}
+
+	@include breakpoint(mobile) {
+		margin-top: 20px;
 	}
 
 	span { display: block; }
@@ -745,6 +754,10 @@ section {
 		@include breakpoint(tablet) {
 			font-size: 16px;
 		}
+
+		@include breakpoint(mobile) {
+			font-size: 10px;
+		}
 	}
 
 	.graph-x-value {
@@ -758,6 +771,10 @@ section {
 
 		@include breakpoint(tablet) {
 			font-size: 14px;
+		}
+
+		@include breakpoint(mobile) {
+			font-size: 10px;
 		}
 	}
 }
