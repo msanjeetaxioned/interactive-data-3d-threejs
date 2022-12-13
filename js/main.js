@@ -33,7 +33,7 @@ const scrollToRightSlideNameForMobile = (ul, lis, pos) => {
 	});
 }
 
-let widthToHeightRatio = 1.75;
+let widthToHeightRatio = 1.73;
 if (currentReso == mobile) {
 	widthToHeightRatio = 1.85;
 }
@@ -509,7 +509,7 @@ let graph1CurrentWindowY = undefined;
 const setRotationAngleOfBarsBasedOnScrollPosition = () => {
 	graph1CanvasDistanceFromTop = document.documentElement.scrollTop + graph1Canvas.getBoundingClientRect().top;
 	graph1CanvasVisibleMin =  graph1CanvasDistanceFromTop - window.innerHeight;
-	graph1CanvasHeight = graph1Canvas.getBoundingClientRect().width / 1.73;
+	graph1CanvasHeight = graph1Canvas.getBoundingClientRect().width / widthToHeightRatio;
 
 	let windowY;
 	if (graph1CurrentWindowY != undefined) {
@@ -1266,7 +1266,7 @@ const onWindowResize = () => {
 		}
 	} else {
 		if (currentReso == mobile) {
-			widthToHeightRatio = 1.75;
+			widthToHeightRatio = 1.73;
 		}
 	}
 	graph1CanvasContainerBCR = graph1CanvasContainer.getBoundingClientRect();
