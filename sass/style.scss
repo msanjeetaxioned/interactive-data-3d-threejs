@@ -184,9 +184,18 @@ section {
 	padding-bottom: 50vh;
 	background-color: $black;
 
+	@include breakpoint(mobile) {
+		height: 100%;
+		padding-bottom: 0;
+	}
+
 	.wrapper {
 		height: 100%;
 		min-height: 100vh;
+
+		@include breakpoint(mobile) {
+			min-height: unset;
+		}
 	}
 
 	.section-title {
@@ -226,6 +235,10 @@ section {
 		@include breakpoint(small-pc) {
 			font-size: 18px;
 		}
+
+		@include breakpoint(mobile) {
+			margin-bottom: 50px;
+		}
 	}
 
 	.canvas-container { position: relative; }
@@ -246,6 +259,11 @@ section {
 	@include breakpoint(tablet) {
 		margin-top: -50px;
 		font-size: 18px;
+	}
+
+	@include breakpoint(mobile) {
+		margin-top: -30px;
+		font-size: 12px;
 	}
 }
 
@@ -268,6 +286,11 @@ section {
 		@include breakpoint(small-pc) {
 			margin: 50px 0 20px;
 		}
+
+		@include breakpoint(mobile) {
+			margin: 40px 0 20px;
+			font-size: 12px;
+		}
 	}
 }
 
@@ -287,6 +310,11 @@ section {
 	@include breakpoint(tablet) {
 		font-size: 14px;
 	}
+
+	@include breakpoint(mobile) {
+		margin-top: 20px;
+		font-size: 10px;
+	}
 }
 
 .slider-names-container { 
@@ -299,6 +327,10 @@ section {
 
 	@include breakpoint(tablet) {
 		height: 36px;
+	}
+
+	@include breakpoint(mobile) {
+		height: 30px;
 	}
 
 	.button {
@@ -327,6 +359,11 @@ section {
 			height: 36px;
 		}
 
+		@include breakpoint(mobile) {
+			width: 30px;
+			height: 30px;
+		}
+
 		&.previous-button {
 			left: 34%;
 
@@ -350,6 +387,10 @@ section {
 
 				@include breakpoint(tablet) {
 					font-size: 18px;
+				}
+
+				@include breakpoint(mobile) {
+					font-size: 16px;
 				}
 			}
 		}
@@ -377,6 +418,10 @@ section {
 
 				@include breakpoint(tablet) {
 					font-size: 18px;
+				}
+
+				@include breakpoint(mobile) {
+					font-size: 16px;
 				}
 			}
 		}
@@ -417,6 +462,10 @@ section {
 			@include breakpoint(tablet) {
 				font-size: 16px;
 			}
+
+			@include breakpoint(mobile) {
+				font-size: 14px;
+			}
 		}
 
 		&.active {
@@ -436,6 +485,10 @@ section {
 
 				@include breakpoint(tablet) {
 					font-size: 18px;
+				}
+
+				@include breakpoint(mobile) {
+					font-size: 16px;
 				}
 			}
 		}
