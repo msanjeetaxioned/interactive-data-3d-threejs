@@ -31,7 +31,7 @@ const scrollToRightSlideNameForMobile = (ul, lis, pos) => {
 	});
 }
 
-const widthToHeightRatio = 1.73;
+const widthToHeightRatio = 1.75;
 const interaction3MobileHeight = 700;
 const interaction3TabletHeight = 850;
 const interaction3DesktopHeight = 1050;
@@ -283,11 +283,18 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 	const barColors = [0x7fff00, 0x8a2be2, 0x8b0000, 0xffd700, 0x008080];
 	const barMaxHeight = 15;
 	let xPos = -16;
+	let xDiff = 8;
+	let widthDepth = 2.5;
+	if (currentReso == mobile) {
+		xPos = -22;
+		xDiff = 11;
+		widthDepth = 3;
+	}
 	let maxValue = 10;
 
 	if (graph1FirstTime) {
 		for (let i = 0; i < graph.length; i++) {
-			const geometryBar = new THREE.BoxGeometry(2.5, 0.1, 2.5);
+			const geometryBar = new THREE.BoxGeometry(widthDepth, 0.1, widthDepth);
 			geometryBar.translate(0, 0.1 / 2, 0);
 			const materialBar = new THREE.MeshPhongMaterial({
 				color: barColors[i],
@@ -303,7 +310,7 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 			graph1Bars[i].position.x = xPos;
 			graph1Bars[i].rotation.y = Math.PI / 4;
 			graph1Holder.add(graph1Bars[i]);
-			xPos = xPos + 8;
+			xPos = xPos + xDiff;
 			
 			if (!graph1ValuesAppended) {
 				if (i == (graph.length - 1)) {
