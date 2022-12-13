@@ -1225,10 +1225,12 @@ const observer2 = new IntersectionObserver(handleIntersect, options);
 observer2.observe(interaction3Canvas);
 /* Interaction 3 end */
 
+// Change Graph1 Bars x-position, width & depth in Mobile & >Mobile
 const changeGraph1BarsPositionOnResize = (reso) => {
 	let xPos = -16;
 	let xDiff = 8;
 	let widthDepth = 2.5 / 3;
+	// Space out bars more in Mobile reso as less space available 
 	if (reso == mobile) {
 		xPos = -22;
 		xDiff = 11;
@@ -1241,6 +1243,10 @@ const changeGraph1BarsPositionOnResize = (reso) => {
 		graph1Bars[i].scale.x = widthDepth;
 		graph1Bars[i].scale.z = widthDepth;
 	}
+}
+
+const removeScrollifySectionHeightInMobile = () => {
+
 }
 
 // Window resize handler
