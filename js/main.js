@@ -707,7 +707,7 @@ const calculateBarsHeightAndAddThemInScene = () => {
 		bars[i] = [];
 		for (let j = 0; j < numOfBars[i]; j++) {
 			const geometryBar = new THREE.BoxGeometry(widthDepth, individualBarHeight, widthDepth).toNonIndexed();
-			geometryBar.translate( 0, individualBarHeight / 2, 0 );
+			geometryBar.translate(0, individualBarHeight / 2, 0);
 			const materialBar = new THREE.MeshPhongMaterial({
 				emissive: 0x000000,
 				specular: 0x111111,
@@ -723,8 +723,8 @@ const calculateBarsHeightAndAddThemInScene = () => {
 			geometryBar.setAttribute('color', new THREE.BufferAttribute(new Float32Array(positionAttribute.count * 3), 3));
 			const vertexColor = geometryBar.getAttribute('color');
 
-			const botFace = { min: 18, max: 24 };
-			const topFace = { min: 12, max: 18 };
+			const botFace = {min: 18, max: 24};
+			const topFace = {min: 12, max: 18};
 			for (let k = 0; k < positionAttribute.count; k++) {
 				if ((k >= botFace.min && k < botFace.max) || (k >= topFace.min && k < topFace.max)) {
 					color.setHex(topAndBotFaceColor);
