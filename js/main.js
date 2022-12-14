@@ -382,7 +382,7 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 }
 
 // Change Graph name on Mobile reso
-const changeGraphNameWithSlideAnimationForMobile = (currentSlideNum, lis, ul) => {
+const changeGraphNameWithSlideAnimationForMobile = (currentSlideNum, lis, ul, slider) => {
 	const currentGraph = lis[currentSlideNum];
 	ul.scroll({
 		left: currentGraph.offsetLeft,
@@ -392,13 +392,28 @@ const changeGraphNameWithSlideAnimationForMobile = (currentSlideNum, lis, ul) =>
 		clearTimeout(timer);
 		if (currentSlideNum == (lis.length - 1)) {
 			ul.scroll({left: lis[1].offsetLeft});
-			graph1CurrentGraphMobile = 1;
+			if (slider == 1) {
+				graph1CurrentGraphMobile = 1;
+			} else if (slider == 2) {
+				interaction3CurrentSlideMobile = 1;
+			}
+			
 		} else if (currentSlideNum == 0) {
 			ul.scroll({left: lis[lis.length - 2].offsetLeft});
-			graph1CurrentGraphMobile = workLifeGraphs.length;
+			if (slider == 1) {
+				graph1CurrentGraphMobile = workLifeGraphs.length;
+			} else if (slider == 2) {
+				interaction3CurrentSlideMobile = workLifeGraphs.length;
+			}
 		}
-		if (!lis[graph1CurrentGraphMobile].classList.contains("active")) {
-			lis[graph1CurrentGraphMobile].classList.add("active");
+		if (slider == 1) {
+			if (!lis[graph1CurrentGraphMobile].classList.contains("active")) {
+				lis[graph1CurrentGraphMobile].classList.add("active");
+			}
+		} else if (slider == 2) {
+			if (!lis[interaction3CurrentSlideMobile].classList.contains("active")) {
+				lis[interaction3CurrentSlideMobile].classList.add("active");
+			}
 		}
 	}, 500);
 }
@@ -453,7 +468,7 @@ const prevOrNextButtonClick = (prevOrNext) => {
 		graph1CurrentGraphMobile += prevOrNext;
 		graph1CurrentGraph += prevOrNext;
 	}
-	changeGraphNameWithSlideAnimationForMobile(graph1CurrentGraphMobile, graphNamesLisMobile, graphNamesUlMobile);
+	changeGraphNameWithSlideAnimationForMobile(graph1CurrentGraphMobile, graphNamesLisMobile, graphNamesUlMobile , 1);
 	changeGraphNameWithSlideAnimation(prevGraph, graph1CurrentGraph, prevOrNext, graphNamesLis, graphNamesUl);
 	graph1CalculateBarsHeightAndAddThemInScene(prevGraph);
 }
@@ -958,6 +973,13 @@ const interaction3PrevButton = interaction3CanvasContainer.querySelector(".previ
 const interaction3NextButton = interaction3CanvasContainer.querySelector(".next-button");
 const interaction3NamesUl = interaction3CanvasContainer.querySelector(".interaction3-names");
 const interaction3NamesLis = interaction3NamesUl.querySelectorAll("li");
+const interaction3NamesUlMobile = interaction3CanvasContainer.querySelector(".interaction3-names-mobile");
+let interaction3NamesLisMobile = interaction3NamesUlMobile.querySelectorAll("li");
+cloneOfFirst = interaction3NamesLisMobile[0].cloneNode(true);
+cloneOfLast = interaction3NamesLisMobile[interaction3NamesLisMobile.length - 1].cloneNode(true);
+interaction3NamesUlMobile.append(cloneOfFirst);
+interaction3NamesUlMobile.prepend(cloneOfLast);
+interaction3NamesLisMobile = interaction3NamesUlMobile.querySelectorAll("li");
 
 const calculateAndSetCurrentValues = (notFirstTime) => {
 	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
@@ -1029,6 +1051,8 @@ let interaction3Radius = [];
 let interaction3SpeedMaxNeg = [];
 let interaction3SpeedMax = [];
 let interaction3CurrentSlide = 3;
+let interaction3CurrentSlideMobile = 3;
+interaction3NamesUlMobile.scrollLeft = interaction3NamesLisMobile[interaction3CurrentSlideMobile].offsetLeft;
 let interaction3Data = [];
 calculateAndSetCurrentValues();
 const interaction3Zoom = 100;
@@ -1048,14 +1072,24 @@ const interaction3Renderer = PIXI.autoDetectRenderer(interaction3CanvasContainer
 interaction3CanvasContainer.appendChild(interaction3Renderer.view);
 
 const interaction3PrevOrNextClick = (prevOrNext) => {
-	const prevGraph = interaction3CurrentSlide;
+	let prevGraph;
+	if (currentReso == mobile) {
+		prevGraph = interaction3CurrentSlideMobile;
+	} else {
+		prevGraph = interaction3CurrentSlide;
+	}
+	interaction3NamesLisMobile[prevGraph].classList.remove("active");
 	if (interaction3CurrentSlide == interaction3Names.length && prevOrNext == 1) {
+		interaction3CurrentSlideMobile = interaction3Names.length + 1;
 		interaction3CurrentSlide = 1;
 	} else if (interaction3CurrentSlide == 1 && prevOrNext == -1) {
+		interaction3CurrentSlideMobile = 0;
 		interaction3CurrentSlide = interaction3Names.length;
 	} else {
+		interaction3CurrentSlideMobile += prevOrNext;
 		interaction3CurrentSlide += prevOrNext;
 	}
+	changeGraphNameWithSlideAnimationForMobile(interaction3CurrentSlideMobile, interaction3NamesLisMobile, interaction3NamesUlMobile, 2);
 	changeGraphNameWithSlideAnimation(prevGraph, interaction3CurrentSlide, prevOrNext, interaction3NamesLis, interaction3NamesUl);
 	calculateAndSetCurrentValues(true);
 }
@@ -1381,6 +1415,7 @@ const onWindowResize = () => {
 				removeScrollifySectionHeightInMobile();
 			}
 		}
+		changeScrollLeftOnResizeInMobileReso(interaction3CurrentSlideMobile, interaction3NamesUlMobile, interaction3NamesLisMobile);
 	} else if (windowWidth < 1024) {
 		interaction3Renderer.resize(interaction3CanvasContainerWidth, interaction3TabletHeight);
 		interaction3Stage.position.y = interaction3TabletHeight / 2;
