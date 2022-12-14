@@ -46,6 +46,17 @@ const graph1NextButton = graph1CanvasContainer.querySelector(".next-button");
 const graphNamesUl = graph1CanvasContainer.querySelector(".graph1-names");
 const graphNamesLis = graphNamesUl.querySelectorAll("li");
 
+const graphNamesUlMobile = graph1CanvasContainer.querySelector(".graph1-names-mobile");
+let graphNamesLisMobile = graphNamesUlMobile.querySelectorAll("li");
+
+let cloneOfFirst = graphNamesLisMobile[0].cloneNode(true);
+let cloneOfLast = graphNamesLisMobile[graphNamesLisMobile.length - 1].cloneNode(true);
+
+graphNamesUlMobile.append(cloneOfFirst);
+graphNamesUlMobile.prepend(cloneOfLast);
+
+graphNamesLisMobile = graphNamesUlMobile.querySelectorAll("li");
+
 let graph1Canvas;
 
 // Setting up Scene, Camera & Renderer
@@ -128,6 +139,10 @@ const workLifeGraphs = [
 const graph1XValuesNames = ["communication", "quality", "timeliness", "partnership", "pricing"];
 let graph1FirstTime = true;
 let graph1CurrentGraph = 3;
+let graph1CurrentGraphMobile = 3;
+graphNamesUlMobile.scroll({
+	left: graphNamesLisMobile[graph1CurrentGraphMobile].getBoundingClientRect().left,
+});
 
 let graph1Bars = [];
 let graph1BarsHeight = [];
@@ -368,6 +383,28 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 	}
 }
 
+// Change Graph name on Mobile reso
+const changeGraphNameWithSlideAnimationForMobile = (currentSlideNum, lis, ul) => {
+	const currentGraph = lis[currentSlideNum];
+	ul.scroll({
+		left: ul.scrollLeft + currentGraph.getBoundingClientRect().left,
+		behavior: "smooth"
+	});
+	const timer = setTimeout(() => {
+		clearTimeout(timer);
+		if (currentSlideNum == (lis.length - 1)) {
+			ul.scroll({left: 0});
+			graph1CurrentGraphMobile = 1;
+		} else if (currentSlideNum == 0) {
+			ul.scroll({left: lis[lis.length - 2].getBoundingClientRect().left});
+			graph1CurrentGraphMobile = workLifeGraphs.length;
+		}
+		if (!lis[graph1CurrentGraphMobile].classList.contains("active")) {
+			lis[graph1CurrentGraphMobile].classList.add("active");
+		}
+	}, 500);
+}
+
 // Changes graph name with animation when next or previous button is clicked
 const changeGraphNameWithSlideAnimation = (prevSlideNum, currentSlideNum, prevOrNext, lis, ul) => {
 	const prevGraph = lis[prevSlideNum - 1];
@@ -384,9 +421,7 @@ const changeGraphNameWithSlideAnimation = (prevSlideNum, currentSlideNum, prevOr
 		const timer = setTimeout(() => {
 			clearTimeout(timer);
 			ul.append(ul.children[0]);
-			ul.scroll({
-				left: 0
-			});
+			ul.scroll({left: 0});
 		}, 500);
 	} else {
 		ul.insertBefore(ul.children[lis.length - 1], ul.children[0]);
@@ -402,14 +437,25 @@ const changeGraphNameWithSlideAnimation = (prevSlideNum, currentSlideNum, prevOr
 
 const prevOrNextButtonClick = (prevOrNext) => {
 	graph1ValuesAppended = false;
-	const prevGraph = graph1CurrentGraph;
-	if (graph1CurrentGraph == workLifeGraphs.length && prevOrNext == 1) {
+	let prevGraph;
+	if (currentReso == mobile) {
+		prevGraph = graph1CurrentGraphMobile;
+		graphNamesLisMobile[prevGraph].classList.remove("active");
+	} else {
+		prevGraph = graph1CurrentGraph;
+	}
+
+	if (prevGraph == workLifeGraphs.length && prevOrNext == 1) {
+		graph1CurrentGraphMobile = workLifeGraphs.length;
 		graph1CurrentGraph = 1;
 	} else if (graph1CurrentGraph == 1 && prevOrNext == -1) {
+		graph1CurrentGraphMobile = 0;
 		graph1CurrentGraph = workLifeGraphs.length;
 	} else {
+		graph1CurrentGraphMobile += prevOrNext;
 		graph1CurrentGraph += prevOrNext;
 	}
+	changeGraphNameWithSlideAnimationForMobile(graph1CurrentGraphMobile, graphNamesLisMobile, graphNamesUlMobile);
 	changeGraphNameWithSlideAnimation(prevGraph, graph1CurrentGraph, prevOrNext, graphNamesLis, graphNamesUl);
 	graph1CalculateBarsHeightAndAddThemInScene(prevGraph);
 }
