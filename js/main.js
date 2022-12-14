@@ -140,9 +140,7 @@ const graph1XValuesNames = ["communication", "quality", "timeliness", "partnersh
 let graph1FirstTime = true;
 let graph1CurrentGraph = 3;
 let graph1CurrentGraphMobile = 3;
-graphNamesUlMobile.scroll({
-	left: graphNamesLisMobile[graph1CurrentGraphMobile].getBoundingClientRect().left,
-});
+graphNamesUlMobile.scrollLeft = graphNamesLisMobile[graph1CurrentGraphMobile].offsetLeft;
 
 let graph1Bars = [];
 let graph1BarsHeight = [];
@@ -387,7 +385,7 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 const changeGraphNameWithSlideAnimationForMobile = (currentSlideNum, lis, ul) => {
 	const currentGraph = lis[currentSlideNum];
 	ul.scroll({
-		left: ul.scrollLeft + currentGraph.getBoundingClientRect().left,
+		left: currentGraph.offsetLeft,
 		behavior: "smooth"
 	});
 	const timer = setTimeout(() => {
@@ -396,7 +394,7 @@ const changeGraphNameWithSlideAnimationForMobile = (currentSlideNum, lis, ul) =>
 			ul.scroll({left: 0});
 			graph1CurrentGraphMobile = 1;
 		} else if (currentSlideNum == 0) {
-			ul.scroll({left: lis[lis.length - 2].getBoundingClientRect().left});
+			ul.scroll({left: lis[lis.length - 2].offsetLeft});
 			graph1CurrentGraphMobile = workLifeGraphs.length;
 		}
 		if (!lis[graph1CurrentGraphMobile].classList.contains("active")) {
