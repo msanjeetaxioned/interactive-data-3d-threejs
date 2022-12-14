@@ -361,7 +361,8 @@ const graph1CalculateBarsHeightAndAddThemInScene = (prevGraphNum) => {
 					},
 					onComplete: () => {
 						enableOrDisablePrevAndNextButtons(true, graph1PrevButton, graph1NextButton);
-					}});
+					}
+				});
 			}
 		}
 	}
@@ -986,7 +987,6 @@ let interaction3SpeedMax = [];
 let interaction3CurrentSlide = 3;
 let interaction3Data = [];
 calculateAndSetCurrentValues();
-
 const interaction3Zoom = 100;
 let interaction3Balls = [];
 
