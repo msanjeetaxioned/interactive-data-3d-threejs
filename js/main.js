@@ -391,7 +391,7 @@ const changeGraphNameWithSlideAnimationForMobile = (currentSlideNum, lis, ul) =>
 	const timer = setTimeout(() => {
 		clearTimeout(timer);
 		if (currentSlideNum == (lis.length - 1)) {
-			ul.scroll({left: 0});
+			ul.scroll({left: lis[1].offsetLeft});
 			graph1CurrentGraphMobile = 1;
 		} else if (currentSlideNum == 0) {
 			ul.scroll({left: lis[lis.length - 2].offsetLeft});
@@ -444,7 +444,7 @@ const prevOrNextButtonClick = (prevOrNext) => {
 	graphNamesLisMobile[prevGraph].classList.remove("active");
 
 	if (prevGraph == workLifeGraphs.length && prevOrNext == 1) {
-		graph1CurrentGraphMobile = workLifeGraphs.length;
+		graph1CurrentGraphMobile = workLifeGraphs.length + 1;
 		graph1CurrentGraph = 1;
 	} else if (graph1CurrentGraph == 1 && prevOrNext == -1) {
 		graph1CurrentGraphMobile = 0;
