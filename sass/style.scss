@@ -445,10 +445,6 @@ section {
 		flex-shrink: 0;
 		text-align: center;
 
-		@include breakpoint(mobile) {
-			flex-basis: 100%;
-		}
-
 		span {
 			color: $gray;
 			font-size: 24px;
@@ -462,18 +458,10 @@ section {
 			@include breakpoint(tablet) {
 				font-size: 16px;
 			}
-
-			@include breakpoint(mobile) {
-				font-size: 14px;
-			}
 		}
 
 		&.active {
 			flex-basis: 36%;
-
-			@include breakpoint(mobile) {
-				flex-basis: 100%;
-			}
 
 			span {
 				color: $white;
@@ -485,10 +473,6 @@ section {
 
 				@include breakpoint(tablet) {
 					font-size: 18px;
-				}
-
-				@include breakpoint(mobile) {
-					font-size: 16px;
 				}
 			}
 		}

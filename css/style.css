@@ -392,11 +392,6 @@ section {
   flex-shrink: 0;
   text-align: center;
 }
-@media screen and (max-width: 767px) {
-  .slider-names li {
-    flex-basis: 100%;
-  }
-}
 .slider-names li span {
   color: #626262;
   font-size: 24px;
@@ -413,18 +408,8 @@ section {
     font-size: 16px;
   }
 }
-@media screen and (max-width: 767px) {
-  .slider-names li span {
-    font-size: 14px;
-  }
-}
 .slider-names li.active {
   flex-basis: 36%;
-}
-@media screen and (max-width: 767px) {
-  .slider-names li.active {
-    flex-basis: 100%;
-  }
 }
 .slider-names li.active span {
   color: #fff;
@@ -438,11 +423,6 @@ section {
 @media screen and (max-width: 1023px) {
   .slider-names li.active span {
     font-size: 18px;
-  }
-}
-@media screen and (max-width: 767px) {
-  .slider-names li.active span {
-    font-size: 16px;
   }
 }
 .slider-names .active + li {
