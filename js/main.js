@@ -27,12 +27,6 @@ if (currentReso != mobile) {
 	});
 }
 
-const scrollToRightSlideNameForMobile = (ul, lis, pos) => {
-	ul.scroll({
-		left: lis[pos - 1].getBoundingClientRect().left
-	});
-}
-
 let widthToHeightRatio = 1.73;
 if (currentReso == mobile) {
 	widthToHeightRatio = 1.85;
@@ -134,10 +128,6 @@ const workLifeGraphs = [
 const graph1XValuesNames = ["communication", "quality", "timeliness", "partnership", "pricing"];
 let graph1FirstTime = true;
 let graph1CurrentGraph = 3;
-
-if (currentReso == mobile) {
-	scrollToRightSlideNameForMobile(graphNamesUl, graphNamesLis, graph1CurrentGraph);
-}
 
 let graph1Bars = [];
 let graph1BarsHeight = [];
@@ -996,10 +986,6 @@ let interaction3SpeedMax = [];
 let interaction3CurrentSlide = 3;
 let interaction3Data = [];
 calculateAndSetCurrentValues();
-
-if (currentReso == mobile) {
-	scrollToRightSlideNameForMobile(interaction3NamesUl, interaction3NamesLis, interaction3CurrentSlide);
-}
 
 const interaction3Zoom = 100;
 let interaction3Balls = [];
