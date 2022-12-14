@@ -1311,6 +1311,16 @@ const removeScrollifySectionHeightInMobile = () => {
 	}
 }
 
+// Give slide names correct left position on resize in Mobile reso
+const changeScrollLeftOnResizeInMobileReso = (currentSlideNum, ul, lis) => {
+	if (currentReso == mobile) {
+		console.log(ul.scrollLeft);
+		ul.scroll({
+			left: ul.scrollLeft + lis[currentSlideNum].getBoundingClientRect().left
+		});
+	}
+}
+
 // Window resize handler
 const onWindowResize = () => {
 	const windowWidth = body.clientWidth;
@@ -1324,6 +1334,7 @@ const onWindowResize = () => {
 			widthToHeightRatio = 1.73;
 		}
 	}
+	changeScrollLeftOnResizeInMobileReso(graph1CurrentGraphMobile, graphNamesUlMobile, graphNamesLisMobile);
 	graph1CanvasContainerWidth = graph1CanvasContainer.getBoundingClientRect().width;
 	graph1Camera.aspect = graph1CanvasContainerWidth / (graph1CanvasContainerWidth / widthToHeightRatio);
 	graph1Camera.updateProjectionMatrix();
