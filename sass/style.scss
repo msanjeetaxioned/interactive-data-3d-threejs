@@ -440,6 +440,10 @@ section {
 	align-items: center;
 	overflow: hidden;
 
+	@include breakpoint(mobile) {
+		display: none;
+	}
+
 	li {
 		flex-basis: 16%;
 		flex-shrink: 0;
@@ -479,6 +483,38 @@ section {
 	}
 
 	.active + li { margin-left: 0; }
+}
+
+.slider-names-mobile {
+	display: none;
+
+	@include breakpoint(mobile) {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+	}
+
+	li {
+		flex-basis: 100%;
+		flex-shrink: 0;
+		text-align: center;
+
+		span {
+			color: $gray;
+			font-size: 14px;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+
+		&.active {
+			span {
+				color: $white;
+				font-size: 16px;
+			}
+		}
+	}
 }
 /* Graph1 SCSS end */
 
