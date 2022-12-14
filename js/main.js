@@ -440,10 +440,10 @@ const prevOrNextButtonClick = (prevOrNext) => {
 	let prevGraph;
 	if (currentReso == mobile) {
 		prevGraph = graph1CurrentGraphMobile;
-		graphNamesLisMobile[prevGraph].classList.remove("active");
 	} else {
 		prevGraph = graph1CurrentGraph;
 	}
+	graphNamesLisMobile[prevGraph].classList.remove("active");
 
 	if (prevGraph == workLifeGraphs.length && prevOrNext == 1) {
 		graph1CurrentGraphMobile = workLifeGraphs.length;
