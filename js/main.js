@@ -65,6 +65,49 @@ graph1Renderer.setSize(graph1CanvasContainerWidth, graph1CanvasContainerWidth / 
 graph1CanvasContainer.insertBefore(graph1Renderer.domElement, graph1CanvasContainer.children[0]);
 graph1Canvas = wrapperWorkLife.querySelector("canvas");
 
+// let startX,
+// 	startY,
+// 	dist,
+// 	threshold = 150, //required min distance traveled to be considered swipe
+// 	allowedTime = 200, // maximum time allowed to travel that distance
+// 	elapsedTime,
+// 	startTime,
+// 	swiping = false;
+
+// graph1Canvas.addEventListener('touchstart', function(e) {
+// 	var touchobj = e.changedTouches[0]
+// 	dist = 0
+// 	startX = touchobj.pageX;
+// 	startTime = new Date().getTime() // record time when finger first makes contact with surface
+// 	e.preventDefault()
+// }, false)
+
+// graph1Canvas.addEventListener('touchend', function(e){
+// 	var touchobj = e.changedTouches[0];
+// 	dist = touchobj.pageX - startX; // get total dist traveled by finger while in contact with surface
+// 	elapsedTime = new Date().getTime() - startTime; // get time elapsed
+	
+// 	if (dist > threshold && elapsedTime <= allowedTime) {
+
+// 	}
+// 	e.preventDefault();
+// }, false)
+
+const graph1Raycaster2 = new THREE.Raycaster();
+const graph1Touch = new THREE.Vector2();
+graph1Touch.x = "";
+let lastTouchLocation = {x: ""};
+graph1Canvas.addEventListener("touchmove", (event) => {
+	const canvasLeft = graph1Canvas.getBoundingClientRect().left + document.documentElement.scrollLeft;
+	const touchObj = event.changedTouches[0];
+	const x = touchObj.pageX - canvasLeft;
+
+	if (graph1Touch.x) {
+		lastTouchLocation.x = graph1Touch.x;
+	}
+	graph1Touch.x = (x / graph1Canvas.getBoundingClientRect().width) * 2 - 1;
+});
+
 const graph1Scene = new THREE.Scene();
 var graph1Camera = new THREE.PerspectiveCamera(45, graph1CanvasContainerWidth / (graph1CanvasContainerWidth / widthToHeightRatio), 1, 1000);
 
@@ -542,6 +585,23 @@ const graph1RotateBar = (cube, currentBarTL, currentBarRotation) => {
 			currentBarRotation = rotations[5];
 			currentBarTL.to(cube.rotation, {y: "+=6.806784083", ease: "none", duration: 1})
 				.to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.5});
+		}
+	}
+}
+
+const graph1RotateBarOnSwipe = (cube, currentBarTL, currentBarRotation) => {
+	if (!currentBarTL.isActive()) {
+		if (lastTouchLocation.x) {
+			if (graph1Touch.x < lastTouchLocation.x) {
+				currentBarRotation = rotations[1];
+				// rotate bar -(180 + 30) degrees ie. -210 degrees
+				currentBarTL.to(cube.rotation, {y: "-=3.66519143", ease: "none", duration: 0.75})
+					.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.5});
+			} else if (graph1Touch.x > lastTouchLocation.x) {
+				currentBarRotation = rotations[4];
+				currentBarTL.to(cube.rotation, {y: "+=3.66519143", ease: "none", duration: 0.75})
+					.to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.5});
+			}
 		}
 	}
 }
@@ -1461,6 +1521,16 @@ const onAnimateChanges = () => {
 		for (let i = 0; i < graph1Bars.length; i++) {
 			if (graph1Bars[i].uuid == graph1Intersects[0].object.uuid) {
 				graph1RotateBar(graph1Bars[i], graph1RotationTl[i], graph1CurrentRotationSpeedAndDirectionOfBars[i]);
+			}
+		}
+	}
+	graph1Raycaster2.setFromCamera(graph1Touch, graph1Camera);
+	// calculate objects intersecting the picking ray
+	const graph1Intersects2 = graph1Raycaster2.intersectObjects(graph1Holder.children);
+	if (graph1Intersects2.length == 2) {
+		for (let i = 0; i < graph1Bars.length; i++) {
+			if (graph1Bars[i].uuid == graph1Intersects2[0].object.uuid) {
+				graph1RotateBarOnSwipe(graph1Bars[i], graph1RotationTl[i], graph1CurrentRotationSpeedAndDirectionOfBars[i]);
 			}
 		}
 	}
