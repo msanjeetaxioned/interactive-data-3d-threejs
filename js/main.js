@@ -593,17 +593,17 @@ const graph1RotateBar = (cube, currentBarTL, currentBarRotation) => {
 	}
 }
 
-const graph1RotateBarOnSwipe = (cube, currentBarTL, currentBarRotation) => {
+const graphRotateBarOnSwipe = (cube, currentBarTL, currentBarRotation, currentLoc, lastLoc) => {
 	if (!currentBarTL.isActive()) {
-		if (lastTouchLocation.x && currentBarRotation == 0) {
-			if (graph1Touch.x < lastTouchLocation.x) {
+		if (lastLoc.x && currentBarRotation == 0) {
+			if (currentLoc.x < lastLoc.x) {
 				currentBarRotation = rotations[1];
 				// rotate bar -(180 + 30) degrees ie. -210 degrees
 				currentBarTL.to(cube.rotation, {y: "-=3.66519143", ease: "none", duration: 0.75})
 					.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.5, onComplete: () => {
 						currentBarRotation = 0;
 					}});
-			} else if (graph1Touch.x > lastTouchLocation.x) {
+			} else if (currentLoc.x > lastLoc.x) {
 				currentBarRotation = rotations[4];
 				currentBarTL.to(cube.rotation, {y: "+=3.66519143", ease: "none", duration: 0.75})
 					.to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.5, onComplete: () => {
@@ -1538,7 +1538,7 @@ const onAnimateChanges = () => {
 	if (graph1Intersects2.length == 2) {
 		for (let i = 0; i < graph1Bars.length; i++) {
 			if (graph1Bars[i].uuid == graph1Intersects2[0].object.uuid && graph1Touch.x != "") {
-				graph1RotateBarOnSwipe(graph1Bars[i], graph1RotationTl[i], graph1CurrentRotationSpeedAndDirectionOfBars[i]);
+				graphRotateBarOnSwipe(graph1Bars[i], graph1RotationTl[i], graph1CurrentRotationSpeedAndDirectionOfBars[i], graph1Touch, lastTouchLocation);
 			}
 		}
 	}
