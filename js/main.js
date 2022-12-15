@@ -591,16 +591,20 @@ const graph1RotateBar = (cube, currentBarTL, currentBarRotation) => {
 
 const graph1RotateBarOnSwipe = (cube, currentBarTL, currentBarRotation) => {
 	if (!currentBarTL.isActive()) {
-		if (lastTouchLocation.x) {
+		if (lastTouchLocation.x && currentBarRotation == 0) {
 			if (graph1Touch.x < lastTouchLocation.x) {
 				currentBarRotation = rotations[1];
 				// rotate bar -(180 + 30) degrees ie. -210 degrees
 				currentBarTL.to(cube.rotation, {y: "-=3.66519143", ease: "none", duration: 0.75})
-					.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.5});
+					.to(cube.rotation, {y: "+=0.523598776", ease: "none", duration: 0.5, onComplete: () => {
+						currentBarRotation = 0;
+					}});
 			} else if (graph1Touch.x > lastTouchLocation.x) {
 				currentBarRotation = rotations[4];
 				currentBarTL.to(cube.rotation, {y: "+=3.66519143", ease: "none", duration: 0.75})
-					.to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.5});
+					.to(cube.rotation, {y: "-=0.523598776", ease: "none", duration: 0.5, onComplete: () => {
+						currentBarRotation = 0;
+					}});
 			}
 		}
 	}
