@@ -65,34 +65,6 @@ graph1Renderer.setSize(graph1CanvasContainerWidth, graph1CanvasContainerWidth / 
 graph1CanvasContainer.insertBefore(graph1Renderer.domElement, graph1CanvasContainer.children[0]);
 graph1Canvas = wrapperWorkLife.querySelector("canvas");
 
-// let startX,
-// 	startY,
-// 	dist,
-// 	threshold = 150, //required min distance traveled to be considered swipe
-// 	allowedTime = 200, // maximum time allowed to travel that distance
-// 	elapsedTime,
-// 	startTime,
-// 	swiping = false;
-
-// graph1Canvas.addEventListener('touchstart', function(e) {
-// 	var touchobj = e.changedTouches[0]
-// 	dist = 0
-// 	startX = touchobj.pageX;
-// 	startTime = new Date().getTime() // record time when finger first makes contact with surface
-// 	e.preventDefault()
-// }, false)
-
-// graph1Canvas.addEventListener('touchend', function(e){
-// 	var touchobj = e.changedTouches[0];
-// 	dist = touchobj.pageX - startX; // get total dist traveled by finger while in contact with surface
-// 	elapsedTime = new Date().getTime() - startTime; // get time elapsed
-	
-// 	if (dist > threshold && elapsedTime <= allowedTime) {
-
-// 	}
-// 	e.preventDefault();
-// }, false)
-
 const graph1Raycaster2 = new THREE.Raycaster();
 const graph1Touch = new THREE.Vector2();
 graph1Touch.x = "";
@@ -107,8 +79,7 @@ graph1Canvas.addEventListener("touchmove", (event) => {
 	}
 	graph1Touch.x = (x / graph1Canvas.getBoundingClientRect().width) * 2 - 1;
 });
-
-graph1Canvas.addEventListener("touchend", (event) => {
+graph1Canvas.addEventListener("touchend", () => {
 	graph1Touch.x = "";
 });
 
