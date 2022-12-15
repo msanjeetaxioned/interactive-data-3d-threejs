@@ -108,6 +108,10 @@ graph1Canvas.addEventListener("touchmove", (event) => {
 	graph1Touch.x = (x / graph1Canvas.getBoundingClientRect().width) * 2 - 1;
 });
 
+graph1Canvas.addEventListener("touchend", (event) => {
+	graph1Touch.x = "";
+});
+
 const graph1Scene = new THREE.Scene();
 var graph1Camera = new THREE.PerspectiveCamera(45, graph1CanvasContainerWidth / (graph1CanvasContainerWidth / widthToHeightRatio), 1, 1000);
 
@@ -1533,7 +1537,7 @@ const onAnimateChanges = () => {
 	const graph1Intersects2 = graph1Raycaster2.intersectObjects(graph1Holder.children);
 	if (graph1Intersects2.length == 2) {
 		for (let i = 0; i < graph1Bars.length; i++) {
-			if (graph1Bars[i].uuid == graph1Intersects2[0].object.uuid) {
+			if (graph1Bars[i].uuid == graph1Intersects2[0].object.uuid && graph1Touch.x != "") {
 				graph1RotateBarOnSwipe(graph1Bars[i], graph1RotationTl[i], graph1CurrentRotationSpeedAndDirectionOfBars[i]);
 			}
 		}
