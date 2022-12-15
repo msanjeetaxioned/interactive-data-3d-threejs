@@ -71,16 +71,20 @@ graph1Touch.x = "";
 let lastTouchLocation = {x: ""};
 graph1Canvas.addEventListener("touchmove", (event) => {
 	const canvasLeft = graph1Canvas.getBoundingClientRect().left + document.documentElement.scrollLeft;
+	const canvasTop = graph1Canvas.getBoundingClientRect().top + document.documentElement.scrollTop;
 	const touchObj = event.changedTouches[0];
 	const x = touchObj.pageX - canvasLeft;
+	const y = touchObj.pageY - canvasTop;
 
 	if (graph1Touch.x) {
 		lastTouchLocation.x = graph1Touch.x;
 	}
 	graph1Touch.x = (x / graph1Canvas.getBoundingClientRect().width) * 2 - 1;
+	graph1Touch.y = -(y / graph1Canvas.getBoundingClientRect().height) * 2 + 1;
 });
 graph1Canvas.addEventListener("touchend", () => {
 	graph1Touch.x = "";
+	graph1Touch.y = "";
 });
 
 const graph1Scene = new THREE.Scene();
