@@ -197,6 +197,28 @@ let movementX = 0,
 	timer1,
 	timer2;
 
+const graph2Raycaster2 = new THREE.Raycaster();
+const graph2Touch = new THREE.Vector2();
+graph2Touch.x = "";
+let graph2LastTouchLocation = {x: ""};
+canvas.addEventListener("touchmove", (event) => {
+	const canvasLeft = canvas.getBoundingClientRect().left + document.documentElement.scrollLeft;
+	const canvasTop = canvas.getBoundingClientRect().top + document.documentElement.scrollTop;
+	const touchObj = event.changedTouches[0];
+	const x = touchObj.pageX - canvasLeft;
+	const y = touchObj.pageY - canvasTop;
+
+	if (graph2Touch.x != "") {
+		graph2LastTouchLocation.x = graph2Touch.x;
+	}
+	graph2Touch.x = (x / canvas.getBoundingClientRect().width) * 2 - 1;
+	graph2Touch.y = -(y / canvas.getBoundingClientRect().height) * 2 + 1;
+});
+canvas.addEventListener("touchend", () => {
+	graph2Touch.x = "";
+	graph2Touch.y = "";
+});
+
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
@@ -1529,6 +1551,19 @@ const onAnimateChanges = () => {
 			for (let j = 0; j < bars[i].length; j++) {
 				if (bars[i][j].uuid == intersects[0].object.uuid) {
 					rotateBar(bars[i][j], rotationTl[i][j], currentRotationSpeedAndDirectionOfBars[i][j]);
+				}
+			}
+		}
+	}
+	graph2Raycaster2.setFromCamera(graph2Touch, camera);
+	// calculate objects intersecting the picking ray
+	const graph2Intersects2 = graph2Raycaster2.intersectObjects(holder.children);
+	if (graph2Intersects2.length == 2) {
+		for (let i = 0; i < bars.length; i++) {
+			for (let j = 0; j < bars[i].length; j++) {
+				if (bars[i][j].uuid == graph2Intersects2[0].object.uuid) {
+					if (graph2Touch.x != "" && graph2Touch.y != "")
+					graphRotateBarOnSwipe(bars[i][j], rotationTl[i][j], currentRotationSpeedAndDirectionOfBars[i][j], graph2Touch, graph2LastTouchLocation);
 				}
 			}
 		}
