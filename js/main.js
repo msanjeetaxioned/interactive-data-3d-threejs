@@ -1531,6 +1531,7 @@ const isElementXPercentInViewport = (el, percentVisible) => {
 
 // Animate function
 const onAnimateChanges = () => {
+	// Graph 1
 	if (isElementXPercentInViewport(graph1Canvas, 1)) {
 		if (currentReso != mobile) {
 			graph1Raycaster.setFromCamera(graph1Mouse, graph1Camera);
@@ -1565,6 +1566,7 @@ const onAnimateChanges = () => {
 		graph1Renderer.render(graph1Scene, graph1Camera);
 	}
 
+	// Graph 2
 	if (isElementXPercentInViewport(canvas, 1)) {
 		if (currentReso != mobile) {
 			raycaster.setFromCamera(mouse, camera);
@@ -1605,7 +1607,7 @@ const onAnimateChanges = () => {
 		renderer.render(scene, camera);
 	}
 
-	// Interaction 3
+	// Spheres Interaction
 	if (isElementXPercentInViewport(interaction3Canvas, 5)) {
 		interaction3World.step(1/60);
 		for (var i = 0; i < interaction3Balls.length; i++) {
