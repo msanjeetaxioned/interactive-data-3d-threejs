@@ -1529,6 +1529,7 @@ const isElementXPercentInViewport = function(el, percentVisible) {
   )
 };
 
+// Animate function
 const onAnimateChanges = () => {
 	if (isElementXPercentInViewport(graph1Canvas, 1)) {
 		graph1Raycaster.setFromCamera(graph1Mouse, graph1Camera);
