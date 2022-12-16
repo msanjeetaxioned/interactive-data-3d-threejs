@@ -1247,8 +1247,8 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
 			this.text2.anchor.y = -0.4;
 			this.text2.style.wordWrap = true;
 		} else if (currentReso == mobile) {
-			this.text2.anchor.y = -0.3;
-			this.text2.style.fontSize = 12;
+			this.text2.anchor.y = -0.6;
+			this.text2.style.fontSize = 10;
 			this.text2.style.wordWrap = true;
 	}
     this.el.addChild(this.text2);
@@ -1338,8 +1338,8 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
 		if (reso == mobile) {
 			this.text.style.fontSize = 24;
 			this.text.anchor.y = 0.8;
-			this.text2.anchor.y = -0.3;
-			this.text2.style.fontSize = 12;
+			this.text2.anchor.y = -0.6;
+			this.text2.style.fontSize = 10;
 			this.text2.style.wordWrap = true;
 		} else if (reso == tablet) {
 			this.text.style.fontSize = 34;
