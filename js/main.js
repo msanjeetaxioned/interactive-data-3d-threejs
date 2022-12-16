@@ -1519,7 +1519,7 @@ window.addEventListener("resize", () => {
 });
 
 // Check if an element is partially visible in viewport based on given percent value
-const isElementXPercentInViewport = function(el, percentVisible) {
+const isElementXPercentInViewport = (el, percentVisible) => {
   let rect = el.getBoundingClientRect(),
     windowHeight = (window.innerHeight || document.documentElement.clientHeight);
 
@@ -1527,7 +1527,7 @@ const isElementXPercentInViewport = function(el, percentVisible) {
     Math.floor(100 - (((rect.top >= 0 ? 0 : rect.top) / +-rect.height) * 100)) < percentVisible ||
     Math.floor(100 - ((rect.bottom - windowHeight) / rect.height) * 100) < percentVisible
   )
-};
+}
 
 // Animate function
 const onAnimateChanges = () => {
@@ -1577,8 +1577,9 @@ const onAnimateChanges = () => {
 			for (let i = 0; i < bars.length; i++) {
 				for (let j = 0; j < bars[i].length; j++) {
 					if (bars[i][j].uuid == graph2Intersects2[0].object.uuid) {
-						if (graph2Touch.x != "" && graph2Touch.y != "")
-						graphRotateBarOnSwipe(bars[i][j], rotationTl[i][j], currentRotationSpeedAndDirectionOfBars[i][j], graph2Touch, graph2LastTouchLocation);
+						if (graph2Touch.x != "" && graph2Touch.y != "") {
+							graphRotateBarOnSwipe(bars[i][j], rotationTl[i][j], currentRotationSpeedAndDirectionOfBars[i][j], graph2Touch, graph2LastTouchLocation);
+						}
 					}
 				}
 			}
