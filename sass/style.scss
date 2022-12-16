@@ -10,6 +10,7 @@
 	font-style: normal;
 	font-weight: normal;
 	src: local('Poppins Regular'), url('../fonts/Poppins-Regular.woff') format('woff');
+	font-display: swap
 }
 
 @font-face {
@@ -17,6 +18,7 @@
 	font-style: normal;
 	font-weight: normal;
 	src: local('Poppins Thin'), url('../fonts/Poppins-Thin.woff') format('woff');
+	font-display: swap
 }
 
 $white: #fff;
