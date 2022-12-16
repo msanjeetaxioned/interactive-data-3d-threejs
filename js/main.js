@@ -1518,66 +1518,83 @@ window.addEventListener("resize", () => {
 	resizeCompleteTimer = setTimeout(onWindowResize, 300);
 });
 
-const onAnimateChanges = () => {
-	graph1Raycaster.setFromCamera(graph1Mouse, graph1Camera);
-	// calculate objects intersecting the picking ray
-	const graph1Intersects = graph1Raycaster.intersectObjects(graph1Holder.children);
-	if (graph1Intersects.length == 2) {
-		for (let i = 0; i < graph1Bars.length; i++) {
-			if (graph1Bars[i].uuid == graph1Intersects[0].object.uuid) {
-				graph1RotateBar(graph1Bars[i], graph1RotationTl[i], graph1CurrentRotationSpeedAndDirectionOfBars[i]);
-			}
-		}
-	}
-	graph1Raycaster2.setFromCamera(graph1Touch, graph1Camera);
-	// calculate objects intersecting the picking ray
-	const graph1Intersects2 = graph1Raycaster2.intersectObjects(graph1Holder.children);
-	if (graph1Intersects2.length == 2) {
-		for (let i = 0; i < graph1Bars.length; i++) {
-			if (graph1Bars[i].uuid == graph1Intersects2[0].object.uuid && graph1Touch.x != "") {
-				graphRotateBarOnSwipe(graph1Bars[i], graph1RotationTl[i], graph1CurrentRotationSpeedAndDirectionOfBars[i], graph1Touch, lastTouchLocation);
-			}
-		}
-	}
-	setRotationAngleOfBarsBasedOnScrollPosition();
-	tiltGraphBasedOnMouseXPosition(graph1Canvas, graph1MouseXCanvas, graph1Holder);
-	graph1Renderer.render(graph1Scene, graph1Camera);
+// Check if an element is partially visible in viewport based on given percent value
+const isElementXPercentInViewport = function(el, percentVisible) {
+  let rect = el.getBoundingClientRect(),
+    windowHeight = (window.innerHeight || document.documentElement.clientHeight);
 
-	raycaster.setFromCamera(mouse, camera);
-	// calculate objects intersecting the picking ray
-	const intersects = raycaster.intersectObjects(holder.children);
-	if (intersects.length == 2) {
-		for (let i = 0; i < bars.length; i++) {
-			for (let j = 0; j < bars[i].length; j++) {
-				if (bars[i][j].uuid == intersects[0].object.uuid) {
-					rotateBar(bars[i][j], rotationTl[i][j], currentRotationSpeedAndDirectionOfBars[i][j]);
+  return !(
+    Math.floor(100 - (((rect.top >= 0 ? 0 : rect.top) / +-rect.height) * 100)) < percentVisible ||
+    Math.floor(100 - ((rect.bottom - windowHeight) / rect.height) * 100) < percentVisible
+  )
+};
+
+const onAnimateChanges = () => {
+	if (isElementXPercentInViewport(graph1Canvas, 1)) {
+		graph1Raycaster.setFromCamera(graph1Mouse, graph1Camera);
+		// calculate objects intersecting the picking ray
+		const graph1Intersects = graph1Raycaster.intersectObjects(graph1Holder.children);
+		if (graph1Intersects.length == 2) {
+			for (let i = 0; i < graph1Bars.length; i++) {
+				if (graph1Bars[i].uuid == graph1Intersects[0].object.uuid) {
+					graph1RotateBar(graph1Bars[i], graph1RotationTl[i], graph1CurrentRotationSpeedAndDirectionOfBars[i]);
 				}
 			}
 		}
-	}
-	graph2Raycaster2.setFromCamera(graph2Touch, camera);
-	// calculate objects intersecting the picking ray
-	const graph2Intersects2 = graph2Raycaster2.intersectObjects(holder.children);
-	if (graph2Intersects2.length == 2) {
-		for (let i = 0; i < bars.length; i++) {
-			for (let j = 0; j < bars[i].length; j++) {
-				if (bars[i][j].uuid == graph2Intersects2[0].object.uuid) {
-					if (graph2Touch.x != "" && graph2Touch.y != "")
-					graphRotateBarOnSwipe(bars[i][j], rotationTl[i][j], currentRotationSpeedAndDirectionOfBars[i][j], graph2Touch, graph2LastTouchLocation);
+		graph1Raycaster2.setFromCamera(graph1Touch, graph1Camera);
+		// calculate objects intersecting the picking ray
+		const graph1Intersects2 = graph1Raycaster2.intersectObjects(graph1Holder.children);
+		if (graph1Intersects2.length == 2) {
+			for (let i = 0; i < graph1Bars.length; i++) {
+				if (graph1Bars[i].uuid == graph1Intersects2[0].object.uuid && graph1Touch.x != "") {
+					graphRotateBarOnSwipe(graph1Bars[i], graph1RotationTl[i], graph1CurrentRotationSpeedAndDirectionOfBars[i], graph1Touch, lastTouchLocation);
 				}
 			}
 		}
+		setRotationAngleOfBarsBasedOnScrollPosition();
+		tiltGraphBasedOnMouseXPosition(graph1Canvas, graph1MouseXCanvas, graph1Holder);
+		graph1Renderer.render(graph1Scene, graph1Camera);
 	}
-	graph2SetRotationAngleOfBarsBasedOnScrollPosition();
-	tiltGraphBasedOnMouseXPosition(canvas, mouseXCanvas, holder);
-	renderer.render(scene, camera);
+
+	if (isElementXPercentInViewport(canvas, 1)) {
+		raycaster.setFromCamera(mouse, camera);
+		// calculate objects intersecting the picking ray
+		const intersects = raycaster.intersectObjects(holder.children);
+		if (intersects.length == 2) {
+			for (let i = 0; i < bars.length; i++) {
+				for (let j = 0; j < bars[i].length; j++) {
+					if (bars[i][j].uuid == intersects[0].object.uuid) {
+						rotateBar(bars[i][j], rotationTl[i][j], currentRotationSpeedAndDirectionOfBars[i][j]);
+					}
+				}
+			}
+		}
+		graph2Raycaster2.setFromCamera(graph2Touch, camera);
+		// calculate objects intersecting the picking ray
+		const graph2Intersects2 = graph2Raycaster2.intersectObjects(holder.children);
+		if (graph2Intersects2.length == 2) {
+			for (let i = 0; i < bars.length; i++) {
+				for (let j = 0; j < bars[i].length; j++) {
+					if (bars[i][j].uuid == graph2Intersects2[0].object.uuid) {
+						if (graph2Touch.x != "" && graph2Touch.y != "")
+						graphRotateBarOnSwipe(bars[i][j], rotationTl[i][j], currentRotationSpeedAndDirectionOfBars[i][j], graph2Touch, graph2LastTouchLocation);
+					}
+				}
+			}
+		}
+		graph2SetRotationAngleOfBarsBasedOnScrollPosition();
+		tiltGraphBasedOnMouseXPosition(canvas, mouseXCanvas, holder);
+		renderer.render(scene, camera);
+	}
 
 	// Interaction 3
-	interaction3World.step(1/60);
-  for (var i = 0; i < interaction3Balls.length; i++) {
-    interaction3Balls[i].update();
-  }
-  interaction3Renderer.render(interaction3Stage);
+	if (isElementXPercentInViewport(interaction3Canvas, 5)) {
+		interaction3World.step(1/60);
+		for (var i = 0; i < interaction3Balls.length; i++) {
+			interaction3Balls[i].update();
+		}
+		interaction3Renderer.render(interaction3Stage);
+	}
 }
 
 const animate = () => {
