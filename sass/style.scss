@@ -904,6 +904,10 @@ section {
 	padding: 50px 0 0;
 	background-color: $black;
 
+	@include breakpoint(mobile) {
+		min-height: unset;
+	}
+
 	.absolute-content { 
 		width: 100%;
 		position: absolute;
