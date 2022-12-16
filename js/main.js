@@ -1555,7 +1555,13 @@ const onAnimateChanges = () => {
 			}
 		}
 		setRotationAngleOfBarsBasedOnScrollPosition();
-		tiltGraphBasedOnMouseXPosition(graph1Canvas, graph1MouseXCanvas, graph1Holder);
+		if (currentReso != mobile) {
+			tiltGraphBasedOnMouseXPosition(graph1Canvas, graph1MouseXCanvas, graph1Holder);
+		} else {
+			if (graph1Holder.rotation.y != 0) {
+				graph1Holder.rotation.y = 0;
+			}
+		}
 		graph1Renderer.render(graph1Scene, graph1Camera);
 	}
 
@@ -1589,7 +1595,13 @@ const onAnimateChanges = () => {
 			}
 		}
 		graph2SetRotationAngleOfBarsBasedOnScrollPosition();
-		tiltGraphBasedOnMouseXPosition(canvas, mouseXCanvas, holder);
+		if (currentReso != mobile) {
+			tiltGraphBasedOnMouseXPosition(canvas, mouseXCanvas, holder);
+		} else {
+			if (holder.rotation.y != 0) {
+				holder.rotation.y = 0;
+			}
+		}
 		renderer.render(scene, camera);
 	}
 
