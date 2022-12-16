@@ -81,11 +81,11 @@ graph1Canvas.addEventListener("touchmove", (event) => {
 	}
 	graph1Touch.x = (x / graph1Canvas.getBoundingClientRect().width) * 2 - 1;
 	graph1Touch.y = -(y / graph1Canvas.getBoundingClientRect().height) * 2 + 1;
-});
+}, {passive: true});
 graph1Canvas.addEventListener("touchend", () => {
 	graph1Touch.x = "";
 	graph1Touch.y = "";
-});
+}, {passive: true});
 
 const graph1Scene = new THREE.Scene();
 var graph1Camera = new THREE.PerspectiveCamera(45, graph1CanvasContainerWidth / (graph1CanvasContainerWidth / widthToHeightRatio), 1, 1000);
@@ -213,11 +213,11 @@ canvas.addEventListener("touchmove", (event) => {
 	}
 	graph2Touch.x = (x / canvas.getBoundingClientRect().width) * 2 - 1;
 	graph2Touch.y = -(y / canvas.getBoundingClientRect().height) * 2 + 1;
-});
+}, {passive: true});
 canvas.addEventListener("touchend", () => {
 	graph2Touch.x = "";
 	graph2Touch.y = "";
-});
+}, {passive: true});
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
