@@ -1201,7 +1201,7 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
     this.circle.hitArea = new PIXI.Circle(0, 0, 1);
     this.circle.scale.x = this.circle.scale.y = this.radius;
 
-		this.bubble = new PIXI.Sprite.from('images/bubble3.png');
+		this.bubble = new PIXI.Sprite.from('images/bubble3.webp');
 		this.bubble.anchor.set(0.5, 0.5);
 		this.bubble.width = 2.3 * r;
 		this.bubble.height = 2.3 * r;
