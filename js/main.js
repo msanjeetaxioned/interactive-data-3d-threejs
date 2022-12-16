@@ -1546,7 +1546,6 @@ const onAnimateChanges = () => {
 			}
 		}
 		graph1Raycaster2.setFromCamera(graph1Touch, graph1Camera);
-		// calculate objects intersecting the picking ray
 		const graph1Intersects2 = graph1Raycaster2.intersectObjects(graph1Holder.children);
 		if (graph1Intersects2.length == 2) {
 			for (let i = 0; i < graph1Bars.length; i++) {
@@ -1570,7 +1569,6 @@ const onAnimateChanges = () => {
 	if (isElementXPercentInViewport(canvas, 1)) {
 		if (currentReso != mobile) {
 			raycaster.setFromCamera(mouse, camera);
-			// calculate objects intersecting the picking ray
 			const intersects = raycaster.intersectObjects(holder.children);
 			if (intersects.length == 2) {
 				for (let i = 0; i < bars.length; i++) {
@@ -1583,7 +1581,6 @@ const onAnimateChanges = () => {
 			}
 		}
 		graph2Raycaster2.setFromCamera(graph2Touch, camera);
-		// calculate objects intersecting the picking ray
 		const graph2Intersects2 = graph2Raycaster2.intersectObjects(holder.children);
 		if (graph2Intersects2.length == 2) {
 			for (let i = 0; i < bars.length; i++) {
