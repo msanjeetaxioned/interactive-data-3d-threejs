@@ -1532,13 +1532,15 @@ const isElementXPercentInViewport = (el, percentVisible) => {
 // Animate function
 const onAnimateChanges = () => {
 	if (isElementXPercentInViewport(graph1Canvas, 1)) {
-		graph1Raycaster.setFromCamera(graph1Mouse, graph1Camera);
-		// calculate objects intersecting the picking ray
-		const graph1Intersects = graph1Raycaster.intersectObjects(graph1Holder.children);
-		if (graph1Intersects.length == 2) {
-			for (let i = 0; i < graph1Bars.length; i++) {
-				if (graph1Bars[i].uuid == graph1Intersects[0].object.uuid) {
-					graph1RotateBar(graph1Bars[i], graph1RotationTl[i], graph1CurrentRotationSpeedAndDirectionOfBars[i]);
+		if (currentReso != mobile) {
+			graph1Raycaster.setFromCamera(graph1Mouse, graph1Camera);
+			// calculate objects intersecting the picking ray
+			const graph1Intersects = graph1Raycaster.intersectObjects(graph1Holder.children);
+			if (graph1Intersects.length == 2) {
+				for (let i = 0; i < graph1Bars.length; i++) {
+					if (graph1Bars[i].uuid == graph1Intersects[0].object.uuid) {
+						graph1RotateBar(graph1Bars[i], graph1RotationTl[i], graph1CurrentRotationSpeedAndDirectionOfBars[i]);
+					}
 				}
 			}
 		}
@@ -1558,14 +1560,16 @@ const onAnimateChanges = () => {
 	}
 
 	if (isElementXPercentInViewport(canvas, 1)) {
-		raycaster.setFromCamera(mouse, camera);
-		// calculate objects intersecting the picking ray
-		const intersects = raycaster.intersectObjects(holder.children);
-		if (intersects.length == 2) {
-			for (let i = 0; i < bars.length; i++) {
-				for (let j = 0; j < bars[i].length; j++) {
-					if (bars[i][j].uuid == intersects[0].object.uuid) {
-						rotateBar(bars[i][j], rotationTl[i][j], currentRotationSpeedAndDirectionOfBars[i][j]);
+		if (currentReso != mobile) {
+			raycaster.setFromCamera(mouse, camera);
+			// calculate objects intersecting the picking ray
+			const intersects = raycaster.intersectObjects(holder.children);
+			if (intersects.length == 2) {
+				for (let i = 0; i < bars.length; i++) {
+					for (let j = 0; j < bars[i].length; j++) {
+						if (bars[i][j].uuid == intersects[0].object.uuid) {
+							rotateBar(bars[i][j], rotationTl[i][j], currentRotationSpeedAndDirectionOfBars[i][j]);
+						}
 					}
 				}
 			}
