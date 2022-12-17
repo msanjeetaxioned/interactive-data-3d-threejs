@@ -1250,7 +1250,7 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
 			this.text2.anchor.y = -0.6;
 			this.text2.style.fontSize = 10;
 			this.text2.style.wordWrap = true;
-	}
+		}
     this.el.addChild(this.text2);
 
     this.shape = new p2.Circle({radius: this.radius});
