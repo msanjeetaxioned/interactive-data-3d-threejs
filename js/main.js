@@ -1050,10 +1050,10 @@ const calculateAndSetCurrentValues = (notFirstTime) => {
 	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
 	let outMin = 0.7;
 	let outMax = 1;
-	if (reso == tablet) {
+	if (currentReso == tablet) {
 		outMin = 0.55;
 		outMax = 0.85;
-	} else if (reso == mobile) {
+	} else if (currentReso == mobile) {
 		outMin = 0.4;
 		outMax = 0.6;
 	}
