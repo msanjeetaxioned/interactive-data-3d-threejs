@@ -7,13 +7,12 @@ const desktop = "desktop";
 let currentReso = "";
 const setCurrentReso = () => {
 	const width = body.clientWidth;
+	currentReso = desktop;
 
 	if (width < 768) {
 		currentReso = mobile;
 	} else if (width < 1024) {
 		currentReso = tablet;
-	} else {
-		currentReso = desktop;
 	}
 }
 setCurrentReso();
@@ -122,6 +121,7 @@ const handleIntersect = (entries) => {
 	entries.forEach(entry => {
 		if (entry.isIntersecting) {
 			if (entry.target == interaction3Canvas) {
+				calculateAndSetCurrentValues();
 				for (var i = 0; i < interaction3Data.length; i ++) {
 					const ball = new Ball(interaction3Data[i].name, interaction3Data[i].value + "%", interaction3Data[i].color, interaction3Data[i].mass, interaction3Data[i].radius, interaction3Data[i].sMin, interaction3Data[i].sMax, i);
 					interaction3Balls.push(ball);
@@ -623,7 +623,7 @@ let graph1CurrentWindowY = undefined;
 // Sets Vertical rotation of bars based on scroll position 
 const setRotationAngleOfBarsBasedOnScrollPosition = () => {
 	graph1CanvasDistanceFromTop = document.documentElement.scrollTop + graph1Canvas.getBoundingClientRect().top;
-	graph1CanvasVisibleMin =  graph1CanvasDistanceFromTop - window.innerHeight;
+	graph1CanvasVisibleMin = graph1CanvasDistanceFromTop - window.innerHeight;
 	graph1CanvasHeight = graph1Canvas.getBoundingClientRect().width / widthToHeightRatio;
 
 	let windowY;
@@ -1048,16 +1048,19 @@ interaction3NamesLisMobile = interaction3NamesUlMobile.querySelectorAll("li");
 
 const calculateAndSetCurrentValues = (notFirstTime) => {
 	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
+	let outMin = 0.7;
+	let outMax = 1;
+	if (reso == tablet) {
+		outMin = 0.55;
+		outMax = 0.85;
+	} else if (reso == mobile) {
+		outMin = 0.4;
+		outMax = 0.6;
+	}
 
 	for (let i = 0; i < currentValues.length; i++) {
 		interaction3Mass[i] = scale(currentValues[i], 0, 24.9, 0.0005, 0.0025);
-		if (currentReso == mobile) {
-			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.4, 0.6);
-		} else if (currentReso == tablet) {
-			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.55, 0.85);
-		} else if (currentReso == desktop) {
-			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.7, 1);
-		}
+		interaction3Radius[i] = scale(currentValues[i], 0, 24.9, outMin, outMax);
 		interaction3SpeedMaxNeg[i] = scale(currentValues[i], 0, 24.9, -1/8, -1);
 		interaction3SpeedMax[i] = scale(currentValues[i], 0, 24.9, 1/8, 1);
 
@@ -1080,15 +1083,18 @@ const updateRadiusOnResize = (reso) => {
 	if (interaction3Balls.length == 0) {
 		return;
 	}
+	let outMin = 0.7;
+	let outMax = 1;
+	if (reso == tablet) {
+		outMin = 0.55;
+		outMax = 0.85;
+	} else if (reso == mobile) {
+		outMin = 0.4;
+		outMax = 0.6;
+	}
 	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
 	for (let i = 0; i < currentValues.length; i++) {
-		if (currentReso == mobile) {
-			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.4, 0.6);
-		} else if (reso == tablet) {
-			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.55, 0.85);
-		} else if (reso == desktop) {
-			interaction3Radius[i] = scale(currentValues[i], 0, 24.9, 0.7, 1);
-		}
+		interaction3Radius[i] = scale(currentValues[i], 0, 24.9, outMin, outMax);
 		interaction3Data[i].radius = interaction3Radius[i];
 		interaction3Balls[i].updateOnResize(i, reso);
 	}
@@ -1119,17 +1125,14 @@ let interaction3CurrentSlide = 3;
 let interaction3CurrentSlideMobile = 3;
 interaction3NamesUlMobile.scrollLeft = interaction3NamesLisMobile[interaction3CurrentSlideMobile].offsetLeft;
 let interaction3Data = [];
-calculateAndSetCurrentValues();
 const interaction3Zoom = 100;
 let interaction3Balls = [];
 
-let interaction3Height;
+let interaction3Height = interaction3DesktopHeight;
 if (currentReso == mobile) {
 	interaction3Height = interaction3MobileHeight;
 } else if (currentReso == tablet) {
 	interaction3Height = interaction3TabletHeight;
-} else if (currentReso == desktop) {
-	interaction3Height = interaction3DesktopHeight;
 }
 const interaction3Renderer = PIXI.autoDetectRenderer(interaction3CanvasContainerWidth, interaction3Height, {
   transparent: true, antialias: true
