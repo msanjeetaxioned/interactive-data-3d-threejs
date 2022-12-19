@@ -122,6 +122,20 @@ const handleIntersect = (entries) => {
 					interaction3Balls.push(ball);
 					observer2.unobserve(entry.target);
 				}
+			} else if (entry.target == wrapperProjectByNumbers) {
+				calculateBarsHeightAndAddThemInScene();
+				camera.position.y = 0;
+				camera.position.z = 40;
+				barsInitialPosition = calculateBarsBotPosition(camera, canvas);
+				for (let i = 0; i < bars.length; i++) {
+					currentRotationSpeedAndDirectionOfBars[i] = [];
+					rotationTl[i] = [];
+					for (let j = 0; j < bars[i].length; j++) {
+						currentRotationSpeedAndDirectionOfBars[i][j] = 0;
+						rotationTl[i][j] = gsap.timeline();
+					}
+				}
+				observer3.unobserve(entry.target);
 			} else {
 				graph1CalculateBarsHeightAndAddThemInScene();
 				observer.unobserve(entry.target);
@@ -783,6 +797,10 @@ function graph1AppendOrUpdateGraphXValues(update = false) {
 	}
 }
 
+const options3 = {threshold: 0.01};
+const observer3 = new IntersectionObserver(handleIntersect, options3);
+observer3.observe(wrapperProjectByNumbers);
+
 const calculateBarsHeightAndAddThemInScene = () => {
 	// Bars
 	const barColor = 0xe31c79;
@@ -867,22 +885,7 @@ const calculateBarsHeightAndAddThemInScene = () => {
 	}
 }
 
-calculateBarsHeightAndAddThemInScene();
-
-camera.position.y = 0;
-camera.position.z = 40;
-barsInitialPosition = calculateBarsBotPosition(camera, canvas);
-// orbit.update();
-
 let rotationTl = [], currentRotationSpeedAndDirectionOfBars = [];
-for (let i = 0; i < bars.length; i++) {
-	currentRotationSpeedAndDirectionOfBars[i] = [];
-	rotationTl[i] = [];
-	for (let j = 0; j < bars[i].length; j++) {
-		currentRotationSpeedAndDirectionOfBars[i][j] = 0;
-		rotationTl[i][j] = gsap.timeline();
-	}
-}
 
 const rotateBar = (cube, currentBarTL, currentBarRotation) => {
 	if (!currentBarTL.isActive() && movementX != currentMovementX) {
