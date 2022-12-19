@@ -4,11 +4,10 @@ const body = document.body;
 const mobile = "mobile";
 const tablet = "tablet";
 const desktop = "desktop";
-let currentReso = "";
+let currentReso = desktop;
 const setCurrentReso = () => {
 	const width = body.clientWidth;
-	currentReso = desktop;
-
+	
 	if (width < 768) {
 		currentReso = mobile;
 	} else if (width < 1024) {

@@ -379,7 +379,7 @@ section {
   }
 }
 .slider-names-container .button:hover {
-  background-color: orangered;
+  background-color: rgb(224, 28, 117);
   cursor: pointer;
 }
 
