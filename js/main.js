@@ -30,10 +30,6 @@ if (currentReso == mobile) {
 	widthToHeightRatio = 1.85;
 }
 
-const interaction3MobileHeight = 700;
-const interaction3TabletHeight = 850;
-const interaction3DesktopHeight = 1050;
-
 const wrapperWorkLife = body.querySelector(".work-life-balance-graph-section > .wrapper");
 const graph1CanvasContainer = wrapperWorkLife.querySelector(".canvas-container");
 let graph1CanvasContainerWidth = graph1CanvasContainer.getBoundingClientRect().width;
@@ -1126,6 +1122,9 @@ interaction3NamesUlMobile.scrollLeft = interaction3NamesLisMobile[interaction3Cu
 let interaction3Data = [];
 const interaction3Zoom = 100;
 let interaction3Balls = [];
+const interaction3MobileHeight = 700;
+const interaction3TabletHeight = 850;
+const interaction3DesktopHeight = 1050;
 
 let interaction3Height = interaction3DesktopHeight;
 if (currentReso == mobile) {
