@@ -36,7 +36,6 @@ $large-mobile: 425px;
 $med-mobile: 375px;
 $small-mobile: 320px;
 
-
 @mixin breakpoint($device) {
 	@if ($device == 'large-pc') {
 		@media screen and (min-width: $large-pc) {
