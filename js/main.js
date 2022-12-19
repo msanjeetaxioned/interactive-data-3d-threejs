@@ -1466,10 +1466,11 @@ const onWindowResize = () => {
 			changeGraph2BarsPositionOnResize();
 		}
 	}
-	calculateGraphBarWidth(true, bars[0][0], camera, canvas, 2);
-	barsInitialPosition = calculateBarsBotPosition(camera, canvas);
-	appendGraphXValues(true);
-
+	if (bars[0][0]) {
+		calculateGraphBarWidth(true, bars[0][0], camera, canvas, 2);
+		barsInitialPosition = calculateBarsBotPosition(camera, canvas);
+		appendGraphXValues(true);
+	}
 	interaction3CanvasContainerWidth = interaction3CanvasContainer.getBoundingClientRect().width;
 
 	if (windowWidth < 768) {
