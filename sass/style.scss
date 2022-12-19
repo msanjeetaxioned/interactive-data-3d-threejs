@@ -227,20 +227,24 @@ section {
 	.section-info {
 		padding-top: 10px;
 		margin-bottom: 60px;
-		background: linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%);
-		background-clip: text;
-		-webkit-background-clip: text;
-	  -webkit-text-fill-color: transparent;
-		font-size: 25px;
-		font-weight: 600;
 		text-align: center;
-
-		@include breakpoint(small-pc) {
-			font-size: 18px;
-		}
 
 		@include breakpoint(mobile) {
 			margin-bottom: 50px;
+		}
+
+		span {
+			display: inline-block;
+			background: linear-gradient(270deg, #4c65f7 31.21%, #ff62aa 73.32%);
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			font-size: 25px;
+			font-weight: 600;
+
+			@include breakpoint(small-pc) {
+				font-size: 18px;
+			}
 		}
 	}
 
