@@ -25,7 +25,7 @@ if (currentReso != mobile) {
 	});
 }
 
-let widthToHeightRatio = 1.73;
+let widthToHeightRatio = 1.7;
 if (currentReso == mobile) {
 	widthToHeightRatio = 1.85;
 }
@@ -885,6 +885,7 @@ const calculateBarsHeightAndAddThemInScene = () => {
 	}
 }
 
+// orbit.update();
 let rotationTl = [], currentRotationSpeedAndDirectionOfBars = [];
 
 const rotateBar = (cube, currentBarTL, currentBarRotation) => {
