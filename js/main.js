@@ -1284,6 +1284,9 @@ const Ball = function (t, v, c, m, r, sMin, sMax, x) {
     if (!this.timer) {
       let movementX = interaction3Movement.x;
       let movementY = interaction3Movement.y;
+			if (movementX == undefined || movementY == undefined) {
+				return;
+			}
       if (movementX > 50) {
         movementX = 50;
       } else if (movementX < -50) {
