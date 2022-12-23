@@ -1045,21 +1045,22 @@ interaction3NamesUlMobile.append(cloneOfFirst);
 interaction3NamesUlMobile.prepend(cloneOfLast);
 interaction3NamesLisMobile = interaction3NamesUlMobile.querySelectorAll("li");
 
+// Sets data for the Bubbles/Spheres of current slide and for current resolution
 const calculateAndSetCurrentValues = (notFirstTime) => {
 	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
-	let outMin = 0.7;
-	let outMax = 1;
+	let radiusMin = 0.7;
+	let radiusMax = 1;
 	if (currentReso == tablet) {
-		outMin = 0.55;
-		outMax = 0.85;
+		radiusMin = 0.55;
+		radiusMax = 0.85;
 	} else if (currentReso == mobile) {
-		outMin = 0.4;
-		outMax = 0.6;
+		radiusMin = 0.4;
+		radiusMax = 0.6;
 	}
 
 	for (let i = 0; i < currentValues.length; i++) {
 		interaction3Mass[i] = scale(currentValues[i], 0, 24.9, 0.0005, 0.0025);
-		interaction3Radius[i] = scale(currentValues[i], 0, 24.9, outMin, outMax);
+		interaction3Radius[i] = scale(currentValues[i], 0, 24.9, radiusMin, radiusMax);
 		interaction3SpeedMaxNeg[i] = scale(currentValues[i], 0, 24.9, -1/8, -1);
 		interaction3SpeedMax[i] = scale(currentValues[i], 0, 24.9, 1/8, 1);
 
@@ -1078,22 +1079,23 @@ const calculateAndSetCurrentValues = (notFirstTime) => {
 	}
 }
 
+// Updates values of Bubbles when window resized from one device range to another
 const updateRadiusOnResize = (reso) => {
 	if (interaction3Balls.length == 0) {
 		return;
 	}
-	let outMin = 0.7;
-	let outMax = 1;
+	let radiusMin = 0.7;
+	let radiusMax = 1;
 	if (reso == tablet) {
-		outMin = 0.55;
-		outMax = 0.85;
+		radiusMin = 0.55;
+		radiusMax = 0.85;
 	} else if (reso == mobile) {
-		outMin = 0.4;
-		outMax = 0.6;
+		radiusMin = 0.4;
+		radiusMax = 0.6;
 	}
 	const currentValues = interaction3Values[interaction3CurrentSlide - 1];
 	for (let i = 0; i < currentValues.length; i++) {
-		interaction3Radius[i] = scale(currentValues[i], 0, 24.9, outMin, outMax);
+		interaction3Radius[i] = scale(currentValues[i], 0, 24.9, radiusMin, radiusMax);
 		interaction3Data[i].radius = interaction3Radius[i];
 		interaction3Balls[i].updateOnResize(i, reso);
 	}
